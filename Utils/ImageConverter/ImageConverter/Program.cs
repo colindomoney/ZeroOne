@@ -10,6 +10,8 @@ namespace ImageConverter
 {
     internal class Program
     {
+        private const int BytesPerPixel = 3;
+
         public static void Main(string[] args)
         {
             Console.WriteLine("ImageConverter starting ...");
@@ -19,16 +21,43 @@ namespace ImageConverter
             Console.WriteLine("Line count: {0}", allLines.Length);
 
             // Check the file makes sense
-            int colsX, rowsY;
-            bool fileOK = GetFileInfo(allLines, out colsX, out rowsY);
-
+            int colsX, rowsY, maxColorValue;
+            bool fileOK = GetFileInfo(ref allLines, out colsX, out rowsY, out maxColorValue);
             Console.WriteLine("File OK : {0}", fileOK);
+
+            int rgbVal = 0;
+
+            for (int i = 0; i < allLines.Length; i++)
+            {
+                string line = allLines[i];
+
+                int cmpVal = Int32.Parse(line);
+
+                // R
+                if (i % BytesPerPixel == 0)
+                {
+                    rgbVal = cmpVal << 16;
+                }
+
+                // G
+                if (i % BytesPerPixel == 1)
+                {
+                    rgbVal |= cmpVal << 8;
+                }
+
+                // B
+                if (i % BytesPerPixel == 2)
+                {
+                    rgbVal |= cmpVal;
+                    Console.WriteLine("[{0}] = {1:X08}", i/BytesPerPixel, rgbVal);
+                }
+            }
 
             Console.WriteLine("Done!");
         }
 
 
-        private static bool GetFileInfo(string[] allLines, out int colsX, out int rowsY)
+        private static bool GetFileInfo(ref string[] allLines, out int colsX, out int rowsY, out int maxColorValue)
         {
             colsX = 0;
             rowsY = 0;
@@ -62,18 +91,19 @@ namespace ImageConverter
                     colsX = Int32.Parse(mtc.Groups[1].Value);
                     rowsY = Int32.Parse(mtc.Groups[2].Value);
 
-                    int maxColorValue = Int32.Parse(allLines[firstLine++]);
+                    maxColorValue = Int32.Parse(allLines[firstLine++]);
 
                     // Remember to skip the maximum color value byte
                     allLines = allLines.Skip(firstLine).ToArray();
 
                     // Now check the size line up correctly
-                    Console.WriteLine("Lines of data: {0}", allLines.Length);
-
+                    if (allLines.Length != (rowsY * colsX * BytesPerPixel))
+                    {
+                        throw new FileLoadException("File size error (dimensions do not match data size)");
+                    }
 
                     return true;
                 }
-
             }
 
             return false;
