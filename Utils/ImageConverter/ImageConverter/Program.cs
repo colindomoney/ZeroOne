@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
@@ -26,6 +27,7 @@ namespace ImageConverter
             Console.WriteLine("File OK : {0}", fileOK);
 
             int rgbVal = 0;
+            int[,] rgbValues = new int[colsX, rowsY];
 
             for (int i = 0; i < allLines.Length; i++)
             {
@@ -48,8 +50,12 @@ namespace ImageConverter
                 // B
                 if (i % BytesPerPixel == 2)
                 {
+                    int rgbi = i / BytesPerPixel;
                     rgbVal |= cmpVal;
-                    Console.WriteLine("[{0}] = {1:X08}", i/BytesPerPixel, rgbVal);
+                    //Console.WriteLine("[{0}] = {1:X08}", rgbi, rgbVal);
+
+                    // Now write it to the output array
+                    rgbValues[rgbi % colsX, rgbi / colsX] = rgbVal;
                 }
             }
 

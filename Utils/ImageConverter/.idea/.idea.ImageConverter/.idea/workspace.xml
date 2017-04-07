@@ -20,18 +20,24 @@
       <file leaf-file-name="Program.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ImageConverter/Program.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+            <state relative-caret-position="75">
+              <caret line="54" column="22" lean-forward="false" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
               <folding>
-                <marker date="1491568821000" expanded="true" signature="6:198" ph="..." />
-                <marker date="1491568821000" expanded="true" signature="224:2401" ph="{...}" />
-                <marker date="1491568821000" expanded="true" signature="253:2399" ph="{...}" />
-                <marker date="1491568821000" expanded="true" signature="306:807" ph="{...}" />
-                <marker date="1491568821000" expanded="true" signature="898:2393" ph="{...}" />
-                <marker date="1491568821000" expanded="true" signature="1211:1309" ph="{...}" />
-                <marker date="1491568821000" expanded="true" signature="1412:1525" ph="{...}" />
-                <marker date="1491568821000" expanded="true" signature="1590:2356" ph="{...}" />
-                <marker date="1491568821000" expanded="true" signature="1793:2341" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="6:226" ph="..." />
+                <marker date="1491572466000" expanded="true" signature="252:3620" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="281:3618" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="380:1855" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="1005:1804" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="1177:1256" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="1322:1401" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="1467:1790" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="1594:1704" ph="/* Console.WriteLine(&quot;[{0}] = {1:X08}&quot;, rgbi, rgbVal); ... */" />
+                <marker date="1491572466000" expanded="true" signature="1973:3612" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="2286:2384" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="2487:2600" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="2665:3575" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="2868:3561" ph="{...}" />
+                <marker date="1491572466000" expanded="true" signature="3357:3509" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -171,7 +177,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1491560868102</updated>
-      <workItem from="1491560869443" duration="5421000" />
+      <workItem from="1491560869443" duration="7812000" />
     </task>
     <task id="LOCAL-00001" summary="Add the ImageConverter project.">
       <created>1491561754647</created>
@@ -187,11 +193,25 @@
       <option name="project" value="LOCAL" />
       <updated>1491563272965</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Got the file parsing stuff working.">
+      <created>1491568958167</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1491568958167</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Got the RGB representation working now.">
+      <created>1491572112198</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1491572112198</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5421000" />
+    <option name="totallyTimeSpent" value="7812000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -204,6 +224,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -216,11 +237,11 @@
       <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19305556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39925373" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39925373" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -239,37 +260,37 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add the ImageConverter project." />
     <MESSAGE value="Working on processing the PPM file." />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on processing the PPM file." />
+    <MESSAGE value="Got the file parsing stuff working." />
+    <MESSAGE value="Got the RGB representation working now." />
+    <option name="LAST_COMMIT_MESSAGE" value="Got the RGB representation working now." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ImageConverter/Program.cs</url>
-          <line>73</line>
-          <properties startOffset="2311" endOffset="2323" documentPath="$PROJECT_DIR$/ImageConverter/Program.cs" />
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="7" />
+      <option name="time" value="15" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/ImageConverter/Program.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+        <state relative-caret-position="75">
+          <caret line="54" column="22" lean-forward="false" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
           <folding>
-            <marker date="1491568821000" expanded="true" signature="6:198" ph="..." />
-            <marker date="1491568821000" expanded="true" signature="224:2401" ph="{...}" />
-            <marker date="1491568821000" expanded="true" signature="253:2399" ph="{...}" />
-            <marker date="1491568821000" expanded="true" signature="306:807" ph="{...}" />
-            <marker date="1491568821000" expanded="true" signature="898:2393" ph="{...}" />
-            <marker date="1491568821000" expanded="true" signature="1211:1309" ph="{...}" />
-            <marker date="1491568821000" expanded="true" signature="1412:1525" ph="{...}" />
-            <marker date="1491568821000" expanded="true" signature="1590:2356" ph="{...}" />
-            <marker date="1491568821000" expanded="true" signature="1793:2341" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="6:226" ph="..." />
+            <marker date="1491572466000" expanded="true" signature="252:3620" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="281:3618" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="380:1855" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="1005:1804" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="1177:1256" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="1322:1401" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="1467:1790" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="1594:1704" ph="/* Console.WriteLine(&quot;[{0}] = {1:X08}&quot;, rgbi, rgbVal); ... */" />
+            <marker date="1491572466000" expanded="true" signature="1973:3612" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="2286:2384" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="2487:2600" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="2665:3575" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="2868:3561" ph="{...}" />
+            <marker date="1491572466000" expanded="true" signature="3357:3509" ph="{...}" />
           </folding>
         </state>
       </provider>
