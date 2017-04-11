@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 
 namespace ImageConverter
@@ -12,6 +13,7 @@ namespace ImageConverter
     internal class Program
     {
         private const int BytesPerPixel = 3;
+        private const int FillColor = 0x00000000;
 
         public static void Main(string[] args)
         {
@@ -58,6 +60,26 @@ namespace ImageConverter
                     rgbValues[rgbi % colsX, rgbi / colsX] = rgbVal;
                 }
             }
+
+            StreamWriter sw = new StreamWriter("./image.csv", false);
+
+            int total = 0;
+            for (int y = 0; y < rowsY; y++)
+            {
+                for (int x = 0; x < colsX; x++)
+                {
+                    total++;
+
+                    if (rgbValues[x, y] == FillColor)
+                        sw.Write("1,");
+                    else
+                        sw.Write("0,");
+                }
+
+                sw.WriteLine();
+            }
+
+            sw.Close();
 
             Console.WriteLine("Done!");
         }
