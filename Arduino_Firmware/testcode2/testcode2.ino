@@ -1,7 +1,7 @@
 #include "FastLED.h"
 
 // How many leds in your strip?
-#define NUM_LEDS 750
+#define NUM_LEDS 1000
 #define DELAY 250
 
 // For led chips like Neopixels, which have a data line, ground, and power, you just
@@ -16,8 +16,6 @@ CRGB leds[NUM_LEDS];
 void setup() { 
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
     FastLED.setBrightness(50);
-    
-    
 }
 
 void loop() {
@@ -26,7 +24,6 @@ void loop() {
     delay(DELAY);
     Do(CRGB::White);
     delay(DELAY);
-      
 }
 
 void Do(CRGB colour)
