@@ -1,11 +1,10 @@
 import opc, time
-import ZO
 
 numLEDs = 591
 client = opc.Client('localhost:7890')
 
-black = [ (0, 0, 0) ] * numLEDs
-white = [ (0, 255, 0) ] * numLEDs
+black = [ (0,0,0) ] * numLEDs
+white = [ (0,255,0) ] * numLEDs
 
 if client.can_connect():
     print("Connected to server")
@@ -14,8 +13,6 @@ else:
     exit(1)
 
 while True:
-    z = ZO.ZeroOne()
-
     print('. ')
     client.put_pixels(white)
     time.sleep(0.25)

@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c39009b-6837-407f-93ce-413360fb788f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.idea.ImageConverter/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/.idea.ImageConverter/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ImageConverter/Program.cs" afterPath="$PROJECT_DIR$/ImageConverter/Program.cs" />
+      <change beforePath="$PROJECT_DIR$/../../01_Pixels.xlsx" afterPath="$PROJECT_DIR$/../../01_Pixels.xlsx" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ImageConverter/.idea/contentModel.xml" afterPath="$PROJECT_DIR$/.idea/.idea.ImageConverter/.idea/contentModel.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ImageConverter/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/.idea.ImageConverter/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ImageConverter/riderModule.iml" afterPath="$PROJECT_DIR$/.idea/.idea.ImageConverter/riderModule.iml" />
+      <change beforePath="$PROJECT_DIR$/ImageConverter/ImageConverter.csproj" afterPath="$PROJECT_DIR$/ImageConverter/ImageConverter.csproj" />
     </list>
     <ignored path="ImageConverter/bin/Debug/" />
     <ignored path="ImageConverter/obj/Debug/" />
@@ -14,32 +17,31 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Program.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ImageConverter/Program.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="278">
               <caret line="75" column="20" lean-forward="false" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="20" />
               <folding>
-                <marker date="1491574367000" expanded="true" signature="6:263" ph="..." />
-                <marker date="1491574367000" expanded="true" signature="289:4209" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="318:4207" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="467:2444" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="1092:1891" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="1264:1343" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="1409:1488" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="1554:1877" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="1681:1791" ph="/* Console.WriteLine(&quot;[{0}] = {1:X08}&quot;, rgbi, rgbVal); ... */" />
-                <marker date="1491574367000" expanded="true" signature="2034:2368" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="2096:2321" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="2562:4201" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="2875:2973" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="3076:3189" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="3254:4164" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="3457:4150" ph="{...}" />
-                <marker date="1491574367000" expanded="true" signature="3946:4098" ph="{...}" />
+                <marker date="1516893362433" expanded="false" signature="6:263" ph="..." />
+                <marker date="1516893362433" expanded="true" signature="289:4209" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="318:4207" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="467:2444" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="1092:1891" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="1264:1343" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="1409:1488" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="1554:1877" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="1681:1791" ph="/* Console.WriteLine(&quot;[{0}] = {1:X08}&quot;, rgbi, rgbVal); ... */" />
+                <marker date="1516893362433" expanded="true" signature="2034:2368" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="2096:2321" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="2562:4201" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="2875:2973" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="3076:3189" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="3254:4164" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="3457:4150" ph="{...}" />
+                <marker date="1516893362433" expanded="true" signature="3946:4098" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -49,6 +51,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/ImageConverter/Program.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -86,25 +91,22 @@
     <panes>
       <pane id="SolutionExplorer">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ImageConverter (1 project)" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ImageConverter" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
+          <expand>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ImageConverter (1 project)" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+          </expand>
+          <select />
         </subPane>
         <option name="show-file-system" value="false" />
         <option name="show-all-items" value="false" />
       </pane>
+      <pane id="Scratches" />
     </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -118,7 +120,22 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected=".NET Project.Default">
+  <component name="RunManager">
+    <configuration name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/ImageConverter/bin/Debug/ImageConverter.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ImageConverter/bin/Debug" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <envs />
+      <option name="USE_MONO" value="0" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/ImageConverter/ImageConverter.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="Console" />
+      <option name="PROJECT_TFM" value=".NETFramework,Version=v4.5" />
+    </configuration>
     <configuration default="true" type="DotNetProject" factoryName=".NET Project">
       <option name="PROJECT_PATH" value="" />
       <option name="PROJECT_KIND" value="None" />
@@ -140,9 +157,6 @@
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
       <command value="run" />
       <scripts />
@@ -150,21 +164,14 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Default" type="DotNetProject" factoryName=".NET Project">
-      <option name="PROJECT_PATH" value="$PROJECT_DIR$/ImageConverter/ImageConverter.csproj" />
-      <option name="PROJECT_KIND" value="Console" />
-      <option name="PROJECT_TFM" value=".NETFramework,Version=v4.5" />
-      <option name="EXE_PATH" value="$PROJECT_DIR$/ImageConverter/bin/Debug/ImageConverter.exe" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ImageConverter/bin/Debug" />
-      <option name="USE_MONO" value="0" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
       <envs />
-      <method />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue=".NET Project.Default" />
-    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -180,6 +187,7 @@
       <option name="presentableId" value="Default" />
       <updated>1491560868102</updated>
       <workItem from="1491560869443" duration="10300000" />
+      <workItem from="1517002965559" duration="89000" />
     </task>
     <task id="LOCAL-00001" summary="Add the ImageConverter project.">
       <created>1491561754647</created>
@@ -220,7 +228,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10300000" />
+    <option name="totallyTimeSpent" value="10389000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -232,36 +240,37 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="873" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1440" height="873" extended-state="0" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run Dashboard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.50277776" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.49722221" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19305556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.50277776" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.49722221" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19305556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39925373" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run Dashboard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="processedProjectFiles" value="true" />
+    <option name="version" value="1" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -283,26 +292,52 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/ImageConverter/Program.cs">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1516893362433" expanded="false" signature="6:263" ph="..." />
+            <marker date="1516893362433" expanded="true" signature="289:4209" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="318:4207" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="467:2444" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1092:1891" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1264:1343" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1409:1488" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1554:1877" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1681:1791" ph="/* Console.WriteLine(&quot;[{0}] = {1:X08}&quot;, rgbi, rgbVal); ... */" />
+            <marker date="1516893362433" expanded="true" signature="2034:2368" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="2096:2321" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="2562:4201" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="2875:2973" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="3076:3189" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="3254:4164" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="3457:4150" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="3946:4098" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageConverter/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="278">
           <caret line="75" column="20" lean-forward="false" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="20" />
           <folding>
-            <marker date="1491574367000" expanded="true" signature="6:263" ph="..." />
-            <marker date="1491574367000" expanded="true" signature="289:4209" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="318:4207" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="467:2444" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="1092:1891" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="1264:1343" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="1409:1488" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="1554:1877" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="1681:1791" ph="/* Console.WriteLine(&quot;[{0}] = {1:X08}&quot;, rgbi, rgbVal); ... */" />
-            <marker date="1491574367000" expanded="true" signature="2034:2368" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="2096:2321" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="2562:4201" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="2875:2973" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="3076:3189" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="3254:4164" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="3457:4150" ph="{...}" />
-            <marker date="1491574367000" expanded="true" signature="3946:4098" ph="{...}" />
+            <marker date="1516893362433" expanded="false" signature="6:263" ph="..." />
+            <marker date="1516893362433" expanded="true" signature="289:4209" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="318:4207" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="467:2444" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1092:1891" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1264:1343" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1409:1488" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1554:1877" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="1681:1791" ph="/* Console.WriteLine(&quot;[{0}] = {1:X08}&quot;, rgbi, rgbVal); ... */" />
+            <marker date="1516893362433" expanded="true" signature="2034:2368" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="2096:2321" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="2562:4201" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="2875:2973" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="3076:3189" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="3254:4164" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="3457:4150" ph="{...}" />
+            <marker date="1516893362433" expanded="true" signature="3946:4098" ph="{...}" />
           </folding>
         </state>
       </provider>

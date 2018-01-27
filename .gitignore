@@ -2,3 +2,9 @@
 Utils/ImageConverter/ImageConverter/obj/Debug/
 
 Utils/ImageConverter/ImageConverter/bin/Debug/
+
+Controller/ZO/__pycache__/
+
+Controller/__pycache__/
+
+HardwareTests/TestRig/__pycache__/

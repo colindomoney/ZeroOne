@@ -10,7 +10,7 @@
 		<AppDesignerFolder>Properties</AppDesignerFolder>
 		<RootNamespace>ImageConverter</RootNamespace>
 		<AssemblyName>ImageConverter</AssemblyName>
-		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
 		<FileAlignment>512</FileAlignment>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,12 +33,12 @@
 		<WarningLevel>4</WarningLevel>
 	</PropertyGroup>
 	<ItemGroup>
-		<Reference Include="System"/>
-		<Reference Include="System.Core"/>
-		<Reference Include="System.Xml.Linq"/>
-		<Reference Include="System.Data.DataSetExtensions"/>
-		<Reference Include="System.Data"/>
-		<Reference Include="System.Xml"/>
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Xml.Linq" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Xml" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="Program.cs" />
