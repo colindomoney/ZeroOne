@@ -1,4 +1,5 @@
 print('__init__ in ZO')
 
-from ZO.ZeroOne import ZeroOne
+from ZO.zero_one import ZeroOne
+import ZO.ui
 
