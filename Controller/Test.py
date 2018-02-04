@@ -1,12 +1,13 @@
 import time, threading
+from enum import Enum
+
 from pynput.keyboard import Key, Listener
 from getkey import getkey, keys
 
-import sys
-sys.path.append('./pydev')
-# sys.path.append('./pydev.egg')
-from pydev import pydevd
-pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
+# import sys
+# sys.path.append('./pydev')
+# from pydev import pydevd
+# pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
 
 # def toggle_led():
 #     print(". ")
@@ -57,7 +58,7 @@ def main2():
             on_release=on_release) as listener:
         listener.join()
 
-def main():
+def main3():
     key = getkey()
     buffer = ''
     if key == keys.UP:
@@ -67,6 +68,27 @@ def main():
     else:  # Handle text characters
         buffer += key
         print(buffer)
+
+def main():
+    print('in main()')
+
+    class Keys(Enum):
+        KEY1 = 'q'
+        KEY2 = 'w'
+        KEY3 = 'e'
+
+        @classmethod
+        def contains(cls, key):
+            return any(key == item.value for item in cls)
+
+        @classmethod
+        def byvalue(cls, value):
+            for item in cls:
+                if value == item.value:
+                    return item.name
+
+    print('Contains {0} -> {1}'.format('q', Keys.byvalue('q')))
+
 
 if __name__ == "__main__":
     main()

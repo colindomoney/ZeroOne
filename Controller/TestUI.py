@@ -2,19 +2,24 @@ import time
 
 from ZO import ZeroOne, ui
 import sys, os, io
+import getch
 
+import sys
+sys.path.append('./pydev')
+from pydev import pydevd
+pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
 
 def main():
     print('Testing UI ...')
 
     __ui = ui.get_ui_instance()
-    print(__ui)
+    command = None
 
-    time.sleep(1)
+    while command != ui.Commands.Quit:
+        time.sleep(0.1)
+        command = __ui.get_command()
+        print('. ')
 
-    __ui.test()
-
-    time.sleep(5)
     print('Done!')
 
 if __name__ == "__main__":

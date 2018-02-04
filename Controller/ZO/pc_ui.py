@@ -3,19 +3,32 @@ from enum import Enum
 from pynput.keyboard import Key, Listener
 from blinkstick import blinkstick
 
-from ZO.ui import UIBase
+from ZO.ui import UIBase, ButtonEvent, Commands
+
 
 class PC_UI(UIBase):
     def __init__(self):
-        self.__keyboard = Keyboard_Driver()
+        self.__lastKey = None
+
+        self.__keyboard = Keyboard_Driver(self.__on_press__, self.__on_release__)
         print('Keyboard created')
         self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY1, self.__button_handler)
 
-    def __button_handler(self, key):
-        print('__button_handler() -> ' + key)
+    def __button_handler(self, key, buttonEvent):
+        print('__button_handler() -> {0}'.format(key.value))
 
     def __dir__(self):
         return super().__dir__()
+
+    def __on_press__(self, key):
+        # print('__on_press__')
+        if key != self.__lastKey:
+            self.__lastKey = key
+            print('KEY = {0}'.format(key.char))
+
+    def __on_release__(self, key):
+        # print('__on_release__')
+        self.__lastKey = None
 
     def led_on(self, Led):
         super().led_on(Led)
@@ -32,23 +45,42 @@ class PC_UI(UIBase):
     def register_button_event_handler(self, callback, Button=UIBase.Button.BUTTON_1):
         super().register_button_event_handler(callback, Button)
 
+    def get_command(self):
+        super().get_command()
+
     def test(self):
         self.__keyboard.test()
 
 class Keyboard_Driver():
     class Keys(Enum):
-        KEY1 = '1'
-        KEY2 = '2'
-        KEY3 = '3'
+        KEY1 = 'q'
+        KEY2 = 'w'
+        KEY3 = 'e'
 
-    def __init__(self):
+        @classmethod
+        def contains(cls, key):
+            return any(key == item.value for item in cls)
+
+        @classmethod
+        def byvalue(cls, value):
+            for key, val in cls.items():
+                if value == val:
+                    return key
+
+    def __init__(self, on_press, on_release):
         print('Keyboard_Driver.__init__()')
 
         # Store the last_key_press
         self.keyEvents = {
-            self.Keys.KEY1: None,
-            self.Keys.KEY2: None,
-            self.Keys.KEY3: None,
+            self.Keys.KEY1.value: None,
+            self.Keys.KEY2.value: None,
+            self.Keys.KEY3.value: None,
+        }
+
+        self.keyHandler = {
+            self.Keys.KEY1.value: None,
+            self.Keys.KEY2.value: None,
+            self.Keys.KEY3.value: None,
         }
 
         # Setup the hook functions
@@ -59,6 +91,9 @@ class Keyboard_Driver():
         self.listener.start()
         self.listener.wait()
 
+        self.__client_on_press = on_press
+        self.__client_on_release = on_release
+
         #     global timer
         #     timer = threading.Timer(1, toggle_led)
         #     timer.start()
@@ -67,23 +102,40 @@ class Keyboard_Driver():
 
     def __on_press__(self, key):
         try:
-            print('alphanumeric key {0} pressed'.format(
-                key.char))
+            ch = key.char
+
+            if not self.Keys.contains(ch):
+                self.__client_on_press(key)
+            else:
+                if self.keyEvents[ch] != ButtonEvent.BUTTON_DOWN:
+                    self.keyEvents[ch] = ButtonEvent.BUTTON_DOWN
+                    if self.keyHandler[ch] != None:
+                        self.keyHandler[ch](self.Keys.byvalue(ch), ButtonEvent.BUTTON_DOWN)
+
+
+            # print('Key = {0}'.format(ch))
         except AttributeError:
-            print('special key {0} pressed'.format(
-                key))
+            self.__client_on_press(key)
 
     def __on_release__(self, key):
-        print('{0} released'.format(
-            key))
+        # Make s
+        try:
+            ch = key.char
 
+            if not self.Keys.contains(ch):
+                self.__client_on_release(key)
+            else:
+                pass
+
+        except AttributeError:
+            self.__client_on_release(key)
 
     def test(self):
         print('Running = ' + str(self.listener.running))
 
     # Register a callback method to register for the events
     def register_key_event_handler(self, key, callback):
-        self.keyEvents[key] = callback
+        self.keyHandler[key.value] = callback
 
 class Blinkstick_LED_Driver():
     def __init__(self):
