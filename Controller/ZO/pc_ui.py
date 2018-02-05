@@ -12,19 +12,30 @@ class PC_UI(UIBase):
 
         self.__keyboard = Keyboard_Driver(self.__on_press__, self.__on_release__)
         print('Keyboard created')
-        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY1, self.__button_handler)
+        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY1, self.__button_handler1)
+        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY2, self.__button_handler2)
+        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY3, self.__button_handler3)
 
-    def __button_handler(self, key, buttonEvent):
-        print('__button_handler() -> {0}'.format(key.value))
+    def __button_handler1(self, key, buttonEvent):
+        print('__button_handler1() -> {}, {}'.format(key.value, buttonEvent))
+
+    def __button_handler2(self, key, buttonEvent):
+        print('__button_handler2() -> {}, {}'.format(key.value, buttonEvent))
+
+    def __button_handler3(self, key, buttonEvent):
+        print('__button_handler3() -> {}, {}'.format(key.value, buttonEvent))
 
     def __dir__(self):
         return super().__dir__()
 
     def __on_press__(self, key):
         # print('__on_press__')
-        if key != self.__lastKey:
-            self.__lastKey = key
-            print('KEY = {0}'.format(key.char))
+        try:
+            if key != self.__lastKey:
+                self.__lastKey = key
+                print('KEY = {0}'.format(key.char))
+        except AttributeError:
+            print('***')
 
     def __on_release__(self, key):
         # print('__on_release__')
@@ -51,6 +62,7 @@ class PC_UI(UIBase):
     def test(self):
         self.__keyboard.test()
 
+
 class Keyboard_Driver():
     class Keys(Enum):
         KEY1 = 'q'
@@ -62,10 +74,11 @@ class Keyboard_Driver():
             return any(key == item.value for item in cls)
 
         @classmethod
-        def byvalue(cls, value):
-            for key, val in cls.items():
-                if value == val:
-                    return key
+        def byvalue(cls, val):
+            for item in cls:
+                if item.value == val:
+                    return item
+            return None
 
     def __init__(self, on_press, on_release):
         print('Keyboard_Driver.__init__()')
@@ -85,8 +98,8 @@ class Keyboard_Driver():
 
         # Setup the hook functions
         self.listener = Listener(
-                on_press = self.__on_press__,
-                on_release = self.__on_release__)
+            on_press=self.__on_press__,
+            on_release=self.__on_release__)
 
         self.listener.start()
         self.listener.wait()
@@ -112,7 +125,6 @@ class Keyboard_Driver():
                     if self.keyHandler[ch] != None:
                         self.keyHandler[ch](self.Keys.byvalue(ch), ButtonEvent.BUTTON_DOWN)
 
-
             # print('Key = {0}'.format(ch))
         except AttributeError:
             self.__client_on_press(key)
@@ -125,17 +137,21 @@ class Keyboard_Driver():
             if not self.Keys.contains(ch):
                 self.__client_on_release(key)
             else:
-                pass
+                if self.keyEvents[ch] != ButtonEvent.BUTTON_UP:
+                    self.keyEvents[ch] = ButtonEvent.BUTTON_UP
+                    if self.keyHandler[ch] != None:
+                        self.keyHandler[ch](self.Keys.byvalue(ch), ButtonEvent.BUTTON_UP)
 
         except AttributeError:
             self.__client_on_release(key)
 
     def test(self):
-        print('Running = ' + str(self.listener.running))
+        pass
 
     # Register a callback method to register for the events
     def register_key_event_handler(self, key, callback):
         self.keyHandler[key.value] = callback
+
 
 class Blinkstick_LED_Driver():
     def __init__(self):

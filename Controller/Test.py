@@ -82,12 +82,20 @@ def main():
             return any(key == item.value for item in cls)
 
         @classmethod
-        def byvalue(cls, value):
+        def byvalue(cls, val):
             for item in cls:
-                if value == item.value:
+                if item.value == val:
                     return item.name
+            return None
 
-    print('Contains {0} -> {1}'.format('q', Keys.byvalue('q')))
+
+    v1 = ['q' == item.value for item in Keys]
+
+    print(v1)
+
+    # print(Keys.byvalue('w'))
+
+    # print('Contains {0} -> {1}'.format('q', Keys.byvalue('q')))
 
 
 if __name__ == "__main__":

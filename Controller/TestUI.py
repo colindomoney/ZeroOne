@@ -1,13 +1,12 @@
 import time
-
 from ZO import ZeroOne, ui
 import sys, os, io
 import getch
 
-import sys
-sys.path.append('./pydev')
-from pydev import pydevd
-pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
+if 'debug' in sys.argv:
+    sys.path.append('./pydev')
+    from pydev import pydevd
+    pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
 
 def main():
     print('Testing UI ...')
