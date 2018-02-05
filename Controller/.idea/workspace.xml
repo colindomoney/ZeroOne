@@ -6,10 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list id="304edeef-f39f-4d26-b66d-89b02b3d304f" name="Default" comment="" />
-    <list default="true" id="8015f625-ece3-4bfc-9b86-5ff9ad745bf3" name="ZO-6 Pushbutton simulation on PC with PyHook" comment="Got the command processor exiting on ESC">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/other.xml" />
+    <list default="true" id="8015f625-ece3-4bfc-9b86-5ff9ad745bf3" name="ZO-6 Pushbutton simulation on PC with PyHook" comment="Flush the keyboard on exit, cleanup the kbhit()">
+      <change beforePath="" afterPath="$PROJECT_DIR$/kbhit.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/TestUI.py" afterPath="$PROJECT_DIR$/TestUI.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,7 +40,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TestUI.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TestUI.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TestUI.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="390">
@@ -49,16 +48,6 @@
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="kbhit.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/kbhit.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="102" column="33" lean-forward="true" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -463,7 +452,14 @@
       <option name="project" value="LOCAL" />
       <updated>1517830232528</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Flush the keyboard on exit, cleanup the kbhit()">
+      <created>1517830934087</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1517830934087</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers>
       <YouTrack shared="false" url="https://colindomoney.myjetbrains.com/youtrack">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -481,7 +477,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32832617" sideWeight="0.502442" order="7" side_tool="true" content_ui="tabs" />
@@ -491,7 +486,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.32618025" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="-121" y="-1176" width="912" height="987" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17216118" sideWeight="0.49438202" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17216118" sideWeight="0.49438202" order="0" side_tool="false" content_ui="combo" />
       <window_info id="YouTrack" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32832617" sideWeight="0.497558" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -547,7 +542,8 @@
     <MESSAGE value="Lots of work with the UI stuff and callbacks" />
     <MESSAGE value="Now got the callback stuff working pretty well." />
     <MESSAGE value="Got the command processor exiting on ESC" />
-    <option name="LAST_COMMIT_MESSAGE" value="Got the command processor exiting on ESC" />
+    <MESSAGE value="Flush the keyboard on exit, cleanup the kbhit()" />
+    <option name="LAST_COMMIT_MESSAGE" value="Flush the keyboard on exit, cleanup the kbhit()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -928,6 +924,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/kbhit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="102" column="33" lean-forward="true" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TestUI.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -935,14 +939,6 @@
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kbhit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="102" column="33" lean-forward="true" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
