@@ -62,6 +62,7 @@ if __is_raspberry_pi__() == False:
         Command8 = 8
         Command9 = 9
         Command10 = 10
+        Test = 100
 
 
     class CommandProcessor():
@@ -70,48 +71,7 @@ if __is_raspberry_pi__() == False:
             self.__kb = kbhit.KBHit()
             # self.__kb.set_normal_term()
 
-        #     # Setup the hook functions
-        #     self.listener = Listener(
-        #         on_press=self.__on_press__,
-        #         on_release=self.__on_release__)
-        #
-        #     self.listener.start()
-        #     self.listener.wait()
-        #
-        # def __on_press__(self, key):
-        #     try:
-        #         if key == Key.esc:
-        #             self.__lastCommand = Commands.Quit
-        #             print(' got ESC ')
-        #     except AttributeError:
-        #         raise
-        #
-        # def __on_release__(self, key):
-        #     # Don't need to do anything with the release event
-        #     try:
-        #         pass
-        #     except AttributeError:
-        #         raise
-
-        def get_command(self):
-            while self.__kb.kbhit():
-                c = self.__kb.getch()
-
-                print('c = {0}'.format(hex(ord(c))))
-
-                # while self.__kb.kbhit():
-                #     self.__kb.getch()
-
-                # if ord(c) == 27:
-                #     return Commands.Quit
-
-            return None
-
-        def shutdown(self):
-            self.__kb.set_normal_term()
-
 __ui_instance__ = None
-
 
 class ButtonEvent(Enum):
     BUTTON_DOWN = 1
@@ -146,6 +106,8 @@ class UIBase:
 
         if key == 0x1c:
             self._command = Commands.Quit
+        elif key == 0x20:
+            self._command = Commands.Test
 
     def led_on(self, Led):
         pass

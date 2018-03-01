@@ -14,9 +14,9 @@ class PC_UI(UIBase):
 
         self.__keyboard = Keyboard_Driver(self._on_press, self._on_release)
         print('Keyboard created')
-        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY1, super().button_handler1)
-        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY2, super().button_handler2)
-        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY3, super().button_handler3)
+        self.__keyboard.register_key_event_handler(super().button_handler1, Keyboard_Driver.Keys.KEY1)
+        self.__keyboard.register_key_event_handler(super().button_handler2, Keyboard_Driver.Keys.KEY2)
+        self.__keyboard.register_key_event_handler(super().button_handler3, Keyboard_Driver.Keys.KEY3)
 
     def _on_press(self, key):
         # print('__on_press__')
@@ -140,7 +140,7 @@ class Keyboard_Driver():
         pass
 
     # Register a callback method to register for the events
-    def register_key_event_handler(self, key, callback):
+    def register_key_event_handler(self, callback, key = Keys.KEY1):
         self.keyHandler[key.value] = callback
 
 

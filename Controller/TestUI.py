@@ -3,6 +3,7 @@ from ZO import ZeroOne, ui
 import sys, os, io
 from kbhit import KBHit
 
+
 if 'debug' in sys.argv:
     sys.path.append('./pydev')
     from pydev import pydevd
@@ -15,9 +16,9 @@ def main():
     command = None
 
     while command != ui.Commands.Quit:
+        print('. ')
         time.sleep(0.1)
         command = __ui.get_command()
-        print('. ')
 
     # Flush the keyboard here
     kb = KBHit()
