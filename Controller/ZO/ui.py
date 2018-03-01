@@ -2,11 +2,11 @@ import io
 from enum import Enum
 import kbhit
 
-
 def __is_raspberry_pi__(raise_on_errors=False):
-    """Checks if Raspberry PI.
-
-    :return:
+    """
+    Checks if the platform is a Raspberry Pi by check the 'cpuinfo' file
+    :param raise_on_errors: Set to true to throw an exception if it's not a Pi
+    :return: True if it's a Pi, false otherwise
     """
     try:
         with io.open('/proc/cpuinfo', 'r') as cpuinfo:
@@ -142,7 +142,11 @@ def get_ui_instance():
 
     else:
         import ZO.pc_ui
-        if __ui_instance__ == None:
-            __ui_instance__ = ZO.pc_ui.PC_UI()
+        try:
+            if __ui_instance__ == None:
+                __ui_instance__ = ZO.pc_ui.PC_UI()
+        except OSError:
+            print('Failed to create a PC UI controller, exiting ...')
+            return None
 
     return __ui_instance__

@@ -1,5 +1,7 @@
-from collections import Iterable
+import sys
 from enum import Enum
+
+import os
 from pynput.keyboard import Key, Listener
 from blinkstick import blinkstick
 
@@ -73,6 +75,11 @@ class Keyboard_Driver():
 
     def __init__(self, on_press, on_release):
         print('Keyboard_Driver.__init__()')
+
+        # Check if we're on a Mac here, and see if we have GUID'
+        if sys.platform == 'darwin':
+              if os.getuid() != 0:
+                  raise OSError("Must be run as root on a Mac, use 'sudo -s '")
 
         # Store the last_key_press
         self.keyEvents = {
