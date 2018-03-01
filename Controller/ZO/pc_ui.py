@@ -8,38 +8,32 @@ from ZO.ui import UIBase, ButtonEvent, Commands
 
 class PC_UI(UIBase):
     def __init__(self):
-        self.__lastKey = None
+        super().__init__()
 
-        self.__keyboard = Keyboard_Driver(self.__on_press__, self.__on_release__)
+        self._lastKey = None
+
+        self.__keyboard = Keyboard_Driver(self._on_press, self._on_release)
         print('Keyboard created')
-        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY1, self.__button_handler1)
-        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY2, self.__button_handler2)
-        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY3, self.__button_handler3)
+        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY1, super().button_handler1)
+        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY2, super().button_handler2)
+        self.__keyboard.register_key_event_handler(Keyboard_Driver.Keys.KEY3, super().button_handler3)
 
-    def __button_handler1(self, key, buttonEvent):
-        print('__button_handler1() -> {}, {}'.format(key.value, buttonEvent))
-
-    def __button_handler2(self, key, buttonEvent):
-        print('__button_handler2() -> {}, {}'.format(key.value, buttonEvent))
-
-    def __button_handler3(self, key, buttonEvent):
-        print('__button_handler3() -> {}, {}'.format(key.value, buttonEvent))
-
-    def __dir__(self):
-        return super().__dir__()
-
-    def __on_press__(self, key):
+    def _on_press(self, key):
         # print('__on_press__')
-        try:
-            if key != self.__lastKey:
-                self.__lastKey = key
-                print('KEY = {0}'.format(key.char))
-        except AttributeError:
-            print('***')
+        if key != self._lastKey:
+            self._lastKey = key
 
-    def __on_release__(self, key):
+            try:
+                super().process_keystroke(key.char)
+            except AttributeError:
+                if key == Key.esc:
+                    super().process_keystroke(0x1c)
+                elif key == Key.space:
+                        super().process_keystroke(0x20)
+
+    def _on_release(self, key):
         # print('__on_release__')
-        self.__lastKey = None
+        self._lastKey = None
 
     def led_on(self, Led):
         super().led_on(Led)
@@ -55,9 +49,6 @@ class PC_UI(UIBase):
 
     def register_button_event_handler(self, callback, Button=UIBase.Button.BUTTON_1):
         super().register_button_event_handler(callback, Button)
-
-    def get_command(self):
-        super().get_command()
 
     def test(self):
         self.__keyboard.test()

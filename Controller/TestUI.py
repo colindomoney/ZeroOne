@@ -1,7 +1,7 @@
 import time
 from ZO import ZeroOne, ui
 import sys, os, io
-import getch
+from kbhit import KBHit
 
 if 'debug' in sys.argv:
     sys.path.append('./pydev')
@@ -18,6 +18,10 @@ def main():
         time.sleep(0.1)
         command = __ui.get_command()
         print('. ')
+
+    # Flush the keyboard here
+    kb = KBHit()
+    kb.flush()
 
     print('Done!')
 

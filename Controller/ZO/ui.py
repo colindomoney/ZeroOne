@@ -129,7 +129,23 @@ class UIBase:
         LED_GREEN = 2
 
     def __init__(self):
+        self._command = None
         pass
+
+    def button_handler1(self, key, buttonEvent):
+        print('button_handler1() -> {}, {}'.format(key.value, buttonEvent))
+
+    def button_handler2(self, key, buttonEvent):
+        print('button_handler2() -> {}, {}'.format(key.value, buttonEvent))
+
+    def button_handler3(self, key, buttonEvent):
+        print('button_handler3() -> {}, {}'.format(key.value, buttonEvent))
+
+    def process_keystroke(self, key):
+        print('< {} >'.format(key))
+
+        if key == 0x1c:
+            self._command = Commands.Quit
 
     def led_on(self, Led):
         pass
@@ -147,7 +163,9 @@ class UIBase:
         pass
 
     def get_command(self):
-        pass
+        command = self._command
+        self._command = None
+        return command
 
     def test(self):
         pass
