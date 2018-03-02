@@ -6,6 +6,7 @@ from pynput.keyboard import Key, Listener
 from blinkstick import blinkstick
 
 from ZO.ui import UIBase, ButtonEvent, Commands
+from ZO.zero_one import ZeroOneException
 
 
 class PC_UI(UIBase):
@@ -79,7 +80,7 @@ class Keyboard_Driver():
         # Check if we're on a Mac here, and see if we have GUID'
         if sys.platform == 'darwin':
               if os.getuid() != 0:
-                  raise OSError("Must be run as root on a Mac, use 'sudo -s '")
+                  raise ZeroOneException("Must be run as root on a Mac, use 'sudo -s '")
 
         # Store the last_key_press
         self.keyEvents = {

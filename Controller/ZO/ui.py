@@ -142,11 +142,7 @@ def get_ui_instance():
 
     else:
         import ZO.pc_ui
-        try:
-            if __ui_instance__ == None:
-                __ui_instance__ = ZO.pc_ui.PC_UI()
-        except OSError:
-            print('Failed to create a PC UI controller, exiting ...')
-            return None
+        if __ui_instance__ == None:
+            __ui_instance__ = ZO.pc_ui.PC_UI()
 
     return __ui_instance__
