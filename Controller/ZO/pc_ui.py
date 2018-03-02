@@ -38,20 +38,14 @@ class PC_UI(UIBase):
         # print('__on_release__')
         self._lastKey = None
 
-    def led_on(self, Led):
-        super().led_on(Led)
+    def led_on(self, led):
+        super().led_on(led)
 
-    def led_off(self, Led):
-        super().led_off(Led)
+    def led_off(self, led):
+        super().led_off(led)
 
-    def led_flash(self, Led, period=500):
-        super().led_flash(Led, period)
-
-    def test_button(self, Button=UIBase.Button.BUTTON_1):
-        super().test_button(Button)
-
-    def register_button_event_handler(self, callback, Button=UIBase.Button.BUTTON_1):
-        super().register_button_event_handler(callback, Button)
+    def led_flash(self, led, period=500):
+        super().led_flash(led, period)
 
     def test(self):
         self.__keyboard.test()
