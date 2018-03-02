@@ -1,6 +1,7 @@
 import time, threading
 from enum import Enum
 
+import sys
 from pynput.keyboard import Key, Listener
 from getkey import getkey, keys
 
@@ -93,10 +94,32 @@ def main():
 
     print(v1)
 
-    # print(Keys.byvalue('w'))
+import logging
 
-    # print('Contains {0} -> {1}'.format('q', Keys.byvalue('q')))
+def main_logging():
 
+    def setup_logging():
+        print("setup_logging")
+
+        logging.basicConfig(
+            format="%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s",
+            handlers=[
+                logging.FileHandler("./zero_one.log"),
+                logging.StreamHandler(sys.stdout)
+            ])
+
+        global log
+        log = logging.getLogger('zero_one')
+        log.setLevel(logging.INFO)
+
+    def destroy_logging():
+        print("destroy_logging")
+
+    setup_logging()
+
+    log.info('info')
+
+    destroy_logging()
 
 if __name__ == "__main__":
-    main()
+    main_logging()

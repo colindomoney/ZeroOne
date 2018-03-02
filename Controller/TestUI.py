@@ -14,6 +14,10 @@ if 'debug' in sys.argv:
 def main():
     print('Testing UI ...')
 
+    # TODO : Install a logger here
+    # https://stackoverflow.com/questions/13733552/logger-configuration-to-log-to-file-and-print-to-stdout
+
+
     # TODO : Check if we get an instance and fail the whole programme if we don't
     __ui = ui.get_ui_instance()
     command = None
