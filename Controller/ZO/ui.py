@@ -2,11 +2,11 @@ import io
 from enum import Enum
 import kbhit
 
-
 def __is_raspberry_pi__(raise_on_errors=False):
-    """Checks if Raspberry PI.
-
-    :return:
+    """
+    Checks if the platform is a Raspberry Pi by check the 'cpuinfo' file
+    :param raise_on_errors: Set to true to throw an exception if it's not a Pi
+    :return: True if it's a Pi, false otherwise
     """
     try:
         with io.open('/proc/cpuinfo', 'r') as cpuinfo:
