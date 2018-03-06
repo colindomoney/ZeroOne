@@ -38,6 +38,8 @@ def main():
     print('Testing UI ...')
     setup_logging()
 
+    st = 0;
+
     try:
 
         __ui = ui.get_ui_instance()
@@ -50,7 +52,20 @@ def main():
 
             if command == ui.Commands.Test:
                 print('TEST')
-                __ui.led_on(ui.UIBase.Led.LED_RED)
+                if st == 0:
+                    __ui.led_on(ui.UIBase.Led.LED_RED)
+
+                if st == 1:
+                    __ui.led_off(ui.UIBase.Led.LED_RED)
+                    __ui.led_on(ui.UIBase.Led.LED_GREEN)
+
+                if st == 2:
+                    __ui.led_off(ui.UIBase.Led.LED_RED)
+                    __ui.led_off(ui.UIBase.Led.LED_GREEN)
+
+                st = st + 1
+                if st == 3:
+                    st = 0
 
         # Flush the keyboard here
         # TODO : is this even needed anymore
