@@ -1,9 +1,10 @@
-import time, threading
+import sys
+import time
 from enum import Enum
 
-import sys
-from pynput.keyboard import Key, Listener
 from getkey import getkey, keys
+from pynput.keyboard import Key, Listener
+
 
 # import sys
 # sys.path.append('./pydev')

@@ -2,22 +2,22 @@
     "deploy.reloaded": 
     {
         "packages": [
-            // {
-            //     "name": "Python Files",
-            //     "description": "Python Files",
-            //     "files": [
-            //         "**/*.py"
-            //     ],
-            //     "exclude": [
-            //         "tests/**"
-            //     ],
-
-            //     "targets": [
-            //         "RPI1 SFTP folder"
-            //     ]
-            // },
             {
-                "§name": "Script Files",
+                "name": "Python Files",
+                "description": "Python Files",
+                "files": [
+                    "**/*.py"
+                ],
+                "exclude": [
+                    "tests/**"
+                ],
+
+                "targets": [
+                    "RPI1 SFTP folder"
+                ]
+            },
+            {
+                "name": "Script Files",
                 "description": "Script Files",
                 "files": [
                     "**/*.sh"

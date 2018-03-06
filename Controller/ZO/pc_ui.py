@@ -1,11 +1,10 @@
+import os
 import sys
 from enum import Enum
 
-import os
 from pynput.keyboard import Key, Listener
-from blinkstick import blinkstick
 
-from ZO.ui import UIBase, ButtonEvent, Commands
+from ZO.ui import UIBase, ButtonEvent
 from ZO.zero_one import ZeroOneException
 
 

@@ -1,9 +1,9 @@
-from optparse import OptionParser, IndentedHelpFormatter, OptionGroup
-from blinkstick import blinkstick
-import textwrap
-import sys
-import time
 import logging
+import sys
+import textwrap
+from optparse import OptionParser, IndentedHelpFormatter, OptionGroup
+
+from blinkstick import blinkstick
 
 logging.basicConfig()
 
@@ -319,7 +319,7 @@ def main():
     # stick.set_mode(2)
     stick.set_error_reporting(True)
     # stick.set_led_count(4)
-    mode = stick.get_mode();
+    mode = stick.get_mode()
     print(mode)
 
     stick.morph(0, 0, name='red', duration=200)
