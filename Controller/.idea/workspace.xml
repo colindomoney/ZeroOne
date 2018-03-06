@@ -5,12 +5,12 @@
     <option name="CUSTOM_SCOPE_NAME" value="Module 'Controller'" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="304edeef-f39f-4d26-b66d-89b02b3d304f" name="Default" comment="Remove some extraneous overrides.">
-      <change beforePath="$PROJECT_DIR$/../.vscode/settings.json" afterPath="$PROJECT_DIR$/../.vscode/settings.json" />
+    <list id="304edeef-f39f-4d26-b66d-89b02b3d304f" name="Default" comment="Remove some extraneous overrides." />
+    <list default="true" id="9d39348b-ba0d-4119-a11d-fd9803047672" name="ZO-9 Add UI code for BlinkStick board" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Test.py" afterPath="$PROJECT_DIR$/Test.py" />
-      <change beforePath="$PROJECT_DIR$/TestBlinkstick.py" afterPath="$PROJECT_DIR$/TestBlinkstick.py" />
+      <change beforePath="$PROJECT_DIR$/TestUI.py" afterPath="$PROJECT_DIR$/TestUI.py" />
       <change beforePath="$PROJECT_DIR$/ZO/pc_ui.py" afterPath="$PROJECT_DIR$/ZO/pc_ui.py" />
+      <change beforePath="$PROJECT_DIR$/ZO/ui.py" afterPath="$PROJECT_DIR$/ZO/ui.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,15 +41,61 @@
     <favorites_list name="Controller" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TestUI.py" pinned="false" current-in-tab="true">
+    <leaf>
+      <file leaf-file-name="TestUI.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TestUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+            <state relative-caret-position="750">
+              <caret line="63" column="0" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ui.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ZO/ui.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+              <folding>
+                <element signature="e#99#1570#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pc_ui.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ZO/pc_ui.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="795">
+              <caret line="186" column="0" lean-forward="true" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestBlinkstick.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TestBlinkstick.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="598">
+              <caret line="326" column="0" lean-forward="true" selection-start-line="326" selection-start-column="0" selection-end-line="326" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="blinkstick.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/.virtualenvs/zero_one/lib/python3.6/site-packages/blinkstick/blinkstick.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="615">
+              <caret line="337" column="8" lean-forward="true" selection-start-line="337" selection-start-column="8" selection-end-line="337" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -91,11 +137,11 @@
         <option value="$PROJECT_DIR$/curses.py" />
         <option value="$PROJECT_DIR$/kbhit.py" />
         <option value="$PROJECT_DIR$/Test.py" />
-        <option value="$PROJECT_DIR$/TestUI.py" />
         <option value="$PROJECT_DIR$/ZO/zero_one.py" />
-        <option value="$PROJECT_DIR$/ZO/pc_ui.py" />
-        <option value="$PROJECT_DIR$/ZO/ui.py" />
         <option value="$PROJECT_DIR$/TestBlinkstick.py" />
+        <option value="$PROJECT_DIR$/ZO/ui.py" />
+        <option value="$PROJECT_DIR$/TestUI.py" />
+        <option value="$PROJECT_DIR$/ZO/pc_ui.py" />
       </list>
     </option>
   </component>
@@ -195,7 +241,7 @@
         </expanded-state>
         <selected-state>
           <State>
-            <id>AngularJS</id>
+            <id>PyPep8NamingInspection</id>
           </State>
         </selected-state>
       </profile-state>
@@ -224,15 +270,6 @@
               <item name="Controller" type="b2602c69:ProjectViewProjectNode" />
               <item name="Controller" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
-              <item name="ZO" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -245,7 +282,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="docu&#9;ACTION&#9;null&#10;task&#9;ACTION&#9;tasks.toolbar.group&#10;gener&#9;ACTION&#9;GenerateGroup" />
+    <property name="SearchEverywhereHistoryKey" value="led_&#9;null&#9;null&#10;docu&#9;ACTION&#9;null&#10;task&#9;ACTION&#9;tasks.toolbar.group&#10;gener&#9;ACTION&#9;GenerateGroup" />
     <property name="tasks.open.task.update.state.enabled" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
@@ -388,13 +425,13 @@
     <configuration />
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
+    <task id="Default" summary="Default task">
       <branch name="master" repository="$PROJECT_DIR$/.." />
       <changelist id="304edeef-f39f-4d26-b66d-89b02b3d304f" name="Default" comment="" />
       <created>1517069285722</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1520010623409</updated>
+      <updated>1520371379262</updated>
     </task>
     <task id="LOCAL-00001" summary="Added the Python test files and controller project.">
       <created>1517069697980</created>
@@ -458,6 +495,19 @@
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
       <updated>1520011148225</updated>
+    </task>
+    <task active="true" id="ZO-9" summary="Add UI code for BlinkStick board">
+      <branch name="master" repository="$PROJECT_DIR$/.." original="true" />
+      <branch name="ZO-9" repository="$PROJECT_DIR$/.." />
+      <changelist id="9d39348b-ba0d-4119-a11d-fd9803047672" name="ZO-9 Add UI code for BlinkStick board" comment="" />
+      <created>1520371313075</created>
+      <option name="issue" value="true" />
+      <url>https://colindomoney.myjetbrains.com/youtrack/issue/ZO-9</url>
+      <option name="number" value="9" />
+      <option name="presentableId" value="ZO-9" />
+      <option name="project" value="ZO" />
+      <option name="type" value="BUG" />
+      <updated>1520371379274</updated>
     </task>
     <option name="localTasksCounter" value="10" />
     <servers>
@@ -561,13 +611,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TestBlinkstick.py</url>
-          <line>206</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -580,16 +623,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ZO/ui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2220">
-          <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
-          <folding>
-            <element signature="e#98#1569#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TestUI.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -605,7 +638,7 @@
         <state relative-caret-position="1590">
           <caret line="148" column="0" lean-forward="true" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
           <folding>
-            <element signature="e#98#1569#0" expanded="false" />
+            <element signature="e#99#1570#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -899,37 +932,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TestBlinkstick.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZO/ui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="109" column="9" lean-forward="true" selection-start-line="109" selection-start-column="9" selection-end-line="109" selection-end-column="9" />
-          <folding>
-            <element signature="e#98#1569#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZO/pc_ui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="129" column="40" lean-forward="false" selection-start-line="129" selection-start-column="40" selection-end-line="129" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <element signature="e#1146#1200#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.virtualenvs/zero_one/lib/python3.6/site-packages/pynput/keyboard/_base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="855">
@@ -954,12 +956,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TestUI.py">
+    <entry file="file://$USER_HOME$/.virtualenvs/zero_one/lib/python3.6/site-packages/blinkstick/blinkstick.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        <state relative-caret-position="615">
+          <caret line="337" column="8" lean-forward="true" selection-start-line="337" selection-start-column="8" selection-end-line="337" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TestBlinkstick.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="326" column="0" lean-forward="true" selection-start-line="326" selection-start-column="0" selection-end-line="326" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZO/ui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+          <folding>
+            <element signature="e#99#1570#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TestUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="63" column="0" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZO/pc_ui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="186" column="0" lean-forward="true" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>

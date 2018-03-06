@@ -2,6 +2,7 @@ import os
 import sys
 from enum import Enum
 
+from blinkstick import blinkstick
 from pynput.keyboard import Key, Listener
 
 from ZO.ui import UIBase, ButtonEvent
@@ -14,11 +15,15 @@ class PC_UI(UIBase):
 
         self._lastKey = None
 
+        # Create the keyvoard driver
         self.__keyboard = Keyboard_Driver(self._on_press, self._on_release)
-        print('Keyboard created')
         self.__keyboard.register_key_event_handler(super().button_handler1, Keyboard_Driver.Keys.KEY1)
         self.__keyboard.register_key_event_handler(super().button_handler2, Keyboard_Driver.Keys.KEY2)
         self.__keyboard.register_key_event_handler(super().button_handler3, Keyboard_Driver.Keys.KEY3)
+
+        # Create the BlinkStick driver
+        self.__blinkstick = Blinkstick_LED_Driver()
+
 
     def _on_press(self, key):
         # print('__on_press__')
@@ -38,13 +43,14 @@ class PC_UI(UIBase):
         self._lastKey = None
 
     def led_on(self, led):
-        super().led_on(led)
+        self.__blinkstick.led_on(led)
 
     def led_off(self, led):
-        super().led_off(led)
+        self.__blinkstick.led_off(led)
 
-    def led_flash(self, led, period=500):
-        super().led_flash(led, period)
+    # Don't do this in the derived class
+    # def led_flash(self, led, period=500):
+    #     super().led_flash(led, period)
 
     def test(self):
         self.__keyboard.test()
@@ -68,8 +74,6 @@ class Keyboard_Driver():
             return None
 
     def __init__(self, on_press, on_release):
-        print('Keyboard_Driver.__init__()')
-
         # Check if we're on a Mac here, and see if we have GUID; if not throw an exception
         if sys.platform == 'darwin':
               if os.getuid() != 0:
@@ -139,7 +143,44 @@ class Keyboard_Driver():
     def register_key_event_handler(self, callback, key = Keys.KEY1):
         self.keyHandler[key.value] = callback
 
-
 class Blinkstick_LED_Driver():
+    class LED(Enum):
+        Led1 = 1,
+        Led2 = 2,
+        Led3 = 3
+
     def __init__(self):
-        pass
+        # Check the hardware is present
+        self._stick = blinkstick.find_by_serial('BS015264-2.2')
+        if self._stick == None:
+            raise ZeroOneException("Unable to find BlinkStick, is it plugged in?")
+
+        self._stick.set_error_reporting(False)
+
+        mode = self._stick.get_mode()
+        if mode == None:
+            raise ZeroOneException("BlinkStick is not set to mode 2, we're fucked")
+
+        self._colours = {
+            Blinkstick_LED_Driver.LED.Led1: 'green',
+            Blinkstick_LED_Driver.LED.Led2: 'red',
+            Blinkstick_LED_Driver.LED.Led3: 'black'
+        }
+
+        # Put the LEDs off
+        self.led_off(UIBase.Led.LED_RED)
+        self.led_off(UIBase.Led.LED_GREEN)
+
+    def led_off(self, led):
+        if led == UIBase.Led.LED_GREEN:
+            self._stick.set_color(0, 0, name='black')
+
+        if led == UIBase.Led.LED_RED:
+            self._stick.set_color(1, 0, name='black')
+
+    def led_on(self, led):
+        if led == UIBase.Led.LED_GREEN:
+            self._stick.set_color(0, 0, name='green')
+
+        if led == UIBase.Led.LED_RED:
+            self._stick.set_color(1, 0, name='red')

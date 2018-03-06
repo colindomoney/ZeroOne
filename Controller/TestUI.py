@@ -1,6 +1,6 @@
 import logging
 import time
-from ZO import ZeroOne, ui
+from ZO import ui
 import sys, os, io
 
 # TODO : This stuff will only work on a PC
@@ -50,6 +50,7 @@ def main():
 
             if command == ui.Commands.Test:
                 print('TEST')
+                __ui.led_on(ui.UIBase.Led.LED_RED)
 
         # Flush the keyboard here
         # TODO : is this even needed anymore

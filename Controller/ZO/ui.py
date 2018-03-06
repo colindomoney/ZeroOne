@@ -2,6 +2,7 @@ import io
 from enum import Enum
 import kbhit
 
+
 def __is_raspberry_pi__(raise_on_errors=False):
     """
     Checks if the platform is a Raspberry Pi by check the 'cpuinfo' file
@@ -45,35 +46,25 @@ def __is_raspberry_pi__(raise_on_errors=False):
 
     return True
 
-
-if __is_raspberry_pi__() == False:
-    class Commands(Enum):
-        Quit = 0
-        Command1 = 1
-        Command2 = 2
-        Command3 = 3
-        Command4 = 4
-        Command5 = 5
-        Command6 = 6
-        Command7 = 7
-        Command8 = 8
-        Command9 = 9
-        Command10 = 10
-        Test = 100
-
-
-    class CommandProcessor():
-        def __init__(self):
-            self.__lastCommand = None
-            self.__kb = kbhit.KBHit()
-            # self.__kb.set_normal_term()
+class Commands(Enum):
+    Quit = 0
+    Command1 = 1
+    Command2 = 2
+    Command3 = 3
+    Command4 = 4
+    Command5 = 5
+    Command6 = 6
+    Command7 = 7
+    Command8 = 8
+    Command9 = 9
+    Command10 = 10
+    Test = 100
 
 __ui_instance__ = None
 
 class ButtonEvent(Enum):
     BUTTON_DOWN = 1
     BUTTON_UP = 2
-
 
 class UIBase:
     class Button(Enum):
@@ -106,13 +97,13 @@ class UIBase:
         elif key == 0x20:
             self._command = Commands.Test
 
-    def led_on(self, Led):
-        pass
+    # def led_on(self, led):
+    #     pass
+    #
+    # def led_off(self, led):
+    #     pass
 
-    def led_off(self, Led):
-        pass
-
-    def led_flash(self, Led, period=500):
+    def led_flash(self, led, period=500):
         pass
 
     def test_button(self, Button=Button.BUTTON_1):
