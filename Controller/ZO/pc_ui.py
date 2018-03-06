@@ -71,7 +71,7 @@ class Keyboard_Driver():
     def __init__(self, on_press, on_release):
         print('Keyboard_Driver.__init__()')
 
-        # Check if we're on a Mac here, and see if we have GUID'
+        # Check if we're on a Mac here, and see if we have GUID; if not throw an exception
         if sys.platform == 'darwin':
               if os.getuid() != 0:
                   raise ZeroOneException("Must be run as root on a Mac, use 'sudo -s '")
@@ -100,11 +100,6 @@ class Keyboard_Driver():
         self.__client_on_press = on_press
         self.__client_on_release = on_release
 
-        #     global timer
-        #     timer = threading.Timer(1, toggle_led)
-        #     timer.start()
-
-        # Setup the timers
 
     def __on_press__(self, key):
         try:

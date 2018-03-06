@@ -47,9 +47,6 @@ def __is_raspberry_pi__(raise_on_errors=False):
 
 
 if __is_raspberry_pi__() == False:
-    from pynput.keyboard import Key, Listener
-
-
     class Commands(Enum):
         Quit = 0
         Command1 = 1
@@ -137,8 +134,6 @@ def get_ui_instance():
     global __ui_instance__
     if __is_raspberry_pi__():
         import ZO.pi_ui
-        # if __un_instance__ == None:
-        # __un_instance__ = ZO
 
     else:
         import ZO.pc_ui
