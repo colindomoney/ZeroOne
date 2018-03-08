@@ -1,8 +1,9 @@
 import logging
+import sys
 import time
-from ZO import ui
-import sys, os, io
+import pprint
 
+from ZO import ui
 # TODO : This stuff will only work on a PC
 from ZO.zero_one import ZeroOneException
 from kbhit import KBHit
@@ -38,12 +39,14 @@ def main():
     print('Testing UI ...')
     setup_logging()
 
-    st = 0;
+    st = 0
 
     try:
 
         __ui = ui.get_ui_instance()
         command = None
+
+        print(__ui)
 
         while command != ui.Commands.Quit:
             print('. ')
@@ -53,15 +56,15 @@ def main():
             if command == ui.Commands.Test:
                 print('TEST')
                 if st == 0:
-                    __ui.led_on(ui.UIBase.Led.LED_RED)
+                    __ui.led_on(ui.Led.LED_RED)
 
                 if st == 1:
-                    __ui.led_off(ui.UIBase.Led.LED_RED)
-                    __ui.led_on(ui.UIBase.Led.LED_GREEN)
+                    __ui.led_off(ui.Led.LED_RED)
+                    __ui.led_on(ui.Led.LED_GREEN)
 
                 if st == 2:
-                    __ui.led_off(ui.UIBase.Led.LED_RED)
-                    __ui.led_off(ui.UIBase.Led.LED_GREEN)
+                    __ui.led_off(ui.Led.LED_RED)
+                    __ui.led_off(ui.Led.LED_GREEN)
 
                 st = st + 1
                 if st == 3:

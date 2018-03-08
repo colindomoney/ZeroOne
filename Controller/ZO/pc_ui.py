@@ -5,7 +5,7 @@ from enum import Enum
 from blinkstick import blinkstick
 from pynput.keyboard import Key, Listener
 
-from ZO.ui import UIBase, ButtonEvent
+from ZO.ui import UIBase, ButtonEvent, Led
 from ZO.zero_one import ZeroOneException
 
 
@@ -43,9 +43,11 @@ class PC_UI(UIBase):
         self._lastKey = None
 
     def led_on(self, led):
+        super().led_on(self, led)
         self.__blinkstick.led_on(led)
 
     def led_off(self, led):
+        super().led_off(self, led)
         self.__blinkstick.led_off(led)
 
     # Don't do this in the derived class
@@ -53,9 +55,9 @@ class PC_UI(UIBase):
     #     super().led_flash(led, period)
 
     def test(self):
-        self.__keyboard.test()
+        pass
 
-
+# noinspection PyCallingNonCallable
 class Keyboard_Driver():
     class Keys(Enum):
         KEY1 = 'q'
@@ -120,6 +122,7 @@ class Keyboard_Driver():
         except AttributeError:
             self.__client_on_press(key)
 
+    # noinspection PyCallingNonCallable
     def __on_release__(self, key):
         # Make s
         try:
@@ -168,19 +171,19 @@ class Blinkstick_LED_Driver():
         # }
 
         # Put the LEDs off
-        self.led_off(UIBase.Led.LED_RED)
-        self.led_off(UIBase.Led.LED_GREEN)
+        self.led_off(Led.LED_RED)
+        self.led_off(Led.LED_GREEN)
 
     def led_off(self, led):
-        if led == UIBase.Led.LED_GREEN:
+        if led == Led.LED_GREEN:
             self._stick.set_color(0, 0, name='black')
 
-        if led == UIBase.Led.LED_RED:
+        if led == Led.LED_RED:
             self._stick.set_color(1, 0, name='black')
 
     def led_on(self, led):
-        if led == UIBase.Led.LED_GREEN:
+        if led == Led.LED_GREEN:
             self._stick.set_color(0, 0, name='green')
 
-        if led == UIBase.Led.LED_RED:
+        if led == Led.LED_RED:
             self._stick.set_color(1, 0, name='red')
