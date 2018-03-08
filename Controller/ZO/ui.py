@@ -1,6 +1,6 @@
 import io
 from enum import Enum
-
+import threading
 
 def __is_raspberry_pi__(raise_on_errors=False):
     """
@@ -90,6 +90,7 @@ class UIBase:
         def __init__(self, state, period=200):
             self.state = state
             self.period = period
+            self.nextState = UIBase.LED_State.LED_ON
 
         def __str__(self):
             return str("State: {0}, Period: {1}".format(self.state, self.period))
@@ -128,6 +129,29 @@ class UIBase:
     def button_handler3(key, button_event):
         print('button_handler3() -> {}, {}'.format(key.value, button_event))
 
+    def _red_flash(self):
+        pass
+
+    def _green_flash(self):
+        pass
+
+    def _do_flash(self, led):
+        print('_do_flash()')
+
+        if self._leds[led].state == UIBase.LED_State.LED_FLASH:
+            if self._leds[led].nextState == UIBase.LED_State.LED_ON:
+                self._leds[led].nextState = UIBase.LED_State.LED_OFF
+                self.led_on(led)
+            else:
+                self._leds[led].nextState = UIBase.LED_State.LED_ON
+                self.led_off(led)
+
+            print('.. call')
+            # threading.Timer(self._leds[led].period, self._do_flash(led)).start()
+            print('.. done')
+        else:
+            self._leds[led].nextState = UIBase.LED_State.LED_ON
+
     def process_keystroke(self, key):
         print('< {} >'.format(key))
 
@@ -157,6 +181,8 @@ class UIBase:
 
         self._leds[led].state = UIBase.LED_State.LED_FLASH
         self._leds[led].period = period
+
+        self._do_flash(led)
 
     def led_on(self, led):
         self._leds[led].state = UIBase.LED_State.LED_ON

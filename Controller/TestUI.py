@@ -45,6 +45,8 @@ def main():
         __ui = ui.get_ui_instance()
         command = None
 
+        __ui.led_flash(ui.Led.LED_GREEN, 200)
+
         while command != ui.Commands.Quit:
             print('. ')
             time.sleep(0.2)
@@ -57,16 +59,11 @@ def main():
 
                 if st == 1:
                     __ui.led_off(ui.Led.LED_RED)
-                    __ui.led_on(ui.Led.LED_GREEN)
-
-                if st == 2:
-                    __ui.led_off(ui.Led.LED_RED)
-                    __ui.led_off(ui.Led.LED_GREEN)
 
                 print(__ui)
 
                 st = st + 1
-                if st == 3:
+                if st == 2:
                     st = 0
 
         # Flush the keyboard here
