@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ping -c4 192.168.9.4 > /dev/null
+ping -c4 8.8.8.8 > /dev/null
 
 if [ $? != 0 ]
 then
