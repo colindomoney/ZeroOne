@@ -43,11 +43,11 @@ class PC_UI(UIBase):
         self._lastKey = None
 
     def led_on(self, led):
-        super().led_on(self, led)
+        super().led_on(led)
         self.__blinkstick.led_on(led)
 
     def led_off(self, led):
-        super().led_off(self, led)
+        super().led_off(led)
         self.__blinkstick.led_off(led)
 
     # Don't do this in the derived class

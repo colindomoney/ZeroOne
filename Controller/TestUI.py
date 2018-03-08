@@ -1,7 +1,6 @@
 import logging
 import sys
 import time
-import pprint
 
 from ZO import ui
 # TODO : This stuff will only work on a PC
@@ -46,8 +45,6 @@ def main():
         __ui = ui.get_ui_instance()
         command = None
 
-        print(__ui)
-
         while command != ui.Commands.Quit:
             print('. ')
             time.sleep(0.2)
@@ -65,6 +62,8 @@ def main():
                 if st == 2:
                     __ui.led_off(ui.Led.LED_RED)
                     __ui.led_off(ui.Led.LED_GREEN)
+
+                print(__ui)
 
                 st = st + 1
                 if st == 3:

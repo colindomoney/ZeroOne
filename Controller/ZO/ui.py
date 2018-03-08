@@ -1,5 +1,4 @@
 import io
-from collections import namedtuple
 from enum import Enum
 
 
@@ -87,23 +86,35 @@ class UIBase:
         LED_ON = 2,
         LED_FLASH = 3
 
+    class LED_Values:
+        def __init__(self, state, period=200):
+            self.state = state
+            self.period = period
+
+        def __str__(self):
+            return str("State: {0}, Period: {1}".format(self.state, self.period))
+
     def __str__(self):
         return "UIBase -> Red: {0}, Green: {1}".format(self._leds[Led.LED_RED], self._leds[Led.LED_GREEN])
 
     def __init__(self):
         self._command = None
-        # ledValues = namedtuple('LED_Values', 'state period')
+
+        r = UIBase.LED_Values(100)
+        g = UIBase.LED_Values(100)
+
+        r.period = 100
 
         self._leds = {
-            Led.LED_RED : namedtuple('LED_Values', 'state period'),
-            Led.LED_GREEN : namedtuple('LED_Values', 'state period')
+            Led.LED_RED: r,
+            Led.LED_GREEN: g
         }
 
-        self._leds[Led.LED_GREEN].state = UIBase.LED_State.LED_OFF
         self._leds[Led.LED_GREEN].period = 200
+        self._leds[Led.LED_GREEN].state = UIBase.LED_State.LED_OFF
 
-        self._leds[Led.LED_RED].state = UIBase.LED_State.LED_OFF
         self._leds[Led.LED_RED].period = 200
+        self._leds[Led.LED_RED].state = UIBase.LED_State.LED_OFF
 
     @staticmethod
     def button_handler1(key, button_event):
@@ -124,7 +135,6 @@ class UIBase:
             self._command = Commands.Quit
         elif key == 0x20:
             self._command = Commands.Test
-
 
     def test_button(self, button=Button.BUTTON_1):
         pass
@@ -148,10 +158,10 @@ class UIBase:
         self._leds[led].state = UIBase.LED_State.LED_FLASH
         self._leds[led].period = period
 
-    def led_on(self, self1, led):
+    def led_on(self, led):
         self._leds[led].state = UIBase.LED_State.LED_ON
 
-    def led_off(self, self1, led):
+    def led_off(self, led):
         self._leds[led].state = UIBase.LED_State.LED_OFF
 
 
