@@ -87,12 +87,14 @@ class UIBase:
     class LED_State(Enum):
         LED_OFF = 1,
         LED_ON = 2,
+        LED_FLASH = 3
 
 
     class LED_Values:
-        def __init__(self, state, period=200):
+        def __init__(self, state, period=0.2):
             self.state = state
             self.period = period
+            self.nextState = UIBase.LED_State.LED_ON
 
         def __str__(self):
             return str("State: {0}, Period: {1}".format(self.state, self.period))
@@ -104,8 +106,8 @@ class UIBase:
         self._command = None
 
         self._leds = {
-            Led.LED_RED: r,
-            Led.LED_GREEN: g
+            Led.LED_RED: UIBase.LED_Values(UIBase.LED_State.LED_OFF),
+            Led.LED_GREEN: UIBase.LED_Values(UIBase.LED_State.LED_OFF)
         }
 
         self._leds[Led.LED_GREEN].period = 0.2
@@ -130,26 +132,26 @@ class UIBase:
         pass
 
     def _green_flash(self):
-        print('Enter _green_flash()')
+        # print('Enter _green_flash()')
 
-        if self._leds[Led.LED_GREEN].period != 0:
-            if self._leds[Led.LED_GREEN].state == UIBase.LED_State.LED_OFF:
-                self._leds[Led.LED_GREEN].state = UIBase.LED_State.LED_ON
-                # self.led_on(Led.LED_GREEN)
+        if self._leds[Led.LED_GREEN].state == UIBase.LED_State.LED_FLASH:
+            if self._leds[Led.LED_GREEN].nextState == UIBase.LED_State.LED_OFF:
+                self._leds[Led.LED_GREEN].nextState = UIBase.LED_State.LED_ON
+                self.set_led(Led.LED_GREEN, UIBase.LED_State.LED_OFF)
             else:
-                self._leds[Led.LED_GREEN].state = UIBase.LED_State.LED_OFF
-                # self.led_off(Led.LED_GREEN)
+                self._leds[Led.LED_GREEN].nextState = UIBase.LED_State.LED_OFF
+                self.set_led(Led.LED_GREEN, UIBase.LED_State.LED_ON)
 
-            print('.. call')
+            # print('.. call')
             try:
                 threading.Timer(self._leds[Led.LED_GREEN].period, self._green_flash).start()
             except:
                 print(sys.exc_info())
-            print('.. done')
+            # print('.. done')
         else:
             self.led_off(Led.LED_GREEN)
 
-        print('Exit _green_flash()')
+        # print('Exit _green_flash()')
 
     def _do_flash(self, led):
         print('_do_flash()')
@@ -193,15 +195,19 @@ class UIBase:
 
     def led_flash(self, led, period=0.25):
 
-        if period < 0.005:
-            period = 0.005
+        # 10ms minimum flash speed
+        if period < 0.010:
+            period = 0.010
 
         self._leds[led].period = period
 
-        if led == Led.LED_GREEN:
-            self._green_flash()
-        else:
-            self._red_flash()
+        if self._leds[led].state != UIBase.LED_State.LED_FLASH:
+            self._leds[led].state = UIBase.LED_State.LED_FLASH
+
+            if led == Led.LED_GREEN:
+                self._green_flash()
+            else:
+                self._red_flash()
 
     def led_on(self, led):
         self._leds[led].state = UIBase.LED_State.LED_ON
@@ -218,10 +224,10 @@ class UIBase:
         # TODO : Turn the LEDs off and stop flashing
         #  Should just be able to call led_off() here
         self._leds[Led.LED_GREEN].period = 0
-        self._leds[Led.LED_GREEN].state = UIBase.LED_State.LED_OFF
+        self.led_off(Led.LED_GREEN)
 
         self._leds[Led.LED_RED].period = 0
-        self._leds[Led.LED_RED].state = UIBase.LED_State.LED_OFF
+        self.led_off(Led.LED_RED)
 
 
 def get_ui_instance():

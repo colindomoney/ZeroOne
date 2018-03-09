@@ -24,7 +24,6 @@ class PC_UI(UIBase):
         # Create the BlinkStick driver
         self.__blinkstick = Blinkstick_LED_Driver()
 
-
     def _on_press(self, key):
         # print('__on_press__')
         if key != self._lastKey:
@@ -36,7 +35,7 @@ class PC_UI(UIBase):
                 if key == Key.esc:
                     super().process_keystroke(0x1c)
                 elif key == Key.space:
-                        super().process_keystroke(0x20)
+                    super().process_keystroke(0x20)
 
     def _on_release(self, key):
         # print('__on_release__')
@@ -50,12 +49,15 @@ class PC_UI(UIBase):
         super().led_off(led)
         self.__blinkstick.led_off(led)
 
-    # Don't do this in the derived class
-    # def led_flash(self, led, period=500):
-    #     super().led_flash(led, period)
+    def set_led(self, led, state):
+        if state == UIBase.LED_State.LED_ON:
+            self.__blinkstick.led_on(led)
+        else:
+            self.__blinkstick.led_off(led)
 
     def test(self):
         pass
+
 
 # noinspection PyCallingNonCallable
 class Keyboard_Driver():
@@ -78,8 +80,8 @@ class Keyboard_Driver():
     def __init__(self, on_press, on_release):
         # Check if we're on a Mac here, and see if we have GUID; if not throw an exception
         if sys.platform == 'darwin':
-              if os.getuid() != 0:
-                  raise ZeroOneException("Must be run as root on a Mac, use 'sudo -s '")
+            if os.getuid() != 0:
+                raise ZeroOneException("Must be run as root on a Mac, use 'sudo -s '")
 
         # Store the last_key_press
         self.keyEvents = {
@@ -104,7 +106,6 @@ class Keyboard_Driver():
 
         self.__client_on_press = on_press
         self.__client_on_release = on_release
-
 
     def __on_press__(self, key):
         try:
@@ -143,8 +144,9 @@ class Keyboard_Driver():
         pass
 
     # Register a callback method to register for the events
-    def register_key_event_handler(self, callback, key = Keys.KEY1):
+    def register_key_event_handler(self, callback, key=Keys.KEY1):
         self.keyHandler[key.value] = callback
+
 
 class Blinkstick_LED_Driver():
     class LED(Enum):
@@ -167,10 +169,6 @@ class Blinkstick_LED_Driver():
         # Put the LEDs off
         self.led_off(Led.LED_RED)
         self.led_off(Led.LED_GREEN)
-
-    # TODO : put all the clever stuff in here
-    def set_led(self, led, state):
-        pass
 
     def led_off(self, led):
         if led == Led.LED_GREEN:
