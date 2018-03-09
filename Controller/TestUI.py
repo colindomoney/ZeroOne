@@ -56,7 +56,6 @@ def main():
             time.sleep(0.2)
             command = _ui.get_command()
 
-            # TODO : Test some buttons here
             if _ui.test_button(Button.BUTTON_2):
                 _ui.led_on(ui.Led.LED_RED)
             else:

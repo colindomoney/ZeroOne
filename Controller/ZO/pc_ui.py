@@ -23,9 +23,9 @@ class PC_UI(UIBase):
 
         # Create the keyvoard driver
         self._keyboard = Keyboard_Driver(self._on_press, self._on_release)
-        self._keyboard.register_key_event_handler(self.button_handler1, Keyboard_Driver.Keys.KEY1)
-        self._keyboard.register_key_event_handler(self.button_handler2, Keyboard_Driver.Keys.KEY2)
-        self._keyboard.register_key_event_handler(self.button_handler3, Keyboard_Driver.Keys.KEY3)
+        self._keyboard.register_key_event_handler(self._button_handler, Keyboard_Driver.Keys.KEY1)
+        self._keyboard.register_key_event_handler(self._button_handler, Keyboard_Driver.Keys.KEY2)
+        self._keyboard.register_key_event_handler(self._button_handler, Keyboard_Driver.Keys.KEY3)
 
         # Create the BlinkStick driver
         self._blinkstick = Blinkstick_LED_Driver()
@@ -47,17 +47,17 @@ class PC_UI(UIBase):
         # print('__on_release__ : {0}'.format(key))
         self._lastKey = None
 
-    def button_handler1(self, key, button_event):
+    def _button_handler(self, key, button_event):
         print('button_handler1() -> {}, {}'.format(key.value, button_event))
-        self._buttonEvents[Button.BUTTON_1.value] = button_event;
 
-    def button_handler2(self, key, button_event):
-        print('button_handler2() -> {}, {}'.format(key.value, button_event))
-        self._buttonEvents[Button.BUTTON_2.value] = button_event;
+        if key.value == Keyboard_Driver.Keys.KEY1.value:
+            self._buttonEvents[Button.BUTTON_1.value] = button_event;
 
-    def button_handler3(self, key, button_event):
-        print('button_handler3() -> {}, {}'.format(key.value, button_event))
-        self._buttonEvents[Button.BUTTON_3.value] = button_event;
+        if key.value == Keyboard_Driver.Keys.KEY2.value:
+            self._buttonEvents[Button.BUTTON_2.value] = button_event;
+
+        if key.value == Keyboard_Driver.Keys.KEY3.value:
+            self._buttonEvents[Button.BUTTON_3.value] = button_event;
 
     def led_on(self, led):
         super().led_on(led)
