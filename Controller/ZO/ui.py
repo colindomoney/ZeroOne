@@ -89,7 +89,6 @@ class UIBase:
         LED_ON = 2,
         LED_FLASH = 3
 
-
     class LED_Values:
         def __init__(self, state, period=0.2):
             self.state = state
@@ -131,45 +130,18 @@ class UIBase:
     def _red_flash(self):
         pass
 
-    def _green_flash(self):
-        # print('Enter _green_flash()')
-
-        if self._leds[Led.LED_GREEN].state == UIBase.LED_State.LED_FLASH:
-            if self._leds[Led.LED_GREEN].nextState == UIBase.LED_State.LED_OFF:
-                self._leds[Led.LED_GREEN].nextState = UIBase.LED_State.LED_ON
-                self.set_led(Led.LED_GREEN, UIBase.LED_State.LED_OFF)
-            else:
-                self._leds[Led.LED_GREEN].nextState = UIBase.LED_State.LED_OFF
-                self.set_led(Led.LED_GREEN, UIBase.LED_State.LED_ON)
-
-            # print('.. call')
-            try:
-                threading.Timer(self._leds[Led.LED_GREEN].period, self._green_flash).start()
-            except:
-                print(sys.exc_info())
-            # print('.. done')
-        else:
-            self.led_off(Led.LED_GREEN)
-
-        # print('Exit _green_flash()')
-
     def _do_flash(self, led):
-        print('_do_flash()')
-
         if self._leds[led].state == UIBase.LED_State.LED_FLASH:
-            if self._leds[led].nextState == UIBase.LED_State.LED_ON:
-                self._leds[led].nextState = UIBase.LED_State.LED_OFF
-                self.led_on(led)
-            else:
+            if self._leds[led].nextState == UIBase.LED_State.LED_OFF:
                 self._leds[led].nextState = UIBase.LED_State.LED_ON
-                self.led_off(led)
+                self.set_led(led, UIBase.LED_State.LED_OFF)
+            else:
+                self._leds[led].nextState = UIBase.LED_State.LED_OFF
+                self.set_led(led, UIBase.LED_State.LED_ON)
 
-            print('.. call')
-            # TODO : Use the 'args' value here
             threading.Timer(self._leds[led].period, self._do_flash, [led]).start()
-            print('.. done')
         else:
-            self._leds[led].nextState = UIBase.LED_State.LED_ON
+            self.led_off(led)
 
     def process_keystroke(self, key):
         print('< {} >'.format(key))
@@ -203,11 +175,7 @@ class UIBase:
 
         if self._leds[led].state != UIBase.LED_State.LED_FLASH:
             self._leds[led].state = UIBase.LED_State.LED_FLASH
-
-            if led == Led.LED_GREEN:
-                self._green_flash()
-            else:
-                self._red_flash()
+            self._do_flash(led)
 
     def led_on(self, led):
         self._leds[led].state = UIBase.LED_State.LED_ON

@@ -48,7 +48,7 @@ def main():
         __ui = ui.get_ui_instance()
         command = None
 
-        __ui.led_flash(ui.Led.LED_GREEN, 0.1)
+        __ui.led_flash(ui.Led.LED_GREEN, 0.2)
 
         while command != ui.Commands.Quit:
             print('. ')
