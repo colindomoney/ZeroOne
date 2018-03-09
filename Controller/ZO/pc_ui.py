@@ -13,19 +13,25 @@ class PC_UI(UIBase):
     def __init__(self):
         super().__init__()
 
+        self._buttonEvents = {
+            Button.BUTTON_1.value: None,
+            Button.BUTTON_2.value: None,
+            Button.BUTTON_3.value: None,
+        }
+
         self._lastKey = None
 
         # Create the keyvoard driver
-        self.__keyboard = Keyboard_Driver(self._on_press, self._on_release)
-        self.__keyboard.register_key_event_handler(super().button_handler1, Keyboard_Driver.Keys.KEY1)
-        self.__keyboard.register_key_event_handler(super().button_handler2, Keyboard_Driver.Keys.KEY2)
-        self.__keyboard.register_key_event_handler(super().button_handler3, Keyboard_Driver.Keys.KEY3)
+        self._keyboard = Keyboard_Driver(self._on_press, self._on_release)
+        self._keyboard.register_key_event_handler(self.button_handler1, Keyboard_Driver.Keys.KEY1)
+        self._keyboard.register_key_event_handler(self.button_handler2, Keyboard_Driver.Keys.KEY2)
+        self._keyboard.register_key_event_handler(self.button_handler3, Keyboard_Driver.Keys.KEY3)
 
         # Create the BlinkStick driver
-        self.__blinkstick = Blinkstick_LED_Driver()
+        self._blinkstick = Blinkstick_LED_Driver()
 
     def _on_press(self, key):
-        print('__on_press__ : {0}'.format(key))
+        # print('__on_press__ : {0}'.format(key))
         if key != self._lastKey:
             self._lastKey = key
 
@@ -38,27 +44,41 @@ class PC_UI(UIBase):
                     super().process_keystroke(0x20)
 
     def _on_release(self, key):
-        print('__on_release__ : {0}'.format(key))
+        # print('__on_release__ : {0}'.format(key))
         self._lastKey = None
+
+    def button_handler1(self, key, button_event):
+        print('button_handler1() -> {}, {}'.format(key.value, button_event))
+        self._buttonEvents[Button.BUTTON_1.value] = button_event;
+
+    def button_handler2(self, key, button_event):
+        print('button_handler2() -> {}, {}'.format(key.value, button_event))
+        self._buttonEvents[Button.BUTTON_2.value] = button_event;
+
+    def button_handler3(self, key, button_event):
+        print('button_handler3() -> {}, {}'.format(key.value, button_event))
+        self._buttonEvents[Button.BUTTON_3.value] = button_event;
 
     def led_on(self, led):
         super().led_on(led)
-        self.set_led(led, UIBase.LED_State.LED_ON)
+        self._set_led(led, UIBase.LED_State.LED_ON)
 
     def led_off(self, led):
         super().led_off(led)
-        self.set_led(led, UIBase.LED_State.LED_OFF)
+        self._set_led(led, UIBase.LED_State.LED_OFF)
 
-    def set_led(self, led, state):
+    def _set_led(self, led, state):
         """ This function is a low level method that just drives the LED without changing the actual state of internal variables """
         if state == UIBase.LED_State.LED_ON:
-            self.__blinkstick.led_on(led)
+            self._blinkstick.led_on(led)
         else:
-            self.__blinkstick.led_off(led)
+            self._blinkstick.led_off(led)
 
     def test_button(self, button=Button.BUTTON_1):
-        # super().test_button(button)
-        pass
+        if self._buttonEvents[button.value] == ButtonEvent.BUTTON_DOWN:
+            return True
+        else:
+            return False
 
     def test(self):
         pass
@@ -127,9 +147,7 @@ class Keyboard_Driver():
         except AttributeError:
             self.__client_on_press(key)
 
-    # noinspection PyCallingNonCallable
     def __on_release__(self, key):
-        # Make s
         try:
             ch = key.char
 
@@ -143,10 +161,6 @@ class Keyboard_Driver():
 
         except AttributeError:
             self.__client_on_release(key)
-
-    # TODO : Add a method to return the button up/down state here
-    def test_button(self):
-        pass
 
     # Register a callback method to register for the events
     def register_key_event_handler(self, callback, key=Keys.KEY1):

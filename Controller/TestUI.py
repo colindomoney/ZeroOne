@@ -46,36 +46,38 @@ def main():
     st = 0
 
     try:
-        __ui = ui.get_ui_instance()
+        _ui = ui.get_ui_instance()
         command = None
 
-        __ui.led_flash(ui.Led.LED_GREEN, 0.2)
+        _ui.led_flash(ui.Led.LED_GREEN, 0.2)
 
         while command != ui.Commands.Quit:
             print('. ')
             time.sleep(0.2)
-            command = __ui.get_command()
+            command = _ui.get_command()
 
             # TODO : Test some buttons here
-            if __ui.test_button(Button.BUTTON_1):
-                pass
+            if _ui.test_button(Button.BUTTON_2):
+                _ui.led_on(ui.Led.LED_RED)
+            else:
+                _ui.led_off(ui.Led.LED_RED)
 
+            if command == ui.Commands.Test:
+                print('TEST')
 
-            # if command == ui.Commands.Test:
-            #     print('TEST')
             #     if st == 0:
-            #         __ui.led_on(ui.Led.LED_RED)
+            #         _ui.led_on(ui.Led.LED_RED)
             #
             #     if st == 1:
-            #         __ui.led_off(ui.Led.LED_RED)
+            #         _ui.led_off(ui.Led.LED_RED)
             #
-            #     print(__ui)
+            #     print(_ui)
             #
             #     st = st + 1
             #     if st == 2:
             #         st = 0
 
-        __ui.shutdown()
+        _ui.shutdown()
 
         # Flush the keyboard here
         # TODO : is this even needed anymore

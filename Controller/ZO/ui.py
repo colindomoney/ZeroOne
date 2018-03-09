@@ -115,26 +115,14 @@ class UIBase:
         self._leds[Led.LED_RED].period = 0.2
         self._leds[Led.LED_RED].state = UIBase.LED_State.LED_OFF
 
-    @staticmethod
-    def button_handler1(key, button_event):
-        print('button_handler1() -> {}, {}'.format(key.value, button_event))
-
-    @staticmethod
-    def button_handler2(key, button_event):
-        print('button_handler2() -> {}, {}'.format(key.value, button_event))
-
-    @staticmethod
-    def button_handler3(key, button_event):
-        print('button_handler3() -> {}, {}'.format(key.value, button_event))
-
     def _do_flash(self, led):
         if self._leds[led].state == UIBase.LED_State.LED_FLASH:
             if self._leds[led].nextState == UIBase.LED_State.LED_OFF:
                 self._leds[led].nextState = UIBase.LED_State.LED_ON
-                self.set_led(led, UIBase.LED_State.LED_OFF)
+                self._set_led(led, UIBase.LED_State.LED_OFF)
             else:
                 self._leds[led].nextState = UIBase.LED_State.LED_OFF
-                self.set_led(led, UIBase.LED_State.LED_ON)
+                self._set_led(led, UIBase.LED_State.LED_ON)
 
             threading.Timer(self._leds[led].period, self._do_flash, [led]).start()
         else:
@@ -148,7 +136,7 @@ class UIBase:
         @return:
         @rtype:
         '''
-        print('< {} >'.format(key))
+        # print('< {} >'.format(key))
 
         if key == 0x1c:
             self._command = Commands.Quit
@@ -183,13 +171,13 @@ class UIBase:
 
     def led_on(self, led):
         self._leds[led].state = UIBase.LED_State.LED_ON
-        self.set_led(led, UIBase.LED_State.LED_ON)
+        self._set_led(led, UIBase.LED_State.LED_ON)
 
     def led_off(self, led):
         self._leds[led].state = UIBase.LED_State.LED_OFF
-        self.set_led(led, UIBase.LED_State.LED_OFF)
+        self._set_led(led, UIBase.LED_State.LED_OFF)
 
-    def set_led(self, led, state):
+    def _set_led(self, led, state):
         pass
 
     def shutdown(self):
