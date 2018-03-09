@@ -2,6 +2,9 @@ import io
 from enum import Enum
 import threading
 
+import sys
+
+
 def __is_raspberry_pi__(raise_on_errors=False):
     """
     Checks if the platform is a Raspberry Pi by check the 'cpuinfo' file
@@ -84,13 +87,12 @@ class UIBase:
     class LED_State(Enum):
         LED_OFF = 1,
         LED_ON = 2,
-        LED_FLASH = 3
+
 
     class LED_Values:
         def __init__(self, state, period=200):
             self.state = state
             self.period = period
-            self.nextState = UIBase.LED_State.LED_ON
 
         def __str__(self):
             return str("State: {0}, Period: {1}".format(self.state, self.period))
@@ -101,20 +103,15 @@ class UIBase:
     def __init__(self):
         self._command = None
 
-        r = UIBase.LED_Values(100)
-        g = UIBase.LED_Values(100)
-
-        r.period = 100
-
         self._leds = {
             Led.LED_RED: r,
             Led.LED_GREEN: g
         }
 
-        self._leds[Led.LED_GREEN].period = 200
+        self._leds[Led.LED_GREEN].period = 0.2
         self._leds[Led.LED_GREEN].state = UIBase.LED_State.LED_OFF
 
-        self._leds[Led.LED_RED].period = 200
+        self._leds[Led.LED_RED].period = 0.2
         self._leds[Led.LED_RED].state = UIBase.LED_State.LED_OFF
 
     @staticmethod
@@ -133,7 +130,26 @@ class UIBase:
         pass
 
     def _green_flash(self):
-        pass
+        print('Enter _green_flash()')
+
+        if self._leds[Led.LED_GREEN].period != 0:
+            if self._leds[Led.LED_GREEN].state == UIBase.LED_State.LED_OFF:
+                self._leds[Led.LED_GREEN].state = UIBase.LED_State.LED_ON
+                # self.led_on(Led.LED_GREEN)
+            else:
+                self._leds[Led.LED_GREEN].state = UIBase.LED_State.LED_OFF
+                # self.led_off(Led.LED_GREEN)
+
+            print('.. call')
+            try:
+                threading.Timer(self._leds[Led.LED_GREEN].period, self._green_flash).start()
+            except:
+                print(sys.exc_info())
+            print('.. done')
+        else:
+            self.led_off(Led.LED_GREEN)
+
+        print('Exit _green_flash()')
 
     def _do_flash(self, led):
         print('_do_flash()')
@@ -147,7 +163,8 @@ class UIBase:
                 self.led_off(led)
 
             print('.. call')
-            # threading.Timer(self._leds[led].period, self._do_flash(led)).start()
+            # TODO : Use the 'args' value here
+            threading.Timer(self._leds[led].period, self._do_flash, [led]).start()
             print('.. done')
         else:
             self._leds[led].nextState = UIBase.LED_State.LED_ON
@@ -174,21 +191,37 @@ class UIBase:
     def test(self):
         pass
 
-    def led_flash(self, led, period=500):
+    def led_flash(self, led, period=0.25):
 
-        if period < 10:
-            period = 10
+        if period < 0.005:
+            period = 0.005
 
-        self._leds[led].state = UIBase.LED_State.LED_FLASH
         self._leds[led].period = period
 
-        self._do_flash(led)
+        if led == Led.LED_GREEN:
+            self._green_flash()
+        else:
+            self._red_flash()
 
     def led_on(self, led):
         self._leds[led].state = UIBase.LED_State.LED_ON
+        self.set_led(led, UIBase.LED_State.LED_ON)
 
     def led_off(self, led):
         self._leds[led].state = UIBase.LED_State.LED_OFF
+        self.set_led(led, UIBase.LED_State.LED_OFF)
+
+    def set_led(self, led, state):
+        pass
+
+    def shutdown(self):
+        # TODO : Turn the LEDs off and stop flashing
+        #  Should just be able to call led_off() here
+        self._leds[Led.LED_GREEN].period = 0
+        self._leds[Led.LED_GREEN].state = UIBase.LED_State.LED_OFF
+
+        self._leds[Led.LED_RED].period = 0
+        self._leds[Led.LED_RED].state = UIBase.LED_State.LED_OFF
 
 
 def get_ui_instance():

@@ -1,4 +1,5 @@
 import sys
+import threading
 import time
 from enum import Enum
 
@@ -11,11 +12,11 @@ from pynput.keyboard import Key, Listener
 # from pydev import pydevd
 # pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
 
-# def toggle_led():
-#     print(". ")
-#     global timer
-#     timer = threading.Timer(1, toggle_led)
-#     timer.start()
+def toggle_led():
+    print(". ")
+    global timer
+    timer = threading.Timer(1, toggle_led)
+    timer.start()
 
 
 def main1():
@@ -123,4 +124,4 @@ def main_logging():
     destroy_logging()
 
 if __name__ == "__main__":
-    main_logging()
+    toggle_led()

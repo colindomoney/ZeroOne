@@ -164,15 +164,13 @@ class Blinkstick_LED_Driver():
         if mode == None:
             raise ZeroOneException("BlinkStick is not set to mode 2, we're fucked")
 
-        # self._colours = {
-        #     Blinkstick_LED_Driver.LED.Led1: (0, 'green'),
-        #     Blinkstick_LED_Driver.LED.Led2: (1, 'red'),
-        #     Blinkstick_LED_Driver.LED.Led3: (2, 'black')
-        # }
-
         # Put the LEDs off
         self.led_off(Led.LED_RED)
         self.led_off(Led.LED_GREEN)
+
+    # TODO : put all the clever stuff in here
+    def set_led(self, led, state):
+        pass
 
     def led_off(self, led):
         if led == Led.LED_GREEN:

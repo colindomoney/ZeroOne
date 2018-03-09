@@ -14,6 +14,10 @@ if 'debug' in sys.argv:
 
     pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
 
+import time, threading
+def foo():
+    print(time.ctime())
+    threading.Timer(0.2, foo).start()
 
 def main():
     def setup_logging():
@@ -41,11 +45,10 @@ def main():
     st = 0
 
     try:
-
         __ui = ui.get_ui_instance()
         command = None
 
-        __ui.led_flash(ui.Led.LED_GREEN, 200)
+        __ui.led_flash(ui.Led.LED_GREEN, 0.1)
 
         while command != ui.Commands.Quit:
             print('. ')
@@ -65,6 +68,8 @@ def main():
                 st = st + 1
                 if st == 2:
                     st = 0
+
+        __ui.shutdown()
 
         # Flush the keyboard here
         # TODO : is this even needed anymore
