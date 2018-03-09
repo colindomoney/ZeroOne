@@ -43,13 +43,14 @@ class PC_UI(UIBase):
 
     def led_on(self, led):
         super().led_on(led)
-        self.__blinkstick.led_on(led)
+        self.set_led(led, UIBase.LED_State.LED_ON)
 
     def led_off(self, led):
         super().led_off(led)
-        self.__blinkstick.led_off(led)
+        self.set_led(led, UIBase.LED_State.LED_OFF)
 
     def set_led(self, led, state):
+        """ This function is a low level method that just drives the LED without changing the actual state of internal variables """
         if state == UIBase.LED_State.LED_ON:
             self.__blinkstick.led_on(led)
         else:
