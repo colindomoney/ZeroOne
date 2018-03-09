@@ -4,6 +4,7 @@ import time
 
 from ZO import ui
 # TODO : This stuff will only work on a PC
+from ZO.ui import Button
 from ZO.zero_one import ZeroOneException
 from kbhit import KBHit
 
@@ -55,19 +56,24 @@ def main():
             time.sleep(0.2)
             command = __ui.get_command()
 
-            if command == ui.Commands.Test:
-                print('TEST')
-                if st == 0:
-                    __ui.led_on(ui.Led.LED_RED)
+            # TODO : Test some buttons here
+            if __ui.test_button(Button.BUTTON_1):
+                pass
 
-                if st == 1:
-                    __ui.led_off(ui.Led.LED_RED)
 
-                print(__ui)
-
-                st = st + 1
-                if st == 2:
-                    st = 0
+            # if command == ui.Commands.Test:
+            #     print('TEST')
+            #     if st == 0:
+            #         __ui.led_on(ui.Led.LED_RED)
+            #
+            #     if st == 1:
+            #         __ui.led_off(ui.Led.LED_RED)
+            #
+            #     print(__ui)
+            #
+            #     st = st + 1
+            #     if st == 2:
+            #         st = 0
 
         __ui.shutdown()
 

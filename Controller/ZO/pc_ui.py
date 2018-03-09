@@ -5,7 +5,7 @@ from enum import Enum
 from blinkstick import blinkstick
 from pynput.keyboard import Key, Listener
 
-from ZO.ui import UIBase, ButtonEvent, Led
+from ZO.ui import UIBase, ButtonEvent, Led, Button
 from ZO.zero_one import ZeroOneException
 
 
@@ -25,7 +25,7 @@ class PC_UI(UIBase):
         self.__blinkstick = Blinkstick_LED_Driver()
 
     def _on_press(self, key):
-        # print('__on_press__')
+        print('__on_press__ : {0}'.format(key))
         if key != self._lastKey:
             self._lastKey = key
 
@@ -38,7 +38,7 @@ class PC_UI(UIBase):
                     super().process_keystroke(0x20)
 
     def _on_release(self, key):
-        # print('__on_release__')
+        print('__on_release__ : {0}'.format(key))
         self._lastKey = None
 
     def led_on(self, led):
@@ -56,11 +56,14 @@ class PC_UI(UIBase):
         else:
             self.__blinkstick.led_off(led)
 
+    def test_button(self, button=Button.BUTTON_1):
+        # super().test_button(button)
+        pass
+
     def test(self):
         pass
 
 
-# noinspection PyCallingNonCallable
 class Keyboard_Driver():
     class Keys(Enum):
         KEY1 = 'q'
@@ -141,7 +144,8 @@ class Keyboard_Driver():
         except AttributeError:
             self.__client_on_release(key)
 
-    def test(self):
+    # TODO : Add a method to return the button up/down state here
+    def test_button(self):
         pass
 
     # Register a callback method to register for the events

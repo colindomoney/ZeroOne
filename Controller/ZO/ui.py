@@ -127,9 +127,6 @@ class UIBase:
     def button_handler3(key, button_event):
         print('button_handler3() -> {}, {}'.format(key.value, button_event))
 
-    def _red_flash(self):
-        pass
-
     def _do_flash(self, led):
         if self._leds[led].state == UIBase.LED_State.LED_FLASH:
             if self._leds[led].nextState == UIBase.LED_State.LED_OFF:
@@ -144,6 +141,13 @@ class UIBase:
             self.led_off(led)
 
     def process_keystroke(self, key):
+        '''
+
+        @param key:
+        @type key:
+        @return:
+        @rtype:
+        '''
         print('< {} >'.format(key))
 
         if key == 0x1c:
@@ -165,7 +169,7 @@ class UIBase:
     def test(self):
         pass
 
-    def led_flash(self, led, period=0.25):
+    def led_flash(self, led, period=0.2):
 
         # 10ms minimum flash speed
         if period < 0.010:
@@ -189,8 +193,7 @@ class UIBase:
         pass
 
     def shutdown(self):
-        # TODO : Turn the LEDs off and stop flashing
-        #  Should just be able to call led_off() here
+        # Shut everything down here before we exit
         self._leds[Led.LED_GREEN].period = 0
         self.led_off(Led.LED_GREEN)
 
