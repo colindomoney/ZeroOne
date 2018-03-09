@@ -172,14 +172,18 @@ class Blinkstick_LED_Driver():
 
     def led_off(self, led):
         if led == Led.LED_GREEN:
-            self._stick.set_color(0, 0, name='black')
-
-        if led == Led.LED_RED:
             self._stick.set_color(1, 0, name='black')
 
+        if led == Led.LED_RED:
+            self._stick.set_color(0, 0, name='black')
+
     def led_on(self, led):
+        brightness = 24
+
         if led == Led.LED_GREEN:
-            self._stick.set_color(0, 0, name='green')
+            # self._stick.set_color(0, 0, name='green')
+            self._stick.set_color(1, 0, red=0, green=brightness, blue=0)
 
         if led == Led.LED_RED:
-            self._stick.set_color(1, 0, name='red')
+            # self._stick.set_color(1, 0, name='red')
+            self._stick.set_color(0, 0, red=brightness, green=0, blue=0)
