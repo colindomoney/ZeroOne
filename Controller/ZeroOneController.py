@@ -13,11 +13,18 @@ else:
     print("FAILED to connect to server")
     exit(1)
 
-while True:
-    z = ZO.ZeroOne()
+try:
 
-    print('. ')
-    client.put_pixels(white)
-    time.sleep(0.25)
+    while True:
+        z = ZO.ZeroOne()
+
+        print('. ')
+        client.put_pixels(white)
+        time.sleep(0.25)
+        client.put_pixels(black)
+        time.sleep(0.25)
+
+except KeyboardInterrupt:
+    print('Exiting ...')
     client.put_pixels(black)
-    time.sleep(0.25)
+

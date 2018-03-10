@@ -1,7 +1,6 @@
 ZO_PIXEL_COUNT = 591  # The total pixels (ie. LEDs) on the display
 ZO_X_SIZE = 38  # The X dimension ie. columns
-ZO_Y_SIZE = 28  # The Y dimenstion ie. rows
-
+ZO_Y_SIZE = 28  # The Y dimension ie. rows
 
 # GPIO pinouts
 # GPIO2 = pushbutton
@@ -9,6 +8,12 @@ ZO_Y_SIZE = 28  # The Y dimenstion ie. rows
 # GPIO5 = pushbutton
 # GPIO17 = LED
 # GPIO27 = LED
+
+# TODO : Pull in the '01' pixels and store them as a 591 byte list
+
+# TODO : Definitions for the values in the '01' pixel ie. 11, 22, 1, 2, 0
+
+# TODO : Convery a PNG to a 28x38 thumbnail
 
 class ZeroOneException(Exception):
     """  Massively complex override of the base exception class for ZeroOne exceptions """

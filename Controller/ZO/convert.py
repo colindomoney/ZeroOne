@@ -38,14 +38,16 @@ def ConvertZeroOneFile(inputFile, outputFile ='./zero_one.npy'):
                 vals = [int(r) for r in row]
                 data.append(vals)
     except FileNotFoundError as ex:
-        print('File not found')
+        # print('File not found')
+        # TODO : Not really sure why we're bothering to catch this exception anyway
         raise
 
     # Here we have an 'array' as a list of lists so convert it to an array and save it in .npy format
     numpy.save(outputFile, numpy.array(data))
 
-    # ar = numpy.array(data)
-    # print(ar)
+
+    ar = numpy.array(data)
+    print(ar)
 
 def main():
     print('convert()')
@@ -53,7 +55,6 @@ def main():
     args = GetArgs()
 
     ConvertZeroOneFile(args.input, args.output)
-
 
 if __name__ == '__main__':
     main()
