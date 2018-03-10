@@ -11,6 +11,7 @@ def GetArgs():
 
     parser = argparse.ArgumentParser(description='A utility to perform various conversions for the ZeroOne project')
     parser.add_argument('-i', '--input', required=True, action='store', help='Specify the name of the input file' )
+    parser.add_argument('-o', '--output', required=False, action='store', default='./zero_one.npy', help='Specify the name of the output file' )
 
 
 
@@ -27,7 +28,7 @@ def GetArgs():
     args = parser.parse_args()
     return args
 
-def ReadFile(inputFile, outputFile = './zero_one.npy'):
+def ConvertZeroOneFile(inputFile, outputFile ='./zero_one.npy'):
     try:
         data = []
 
@@ -43,15 +44,15 @@ def ReadFile(inputFile, outputFile = './zero_one.npy'):
     # Here we have an 'array' as a list of lists so convert it to an array and save it in .npy format
     numpy.save(outputFile, numpy.array(data))
 
-    ar = numpy.array(data)
-    print(ar)
+    # ar = numpy.array(data)
+    # print(ar)
 
 def main():
     print('convert()')
 
     args = GetArgs()
 
-    vals = ReadFile(args.input)
+    ConvertZeroOneFile(args.input, args.output)
 
 
 if __name__ == '__main__':
