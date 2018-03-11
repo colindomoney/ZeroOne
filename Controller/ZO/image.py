@@ -10,8 +10,6 @@ ZERO_ONE_MASK_FILE = './ZO/zero_one.npy'
 
 def load_mask_data():
 
-    thisDir = os.getcwd()
-
     # Get the mask data, flatten it out and convert it to a list
     maskData = list(numpy.load(ZERO_ONE_MASK_FILE).flatten())
 

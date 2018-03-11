@@ -2,6 +2,7 @@ import sys
 import threading
 import time
 from enum import Enum
+from ZO import zero_one
 
 from getkey import getkey, keys
 from pynput.keyboard import Key, Listener
@@ -11,6 +12,7 @@ from pynput.keyboard import Key, Listener
 # sys.path.append('./pydev')
 # from pydev import pydevd
 # pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
+
 
 def toggle_led():
     print(". ")
@@ -152,8 +154,10 @@ def main_graphics():
     outputFrame = [x[0] for x in combinedData if x[1] != 0]
 
     # TODO : Test the length here
+    if len(outputFrame) != zero_one.ZO_PIXEL_COUNT:
+        raise zero_one.ZeroOneException('Pixel count not the expected length after masking')
 
-    # Create a NumPy array, which has four elements. The top-left should be pure red, the top-right should be pure blue, the bottom-left should be pure green, and the bottom-right should be yellow
+        # Create a NumPy array, which has four elements. The top-left should be pure red, the top-right should be pure blue, the bottom-left should be pure green, and the bottom-right should be yellow
     # pixels = numpy.array([[[255, 0, 0], [0, 255, 0]], [[0, 0, 255], [255, 255, 0]]])
 
     # Create a PIL image from the NumPy array
@@ -164,12 +168,21 @@ def main_graphics():
 
 
 def main():
-    xvals = list(range(1, 39))
-    yvals = list(range(1, 29))
+    # xvals = list(range(1, 39))
+    # yvals = list(range(1, 29))
+
+    # import pylibftdi as ftdi
+    # bb = ftdi.BitBangDevice(device_id='123')
+
+    import FtdiGpio as FtdiGpio
+
+    ftgp =  FtdiGpio.FtdiGpio()
+
+
 
     print('Done')
 
 
 if __name__ == "__main__":
     # main_graphics()
-    main_graphics()
+    main()
