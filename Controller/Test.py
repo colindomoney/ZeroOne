@@ -18,7 +18,6 @@ def toggle_led():
     timer = threading.Timer(1, toggle_led)
     timer.start()
 
-
 def main1():
     # toggle_led()
 
@@ -72,7 +71,7 @@ def main3():
         buffer += key
         print(buffer)
 
-def main():
+def main4():
     print('in main()')
 
     class Keys(Enum):
@@ -96,9 +95,8 @@ def main():
 
     print(v1)
 
-import logging
-
 def main_logging():
+    import logging
 
     def setup_logging():
         print("setup_logging")
@@ -123,5 +121,55 @@ def main_logging():
 
     destroy_logging()
 
+ZERO_ONE_MASK_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Controller/ZO/zero_one.npy'
+IMAGE_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png'
+
+def main_graphics():
+    from PIL import Image
+    import numpy
+    from ZO import image
+
+    print('main_graphics')
+
+    # Open the file, get the data and convert it to a list
+    imgData = list(Image.open(IMAGE_FILE).getdata())
+
+    # Get the mask data, flatten it out and convert it to a list
+    # maskData = list(numpy.load(ZERO_ONE_MASK_FILE).flatten())
+
+    maskData = image.load_mask_data()
+
+    # Zip the data
+    combinedData = list(zip(imgData, maskData))
+
+    # Get everything that isn't a zero in the mask
+    outputFrame = [x[0] for x in combinedData if x[1] != 0]
+
+    # TODO : Test the length here
+
+    # Create a NumPy array, which has four elements. The top-left should be pure red, the top-right should be pure blue, the bottom-left should be pure green, and the bottom-right should be yellow
+    # pixels = numpy.array([[[255, 0, 0], [0, 255, 0]], [[0, 0, 255], [255, 255, 0]]])
+
+    # Create a PIL image from the NumPy array
+    # image = Image.fromarray(pixels.astype('uint8'), 'RGB')
+
+    # Save the image
+    # image.show()
+
+
+    print(imgData)
+
+    # img.show()
+
+
+def main():
+    xvals = list(range(1, 39))
+    yvals = list(range(1, 29))
+
+
+
+    print('Done')
+
 if __name__ == "__main__":
-    toggle_led()
+    # main_graphics()
+    main_graphics()
