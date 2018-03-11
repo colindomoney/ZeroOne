@@ -18,6 +18,7 @@ def toggle_led():
     timer = threading.Timer(1, toggle_led)
     timer.start()
 
+
 def main1():
     # toggle_led()
 
@@ -37,6 +38,7 @@ def main1():
     except KeyboardInterrupt:
         print("Exiting")
         # timer.cancel()
+
 
 def main2():
     def on_press(key):
@@ -60,6 +62,7 @@ def main2():
             on_release=on_release) as listener:
         listener.join()
 
+
 def main3():
     key = getkey()
     buffer = ''
@@ -70,6 +73,7 @@ def main3():
     else:  # Handle text characters
         buffer += key
         print(buffer)
+
 
 def main4():
     print('in main()')
@@ -90,10 +94,10 @@ def main4():
                     return item.name
             return None
 
-
     v1 = ['q' == item.value for item in Keys]
 
     print(v1)
+
 
 def main_logging():
     import logging
@@ -121,8 +125,10 @@ def main_logging():
 
     destroy_logging()
 
+
 ZERO_ONE_MASK_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Controller/ZO/zero_one.npy'
 IMAGE_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png'
+
 
 def main_graphics():
     from PIL import Image
@@ -157,18 +163,12 @@ def main_graphics():
     # image.show()
 
 
-    print(imgData)
-
-    # img.show()
-
-
 def main():
     xvals = list(range(1, 39))
     yvals = list(range(1, 29))
 
-
-
     print('Done')
+
 
 if __name__ == "__main__":
     # main_graphics()
