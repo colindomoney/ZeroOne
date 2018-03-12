@@ -180,13 +180,25 @@ def main():
 
     import FtdiGpio as FtdiGpio
 
-    with FtdiGpio.FtdiGpio('A50285BI') as ftgp:
-        ftgp.set_direction(ftgp.Pins.PIN_ALL_OUT)
+    def test_pin():
+        if ftgp.test_pin(ftgp.Pins.PIN1_PIN):
+            print('H ')
+        else:
+            print('L')
+
+    with FtdiGpio.FtdiGpio() as ftgp:
+        ftgp.set_direction(ftgp.Pins.PIN0_OUT)
 
         while True:
-            # time.sleep(0.1)
-            ftgp.toggle_bit(ftgp.Pins.PIN0_PIN)
+            time.sleep(0.25)
+            print('Set to L ... ')
+            ftgp.set_pin_low(ftgp.Pins.PIN0_PIN)
+            test_pin()
 
+            time.sleep(0.25)
+            print('Set to H ... ')
+            ftgp.set_pin_high(ftgp.Pins.PIN0_PIN)
+            test_pin()
 
     print('Done')
 

@@ -108,14 +108,14 @@ class FtdiGpio:
     def set_direction(self, map=Pins.PIN_ALL_IN):
         self._bb.direction = map
 
-    def test_bit(self, bit=0):
+    def test_pin(self, bit=0):
         return True if self._bb.port & bit else False
 
-    def toggle_bit(self, bit=0):
+    def toggle_pin(self, bit=0):
         self._bb.port ^= bit
 
-    def set_bit_high(self, bit=0):
+    def set_pin_high(self, bit=0):
         self._bb.port |= bit
 
-    def set_bit_low(self, bit=0):
+    def set_pin_low(self, bit=0):
         self._bb.port &= ~bit
