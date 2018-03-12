@@ -1,3 +1,6 @@
+import pylibftdi
+
+
 class FtdiGpioException(Exception):
     """  Massively complex override of the base exception class for ZeroOne exceptions """
 
@@ -51,24 +54,28 @@ class FtdiGpio:
     PIN7_IN = 0x00
 
     def __init__(self, device_id=None):
+        # Get all the devices and pull the first one in the list
+        allDevices = self._get_ftdi_device_list()
+        self._device_id = (allDevices or [None])[0]
+
+        # Check if the one we were give is in the list
+        # if device_id is not None:
+        #     if device_id not in allDevices:
+        #         raise FtdiGpioException('The specified FTDI device is not attached')
+        #     else:
+        #         self._device_id = device_id
         self._device_id = device_id
 
+        # If we still have None here either we couldn't find our devices, or there are no devices
         if self._device_id is None:
-            # Search all the availabe devices and pick the first one
-            self._device_id = (self._get_ftdi_device_list() or [None])[0]
+            raise FtdiGpioException('Failed to find any FTDI GPIO device attached')
 
-        print('Device: {}'.format(self._device_id))
-
-        # self._bb = ftdi.BitBangDevice(device_id='A50285BI', direction=ftdi.ALL_OUTPUTS)
-        #
-        # self._bb.port = 0xff;
-        # self._bb.port = 0x00;
-        #
-        # print(self._bb)
-
-        # Did we get a device here yet ? If not abort since we can't do anything more
-
-        # Open the device
+        try:
+            # Now try and open the device
+            self._bb = ftdi.BitBangDevice(device_id=self._device_id, direction=self.PIN_ALL_IN)
+            self._bb.port = self.PIN_ALL
+        except pylibftdi._base.FtdiError:
+            raise FtdiGpioException('Failed to open device in BitBang mode')
 
     # Do the context manager stuff
     def __enter__(self):
