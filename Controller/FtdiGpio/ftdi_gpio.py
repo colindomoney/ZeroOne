@@ -20,25 +20,51 @@ except ImportError:
 class FtdiGpio:
     # TODO : Define the pin maps here in hex
 
-    # TODO : Define the I/O direction
+    PIN_ALL = 0xff
+    PIN0_PIN = 0x01
+    PIN1_PIN = 0x02
+    PIN2_PIN = 0x04
+    PIN3_PIN = 0x08
+    PIN4_PIN = 0x10
+    PIN5_PIN = 0x20
+    PIN6_PIN = 0x40
+    PIN7_PIN = 0x80
+
+    PIN_ALL_OUT = 0xff
+    PIN0_OUT = 0x01
+    PIN1_OUT = 0x02
+    PIN2_OUT = 0x04
+    PIN3_OUT = 0x08
+    PIN4_OUT = 0x10
+    PIN5_OUT = 0x20
+    PIN6_OUT = 0x40
+    PIN7_OUT = 0x80
+
+    PIN_ALL_IN = 0x00
+    PIN0_IN = 0x00
+    PIN1_IN = 0x00
+    PIN2_IN = 0x00
+    PIN3_IN = 0x00
+    PIN4_IN = 0x00
+    PIN5_IN = 0x00
+    PIN6_IN = 0x00
+    PIN7_IN = 0x00
 
     def __init__(self, device_id=None):
-        self._device_id = None
+        self._device_id = device_id
 
-        if device_id is None:
+        if self._device_id is None:
             # Search all the availabe devices and pick the first one
-            pass
+            self._device_id = (self._get_ftdi_device_list() or [None])[0]
 
-        devices = self._get_ftdi_device_list()
-        print(devices)
+        print('Device: {}'.format(self._device_id))
 
-        self._bb = ftdi.BitBangDevice(device_id='A50285BI', direction=ftdi.ALL_OUTPUTS)
-
-        self._bb.port = 0xff;
-        self._bb.port = 0x00;
-
-
-        print(self._bb)
+        # self._bb = ftdi.BitBangDevice(device_id='A50285BI', direction=ftdi.ALL_OUTPUTS)
+        #
+        # self._bb.port = 0xff;
+        # self._bb.port = 0x00;
+        #
+        # print(self._bb)
 
         # Did we get a device here yet ? If not abort since we can't do anything more
 
@@ -63,8 +89,12 @@ class FtdiGpio:
             dev_info = map(lambda x: x.decode('latin1'), device)
             # device must always be this triple
             vendor, product, serial = dev_info
+
+            # We used to return a whole ton of stuff
             # dev_list.append("%s:%s:%s" % (vendor, product, serial))
-            dev_list.append((vendor, product, serial))
+
+            # Now just return the serial number
+            dev_list.append(serial)
         return dev_list
 
     # TODO : Set the port directions

@@ -4,6 +4,7 @@ import time
 from enum import Enum
 from ZO import zero_one
 
+
 from getkey import getkey, keys
 from pynput.keyboard import Key, Listener
 
@@ -168,16 +169,26 @@ def main_graphics():
 
 
 def main():
+    from PIL import ImageColor
+
     # xvals = list(range(1, 39))
     # yvals = list(range(1, 29))
 
     # import pylibftdi as ftdi
     # bb = ftdi.BitBangDevice(device_id='123')
 
+    # x = [[ImageColor.getrgb('red') for i in range(4)] for j in range(2)]
+
     import FtdiGpio as FtdiGpio
 
-    with FtdiGpio.FtdiGpio() as ftgp:
-        ftgp.set_direction(0)
+    with FtdiGpio.FtdiGpio('A50285BI') as ftgp:
+        ftgp.set_direction(FtdiGpio.FtdiGpio.PIN_ALL_OUT)
+
+        while True:
+            time.sleep(0.1)
+            ftgp.set_bit_high(ftgp.PIN0_PIN)
+            time.sleep(0.1)
+            ftgp.set_bit_low(ftgp.PIN0_PIN)
 
 
     print('Done')
