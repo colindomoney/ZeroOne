@@ -154,7 +154,6 @@ def main_graphics():
     # Get everything that isn't a zero in the mask
     outputFrame = [x[0] for x in combinedData if x[1] != 0]
 
-    # TODO : Test the length here
     if len(outputFrame) != zero_one.ZO_PIXEL_COUNT:
         raise zero_one.ZeroOneException('Pixel count not the expected length after masking')
 
@@ -182,13 +181,11 @@ def main():
     import FtdiGpio as FtdiGpio
 
     with FtdiGpio.FtdiGpio('A50285BI') as ftgp:
-        ftgp.set_direction(FtdiGpio.FtdiGpio.PIN_ALL_OUT)
+        ftgp.set_direction(ftgp.Pins.PIN_ALL_OUT)
 
         while True:
-            time.sleep(0.1)
-            ftgp.set_bit_high(ftgp.PIN_ALL)
-            time.sleep(0.1)
-            ftgp.set_bit_low(ftgp.PIN_ALL)
+            # time.sleep(0.1)
+            ftgp.toggle_bit(ftgp.Pins.PIN0_PIN)
 
 
     print('Done')

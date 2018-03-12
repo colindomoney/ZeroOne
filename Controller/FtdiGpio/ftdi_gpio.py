@@ -21,37 +21,36 @@ except ImportError:
 
 
 class FtdiGpio:
-    # TODO : Define the pin maps here in hex
+    class Pins:
+        PIN_ALL = 0xff
+        PIN0_PIN = 0x01
+        PIN1_PIN = 0x02
+        PIN2_PIN = 0x04
+        PIN3_PIN = 0x08
+        PIN4_PIN = 0x10
+        PIN5_PIN = 0x20
+        PIN6_PIN = 0x40
+        PIN7_PIN = 0x80
 
-    PIN_ALL = 0xff
-    PIN0_PIN = 0x01
-    PIN1_PIN = 0x02
-    PIN2_PIN = 0x04
-    PIN3_PIN = 0x08
-    PIN4_PIN = 0x10
-    PIN5_PIN = 0x20
-    PIN6_PIN = 0x40
-    PIN7_PIN = 0x80
+        PIN_ALL_OUT = 0xff
+        PIN0_OUT = 0x01
+        PIN1_OUT = 0x02
+        PIN2_OUT = 0x04
+        PIN3_OUT = 0x08
+        PIN4_OUT = 0x10
+        PIN5_OUT = 0x20
+        PIN6_OUT = 0x40
+        PIN7_OUT = 0x80
 
-    PIN_ALL_OUT = 0xff
-    PIN0_OUT = 0x01
-    PIN1_OUT = 0x02
-    PIN2_OUT = 0x04
-    PIN3_OUT = 0x08
-    PIN4_OUT = 0x10
-    PIN5_OUT = 0x20
-    PIN6_OUT = 0x40
-    PIN7_OUT = 0x80
-
-    PIN_ALL_IN = 0x00
-    PIN0_IN = 0x00
-    PIN1_IN = 0x00
-    PIN2_IN = 0x00
-    PIN3_IN = 0x00
-    PIN4_IN = 0x00
-    PIN5_IN = 0x00
-    PIN6_IN = 0x00
-    PIN7_IN = 0x00
+        PIN_ALL_IN = 0x00
+        PIN0_IN = 0x00
+        PIN1_IN = 0x00
+        PIN2_IN = 0x00
+        PIN3_IN = 0x00
+        PIN4_IN = 0x00
+        PIN5_IN = 0x00
+        PIN6_IN = 0x00
+        PIN7_IN = 0x00
 
     def __init__(self, device_id=None):
         # Get all the devices and pull the first one in the list
@@ -71,11 +70,11 @@ class FtdiGpio:
 
         try:
             # Now try and open the device
-            self._bb = ftdi.BitBangDevice(device_id=self._device_id, direction=self.PIN_ALL_IN)
+            self._bb = ftdi.BitBangDevice(device_id=self._device_id, direction=self.Pins.PIN_ALL_IN)
         except pylibftdi._base.FtdiError:
             raise FtdiGpioException('Failed to open device in BitBang mode')
 
-        self._bb.port = self.PIN_ALL
+        self._bb.port = self.Pins.PIN_ALL
 
     # Do the context manager stuff
     def __enter__(self):
@@ -83,8 +82,8 @@ class FtdiGpio:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         # Shut down the device and close it
-        self._bb.direction = self.PIN_ALL_IN
-        self._bb.port = self.PIN_ALL
+        self._bb.direction = self.Pins.PIN_ALL_IN
+        self._bb.port = self.Pins.PIN_ALL
         self._bb.close()
 
     def _get_ftdi_device_list(self):
@@ -106,18 +105,17 @@ class FtdiGpio:
             dev_list.append(serial)
         return dev_list
 
-    # TODO : Set the port directions
-    def set_direction(self, map=PIN_ALL_IN):
+    def set_direction(self, map=Pins.PIN_ALL_IN):
         self._bb.direction = map
 
-    # TODO : Test the bit
     def test_bit(self, bit=0):
-        pass
+        return True if self._bb.port & bit else False
 
-    # TODO : Set the bit high
+    def toggle_bit(self, bit=0):
+        self._bb.port ^= bit
+
     def set_bit_high(self, bit=0):
         self._bb.port |= bit
 
-    # TODO : Set the bit low
     def set_bit_low(self, bit=0):
         self._bb.port &= ~bit
