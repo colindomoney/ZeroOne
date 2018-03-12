@@ -176,8 +176,8 @@ def main():
 
     import FtdiGpio as FtdiGpio
 
-    ftgp =  FtdiGpio.FtdiGpio()
-
+    with FtdiGpio.FtdiGpio() as ftgp:
+        ftgp.set_direction(0)
 
 
     print('Done')

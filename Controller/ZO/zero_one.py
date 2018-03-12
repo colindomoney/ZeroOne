@@ -30,3 +30,5 @@ class ZeroOne(object):
 
     def __init__(self):
         pass
+
+# TODO : Add a class that controls the pixels ie. checks the server is there, can blit images to the pixels
