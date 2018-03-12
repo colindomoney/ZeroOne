@@ -186,9 +186,9 @@ def main():
 
         while True:
             time.sleep(0.1)
-            ftgp.set_bit_high(ftgp.PIN0_PIN)
+            ftgp.set_bit_high(ftgp.PIN_ALL)
             time.sleep(0.1)
-            ftgp.set_bit_low(ftgp.PIN0_PIN)
+            ftgp.set_bit_low(ftgp.PIN_ALL)
 
 
     print('Done')

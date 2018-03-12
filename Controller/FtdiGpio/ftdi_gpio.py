@@ -59,12 +59,11 @@ class FtdiGpio:
         self._device_id = (allDevices or [None])[0]
 
         # Check if the one we were give is in the list
-        # if device_id is not None:
-        #     if device_id not in allDevices:
-        #         raise FtdiGpioException('The specified FTDI device is not attached')
-        #     else:
-        #         self._device_id = device_id
-        self._device_id = device_id
+        if device_id is not None:
+            if device_id not in allDevices:
+                raise FtdiGpioException('The specified FTDI device is not attached')
+            else:
+                self._device_id = device_id
 
         # If we still have None here either we couldn't find our devices, or there are no devices
         if self._device_id is None:
@@ -73,17 +72,20 @@ class FtdiGpio:
         try:
             # Now try and open the device
             self._bb = ftdi.BitBangDevice(device_id=self._device_id, direction=self.PIN_ALL_IN)
-            self._bb.port = self.PIN_ALL
         except pylibftdi._base.FtdiError:
             raise FtdiGpioException('Failed to open device in BitBang mode')
+
+        self._bb.port = self.PIN_ALL
 
     # Do the context manager stuff
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        # TODO : Close the FTDI device
-        pass
+        # Shut down the device and close it
+        self._bb.direction = self.PIN_ALL_IN
+        self._bb.port = self.PIN_ALL
+        self._bb.close()
 
     def _get_ftdi_device_list(self):
         """
@@ -105,8 +107,8 @@ class FtdiGpio:
         return dev_list
 
     # TODO : Set the port directions
-    def set_direction(self, map=0):
-        pass
+    def set_direction(self, map=PIN_ALL_IN):
+        self._bb.direction = map
 
     # TODO : Test the bit
     def test_bit(self, bit=0):
@@ -114,8 +116,8 @@ class FtdiGpio:
 
     # TODO : Set the bit high
     def set_bit_high(self, bit=0):
-        pass
+        self._bb.port |= bit
 
     # TODO : Set the bit low
     def set_bit_low(self, bit=0):
-        pass
+        self._bb.port &= ~bit
