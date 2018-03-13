@@ -4,12 +4,25 @@
 
 import numpy, os
 from . import zero_one
-from PIL import Image
+from PIL import Image, ImageColor
 
 # TODO : How safe is this in practice
 ZERO_ONE_MASK_FILE = './ZO/zero_one.npy'
 
+TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png'
+RED_TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/Red_Left.png'
+GREEN_TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/Green_Centre.png'
+BLUE_TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/Blue_Right.png'
+
 class ZO_Mask:
+    # This tag values in the CSV pattern file
+    class ZoneTags:
+        NoTag = 0
+        ZeroOutlineTag = 11
+        ZeroInteriorTag = 1
+        OneOutlineTag = 22
+        OneInteriorTag = 2
+
     '''
     A simple class to manage the '01' pixel mask.
     '''
@@ -31,41 +44,69 @@ class ZO_Mask:
     # Returns it as a 2D array
     @property
     def array(self):
-        return list(numpy.load(ZERO_ONE_MASK_FILE))
+        return numpy.load(ZERO_ONE_MASK_FILE).tolist()
 
 class ZO_Image:
     class Patterns:
-        ZeroOutline = 0x01,
-        ZeroInterior = 0x02,
-        ZeroBoth = 0x03,
-        OneOutline = 0x10,
-        OneInterior = 0x20,
+        ZeroOutline = 0x01
+        ZeroInterior = 0x02
+        ZeroBoth = 0x03
+        OneOutline = 0x10
+        OneInterior = 0x20
         OneBoth = 0x30
 
     def __init__(self):
         super().__init__()
 
         self._image = None
+        self._pattern = None
 
+    # TODO : Return the underlying image buffer
     @property
     def screen_buffer(self):
         return None
 
-    def set_to_color(self, rgb='black', alpha=0.0):
-        pass
+    # TODO : Not sure what this was going to do ?
+    # def set_to_color(self, rgb='black', alpha=0.0):
+    #     pass
 
     def load_from_file(self, filename=None):
         self._image = Image.open(filename)
+        # self._image.show()
 
-    def set_pattern(self, pattern=None, rgb='white', alpha=0.0):
-        pass
+    def clear_pattern(self):
+        # Create a new image in RGBA with (width, height)
+        self._pattern = Image.new('RGBA', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE))
 
-class PixelDriver:
-    def __init__(self):
-        pass
+    def set_pattern(self, pattern=None, rgb='red', alpha=255):
+        mask = ZO_Mask().array
 
-    def update_display(self):
-        ''' Actually write the pixels to the display'''
-        pass
+        if self._pattern is None:
+            self.clear_pattern()
 
-    # TODO :
+        bg = ImageColor.getcolor('white', 'RGBA')
+        bg = (bg[0], bg[1], bg[2], 0)  # Set a transparent background
+        fg = ImageColor.getcolor(rgb, 'RGBA')
+
+        op = []
+        for r in mask:
+            row = []
+            for c in r:
+                if c == ZO_Mask.ZoneTags.NoTag:
+                    row.append(bg)
+                elif c == ZO_Mask.ZoneTags.OneInteriorTag:
+                    row.append(fg if pattern | ZO_Image.Patterns.OneInterior else bg)
+                elif c == ZO_Mask.ZoneTags.OneOutlineTag:
+                    row.append(fg if pattern | ZO_Image.Patterns.OneOutline else bg)
+                elif c == ZO_Mask.ZoneTags.ZeroOutlineTag:
+                    row.append(fg if pattern | ZO_Image.Patterns.ZeroOutline else bg)
+                elif c == ZO_Mask.ZoneTags.ZeroInteriorTag:
+                    row.append(fg if pattern | ZO_Image.Patterns.ZeroInterior else bg)
+
+            op.append(row)
+
+        # Some clever fannying around to make sure we keep the tuple data correcly
+        op = numpy.asarray(op, dtype=numpy.dtype('uint8,uint8,uint8,uint8'))
+        wcImg = Image.fromarray(op, 'RGBA')
+
+        wcImg.show()

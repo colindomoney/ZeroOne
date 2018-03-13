@@ -26,9 +26,19 @@ class ZeroOneException(Exception):
         return self.message
 
 
+# TODO : Not sure we need this class any more
 class ZeroOne(object):
-
     def __init__(self):
         pass
 
-# TODO : Add a class that controls the pixels ie. checks the server is there, can blit images to the pixels
+
+class PixelDriver:
+    def __init__(self):
+        # TODO : Check the display is present ie. server reachable, etc
+        pass
+
+    def update_display(self):
+        ''' Actually write the pixels to the display'''
+        pass
+
+    # TODO :

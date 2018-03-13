@@ -166,8 +166,6 @@ def main_gpio():
 
 
 ZERO_ONE_MASK_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Controller/ZO/zero_one.npy'
-IMAGE_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png'
-
 
 def main_graphics():
     from PIL import Image
@@ -176,8 +174,25 @@ def main_graphics():
 
     print('main_graphics')
 
+    # Create a NumPy array, which has four elements. The top-left should be pure red, the top-right should be pure blue, the bottom-left should be pure green, and the bottom-right should be yellow
+    # pixels = numpy.array([[[255, 0, 0, 255], [0, 255, 0, 255]], [[0, 0, 255, 255], [255, 255, 0, 255]]])
+
+    # Create a PIL image from the NumPy array
+    # testImage = Image.fromarray(pixels.astype('uint8'), 'RGBA')
+
+    # Save the image
+    # testImage.show()
+
+    img = image.ZO_Image()
+    img.set_pattern(image.ZO_Image.Patterns.OneOutline)
+
+    # img.load_from_file(image.TEST_PATTERN_FILE)
+
+    # Exit early
+    return
+
     # Open the file, get the data and convert it to a list
-    imgData = list(Image.open(IMAGE_FILE).getdata())
+    imgData = list(Image.open(image.TEST_PATTERN_FILE).getdata())
 
     # Get the mask data, flatten it out and convert it to a list
     # maskData = list(numpy.load(ZERO_ONE_MASK_FILE).flatten())
@@ -193,14 +208,7 @@ def main_graphics():
     if len(outputFrame) != zero_one.ZO_PIXEL_COUNT:
         raise zero_one.ZeroOneException('Pixel count not the expected length after masking')
 
-        # Create a NumPy array, which has four elements. The top-left should be pure red, the top-right should be pure blue, the bottom-left should be pure green, and the bottom-right should be yellow
-    # pixels = numpy.array([[[255, 0, 0], [0, 255, 0]], [[0, 0, 255], [255, 255, 0]]])
 
-    # Create a PIL image from the NumPy array
-    # image = Image.fromarray(pixels.astype('uint8'), 'RGB')
-
-    # Save the image
-    # image.show()
 
 
 
