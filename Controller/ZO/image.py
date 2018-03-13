@@ -105,8 +105,9 @@ class ZO_Image:
 
             op.append(row)
 
-        # Some clever fannying around to make sure we keep the tuple data correcly
+        # Some clever fannying around to make sure we keep the tuple data correctly
         op = numpy.asarray(op, dtype=numpy.dtype('uint8,uint8,uint8,uint8'))
         wcImg = Image.fromarray(op, 'RGBA')
 
-        wcImg.show()
+        # Now paste the temporary image over the pattern
+        self._pattern.paste(wcImg)

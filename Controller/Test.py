@@ -184,6 +184,7 @@ def main_graphics():
     # testImage.show()
 
     img = image.ZO_Image()
+    img.clear_pattern()
     img.set_pattern(image.ZO_Image.Patterns.OneOutline)
 
     # img.load_from_file(image.TEST_PATTERN_FILE)
