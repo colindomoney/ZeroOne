@@ -175,18 +175,31 @@ def main_graphics():
     print('main_graphics')
 
     img = image.ZO_Image()
+    pix = zero_one.PixelDriver()
 
     # Set up the pattern and load an image from disk
-    img.clear_pattern()
-    img.set_pattern(image.ZO_Image.Patterns.OneOutline)
-    img.set_pattern(image.ZO_Image.Patterns.ZeroOutline, rgb='green')
+    # img.clear_pattern()
+    # img.set_pattern(image.ZO_Image.Patterns.OneOutline)
+    # img.set_pattern(image.ZO_Image.Patterns.OneInterior, rgb='white')
+    # img.set_pattern(image.ZO_Image.Patterns.ZeroOutline, rgb='green')
+    # img.set_pattern(image.ZO_Image.Patterns.ZeroInterior, rgb='yellow')
     img.load_from_file(image.TEST_PATTERN_FILE)
 
     # img.image.show()
-    img.show_pattern = True
+    img.show_pattern = False
     # img.image.show()
 
     # Exit early
+
+    while True:
+        img.show_pattern = False
+        pix.update_display(img.image)
+        time.sleep(2)
+        # img.show_pattern = True
+        # pix.update_display(img.image)
+        # time.sleep(2)
+
+
     return
 
     # Open the file, get the data and convert it to a list

@@ -59,7 +59,7 @@ class ZO_Image:
         super().__init__()
         self._show_pattern = False
 
-        self._image = None
+        self._image = Image.new('RGBA', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE))
         self._pattern = None
 
     @property
