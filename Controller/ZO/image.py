@@ -33,7 +33,7 @@ class ZO_Mask:
     def array(self):
         return list(numpy.load(ZERO_ONE_MASK_FILE))
 
-class ZO_Image(Image.Image):
+class ZO_Image:
     class Patterns:
         ZeroOutline = 0x01,
         ZeroInterior = 0x02,
@@ -55,7 +55,7 @@ class ZO_Image(Image.Image):
         pass
 
     def load_from_file(self, filename=None):
-        pass
+        self._image = Image.open(filename)
 
     def set_pattern(self, pattern=None, rgb='white', alpha=0.0):
         pass
