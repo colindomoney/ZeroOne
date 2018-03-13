@@ -41,7 +41,9 @@ class PixelDriver:
     OpcConnectionString = 'localhost:7890'
 
     def __init__(self):
+        self._interpolation = True
         self._client = opc.Client(PixelDriver.OpcConnectionString)
+        self._client.set_interpolation(self._interpolation)
 
     def connect_to_server(self):
         if not self._client.can_connect():
@@ -53,6 +55,21 @@ class PixelDriver:
 
         if image is not None:
             self._map_image_to_pixels(image)
+
+    @property
+    def interpolation(self):
+        return self._interpolation
+
+    @interpolation.setter
+    def interpolation(self, value):
+        self.interpolation = value
+        self._client.set_interpolation(self._interpolation)
+
+    def blank_display(self):
+        black = [(0, 0, 0)] * ZO_X_SIZE * ZO_Y_SIZE
+        self._client.set_interpolation(False)
+        self._client.put_pixels(black)
+        self._client.set_interpolation(self._interpolation)
 
     def _map_image_to_pixels(self, opImage):
         from . import ZO_Mask

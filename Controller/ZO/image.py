@@ -10,6 +10,8 @@ from PIL import Image, ImageColor
 ZERO_ONE_MASK_FILE = './ZO/zero_one.npy'
 
 TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png'
+UNION_JACK_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/UnionJack.png'
+SOUTH_AFRICA_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/SouthAfrica.png'
 RED_TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/Red_Left.png'
 GREEN_TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/Green_Centre.png'
 BLUE_TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/Blue_Right.png'
@@ -88,6 +90,11 @@ class ZO_Image:
 
     def load_from_file(self, filename=None):
         self._image = Image.open(filename)
+
+        if self.image.width != zero_one.ZO_X_SIZE or self.image.height != zero_one.ZO_Y_SIZE:
+            raise zero_one.ZeroOneException('Invalid image size, not loaded')
+
+        # TODO : We should check that we have an actual RGBA image here ?
 
     def clear_pattern(self):
         # Create a new image in RGBA with (width, height)
