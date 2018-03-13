@@ -78,7 +78,7 @@ class ZO_Image:
         # Create a new image in RGBA with (width, height)
         self._pattern = Image.new('RGBA', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE))
 
-    def set_pattern(self, pattern=None, rgb='red', alpha=255):
+    def set_pattern(self, pattern=None, rgb='red', alpha=255, show=False):
         mask = ZO_Mask().array
 
         if self._pattern is None:
@@ -87,6 +87,7 @@ class ZO_Image:
         bg = ImageColor.getcolor('white', 'RGBA')
         bg = (bg[0], bg[1], bg[2], 0)  # Set a transparent background
         fg = ImageColor.getcolor(rgb, 'RGBA')
+        fg = (fg[0], fg[1], fg[2], alpha)  # Set a transparent background
 
         op = []
         for r in mask:
@@ -95,13 +96,13 @@ class ZO_Image:
                 if c == ZO_Mask.ZoneTags.NoTag:
                     row.append(bg)
                 elif c == ZO_Mask.ZoneTags.OneInteriorTag:
-                    row.append(fg if pattern | ZO_Image.Patterns.OneInterior else bg)
+                    row.append(fg if pattern & ZO_Image.Patterns.OneInterior else bg)
                 elif c == ZO_Mask.ZoneTags.OneOutlineTag:
-                    row.append(fg if pattern | ZO_Image.Patterns.OneOutline else bg)
+                    row.append(fg if pattern & ZO_Image.Patterns.OneOutline else bg)
                 elif c == ZO_Mask.ZoneTags.ZeroOutlineTag:
-                    row.append(fg if pattern | ZO_Image.Patterns.ZeroOutline else bg)
+                    row.append(fg if pattern & ZO_Image.Patterns.ZeroOutline else bg)
                 elif c == ZO_Mask.ZoneTags.ZeroInteriorTag:
-                    row.append(fg if pattern | ZO_Image.Patterns.ZeroInterior else bg)
+                    row.append(fg if pattern & ZO_Image.Patterns.ZeroInterior else bg)
 
             op.append(row)
 
@@ -110,4 +111,7 @@ class ZO_Image:
         wcImg = Image.fromarray(op, 'RGBA')
 
         # Now paste the temporary image over the pattern
-        self._pattern.paste(wcImg)
+        self._pattern =  Image.alpha_composite(self._pattern, wcImg)
+
+        if show == True:
+            self._pattern.show()
