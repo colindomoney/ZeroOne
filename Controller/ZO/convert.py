@@ -43,7 +43,7 @@ def ConvertZeroOneFile(inputFile, outputFile ='./zero_one.npy'):
         raise
 
     # Here we have an 'array' as a list of lists so convert it to an array and save it in .npy format
-    numpy.save(outputFile, numpy.array(data))
+    numpy.save(outputFile, numpy.array(data, dtype=numpy.uint8))
 
 
     ar = numpy.array(data)

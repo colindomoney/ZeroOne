@@ -129,45 +129,7 @@ def main_logging():
     destroy_logging()
 
 
-ZERO_ONE_MASK_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Controller/ZO/zero_one.npy'
-IMAGE_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png'
-
-
-def main_graphics():
-    from PIL import Image
-    import numpy
-    from ZO import image
-
-    print('main_graphics')
-
-    # Open the file, get the data and convert it to a list
-    imgData = list(Image.open(IMAGE_FILE).getdata())
-
-    # Get the mask data, flatten it out and convert it to a list
-    # maskData = list(numpy.load(ZERO_ONE_MASK_FILE).flatten())
-
-    maskData = image.load_mask_data()
-
-    # Zip the data
-    combinedData = list(zip(imgData, maskData))
-
-    # Get everything that isn't a zero in the mask
-    outputFrame = [x[0] for x in combinedData if x[1] != 0]
-
-    if len(outputFrame) != zero_one.ZO_PIXEL_COUNT:
-        raise zero_one.ZeroOneException('Pixel count not the expected length after masking')
-
-        # Create a NumPy array, which has four elements. The top-left should be pure red, the top-right should be pure blue, the bottom-left should be pure green, and the bottom-right should be yellow
-    # pixels = numpy.array([[[255, 0, 0], [0, 255, 0]], [[0, 0, 255], [255, 255, 0]]])
-
-    # Create a PIL image from the NumPy array
-    # image = Image.fromarray(pixels.astype('uint8'), 'RGB')
-
-    # Save the image
-    # image.show()
-
-
-def main():
+def main_gpio():
     from PIL import ImageColor
 
     # xvals = list(range(1, 39))
@@ -203,6 +165,45 @@ def main():
     print('Done')
 
 
+ZERO_ONE_MASK_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Controller/ZO/zero_one.npy'
+IMAGE_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png'
+
+
+def main_graphics():
+    from PIL import Image
+    import numpy
+    from ZO import image
+
+    print('main_graphics')
+
+    # Open the file, get the data and convert it to a list
+    imgData = list(Image.open(IMAGE_FILE).getdata())
+
+    # Get the mask data, flatten it out and convert it to a list
+    # maskData = list(numpy.load(ZERO_ONE_MASK_FILE).flatten())
+
+    maskData = image.ZO_Mask().flat
+
+    # Zip the data
+    combinedData = list(zip(imgData, maskData))
+
+    # Get everything that isn't a zero in the mask
+    outputFrame = [x[0] for x in combinedData if x[1] != 0]
+
+    if len(outputFrame) != zero_one.ZO_PIXEL_COUNT:
+        raise zero_one.ZeroOneException('Pixel count not the expected length after masking')
+
+        # Create a NumPy array, which has four elements. The top-left should be pure red, the top-right should be pure blue, the bottom-left should be pure green, and the bottom-right should be yellow
+    # pixels = numpy.array([[[255, 0, 0], [0, 255, 0]], [[0, 0, 255], [255, 255, 0]]])
+
+    # Create a PIL image from the NumPy array
+    # image = Image.fromarray(pixels.astype('uint8'), 'RGB')
+
+    # Save the image
+    # image.show()
+
+
+
 if __name__ == "__main__":
     # main_graphics()
-    main()
+    main_graphics()
