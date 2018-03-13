@@ -1,3 +1,5 @@
+from ZO import ZO_Mask
+
 ZO_PIXEL_COUNT = 591  # The total pixels (ie. LEDs) on the display
 ZO_X_SIZE = 38  # The X dimension ie. columns
 ZO_Y_SIZE = 28  # The Y dimension ie. rows
@@ -41,4 +43,21 @@ class PixelDriver:
         ''' Actually write the pixels to the display'''
         pass
 
-    # TODO :
+    def _map_image_to_pixels(self):
+        maskData = ZO_Mask().flat
+
+        # Zip the data
+        # TODO : Set the input data here
+        combinedData = list(zip(imgData, maskData))
+
+        # Get everything that isn't a zero in the mask
+        outputFrame = [x[0] for x in combinedData if x[1] != 0]
+
+        if len(outputFrame) != ZO_PIXEL_COUNT:
+            raise ZeroOneException('Pixel count not the expected length after masking')
+
+    # TODO : Implement the following features
+    #  1 - check the server is running
+    #  2 - check the displays are attached
+    #  3 - blank the pixels
+

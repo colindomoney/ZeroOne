@@ -4,7 +4,6 @@ import time
 from enum import Enum
 from ZO import zero_one
 
-
 from getkey import getkey, keys
 from pynput.keyboard import Key, Listener
 
@@ -167,6 +166,7 @@ def main_gpio():
 
 ZERO_ONE_MASK_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Controller/ZO/zero_one.npy'
 
+
 def main_graphics():
     from PIL import Image
     import numpy
@@ -174,18 +174,7 @@ def main_graphics():
 
     print('main_graphics')
 
-    # Create a NumPy array, which has four elements. The top-left should be pure red, the top-right should be pure blue, the bottom-left should be pure green, and the bottom-right should be yellow
-    # pixels = numpy.array([[[255, 0, 0, 255], [0, 255, 0, 255]], [[0, 0, 255, 255], [255, 255, 0, 255]]])
-
-    # Create a PIL image from the NumPy array
-    # testImage = Image.fromarray(pixels.astype('uint8'), 'RGBA')
-
-    # Save the image
-    # testImage.show()
-
     img = image.ZO_Image()
-
-    img.set_to_color(rgb='yellow')
 
     img.clear_pattern()
     img.set_pattern(image.ZO_Image.Patterns.OneOutline)
@@ -198,23 +187,6 @@ def main_graphics():
 
     # Open the file, get the data and convert it to a list
     imgData = list(Image.open(image.TEST_PATTERN_FILE).getdata())
-
-    # Get the mask data, flatten it out and convert it to a list
-    # maskData = list(numpy.load(ZERO_ONE_MASK_FILE).flatten())
-
-    maskData = image.ZO_Mask().flat
-
-    # Zip the data
-    combinedData = list(zip(imgData, maskData))
-
-    # Get everything that isn't a zero in the mask
-    outputFrame = [x[0] for x in combinedData if x[1] != 0]
-
-    if len(outputFrame) != zero_one.ZO_PIXEL_COUNT:
-        raise zero_one.ZeroOneException('Pixel count not the expected length after masking')
-
-
-
 
 
 if __name__ == "__main__":

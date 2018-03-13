@@ -69,14 +69,12 @@ class ZO_Image:
     def set_to_color(self, rgb='white', alpha=255):
         fg = ImageColor.getcolor(rgb, 'RGBA')
 
+        # Build an array and pull it in as RGBA
         arr = numpy.array([[fg for x in  range(zero_one.ZO_X_SIZE)] for y in range(zero_one.ZO_Y_SIZE)], dtype=numpy.dtype('uint8,uint8,uint8,uint8'))
-        # self._image = Image.new('RGBA', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE))
         self._image = Image.fromarray(arr, 'RGBA')
-        self._image.show()
 
     def load_from_file(self, filename=None):
         self._image = Image.open(filename)
-        # self._image.show()
 
     def clear_pattern(self):
         # Create a new image in RGBA with (width, height)
@@ -91,7 +89,7 @@ class ZO_Image:
         bg = ImageColor.getcolor('white', 'RGBA')
         bg = (bg[0], bg[1], bg[2], 0)  # Set a transparent background
         fg = ImageColor.getcolor(rgb, 'RGBA')
-        fg = (fg[0], fg[1], fg[2], alpha)  # Set a transparent background
+        fg = (fg[0], fg[1], fg[2], alpha)  # Set a solid foreground
 
         op = []
         for r in mask:
