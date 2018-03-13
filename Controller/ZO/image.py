@@ -66,9 +66,13 @@ class ZO_Image:
     def screen_buffer(self):
         return None
 
-    # TODO : Not sure what this was going to do ?
-    # def set_to_color(self, rgb='black', alpha=0.0):
-    #     pass
+    def set_to_color(self, rgb='white', alpha=255):
+        fg = ImageColor.getcolor(rgb, 'RGBA')
+
+        arr = numpy.array([[fg for x in  range(zero_one.ZO_X_SIZE)] for y in range(zero_one.ZO_Y_SIZE)], dtype=numpy.dtype('uint8,uint8,uint8,uint8'))
+        # self._image = Image.new('RGBA', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE))
+        self._image = Image.fromarray(arr, 'RGBA')
+        self._image.show()
 
     def load_from_file(self, filename=None):
         self._image = Image.open(filename)
