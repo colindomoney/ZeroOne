@@ -176,11 +176,15 @@ def main_graphics():
 
     img = image.ZO_Image()
 
+    # Set up the pattern and load an image from disk
     img.clear_pattern()
     img.set_pattern(image.ZO_Image.Patterns.OneOutline)
     img.set_pattern(image.ZO_Image.Patterns.ZeroOutline, rgb='green')
+    img.load_from_file(image.TEST_PATTERN_FILE)
 
-    # img.load_from_file(image.TEST_PATTERN_FILE)
+    # img.image.show()
+    img.show_pattern = True
+    # img.image.show()
 
     # Exit early
     return

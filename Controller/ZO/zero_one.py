@@ -1,4 +1,4 @@
-from ZO import ZO_Mask
+
 
 ZO_PIXEL_COUNT = 591  # The total pixels (ie. LEDs) on the display
 ZO_X_SIZE = 38  # The X dimension ie. columns
@@ -44,6 +44,8 @@ class PixelDriver:
         pass
 
     def _map_image_to_pixels(self):
+        from . import ZO_Mask
+
         maskData = ZO_Mask().flat
 
         # Zip the data

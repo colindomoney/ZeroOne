@@ -57,14 +57,27 @@ class ZO_Image:
 
     def __init__(self):
         super().__init__()
+        self._show_pattern = False
 
         self._image = None
         self._pattern = None
 
-    # TODO : Return the underlying image buffer
     @property
-    def screen_buffer(self):
-        return None
+    def image(self):
+        img = self._image
+
+        if self._show_pattern == True:
+            img = Image.alpha_composite(self._image, self._pattern)
+
+        return img
+
+    @property
+    def show_pattern(self):
+        return self._show_pattern
+
+    @show_pattern.setter
+    def show_pattern(self, value):
+        self._show_pattern = value
 
     def set_to_color(self, rgb='white', alpha=255):
         fg = ImageColor.getcolor(rgb, 'RGBA')
