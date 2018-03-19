@@ -42,3 +42,7 @@ Controller/zero_one\.log
 Controller/\.idea/
 
 *.pyc
+
+Controller/images/
+
+Controller/Test\.build/
