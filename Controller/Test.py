@@ -183,7 +183,7 @@ def main_graphics():
     # img.set_pattern(image.ZO_Image.Patterns.OneInterior, rgb='white')
     # img.set_pattern(image.ZO_Image.Patterns.ZeroOutline, rgb='green')
     # img.set_pattern(image.ZO_Image.Patterns.ZeroInterior, rgb='yellow')
-    img.load_from_file(image.SOUTH_AFRICA_FILE)
+    img.load_from_file(image.TEST_PATTERN_FILE)
 
     # img.image.show()
     img.show_pattern = False

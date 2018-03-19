@@ -13,12 +13,6 @@ ZO_Y_SIZE = 28  # The Y dimension ie. rows
 # GPIO17 = LED
 # GPIO27 = LED
 
-# TODO : Pull in the '01' pixels and store them as a 591 byte list
-
-# TODO : Definitions for the values in the '01' pixel ie. 11, 22, 1, 2, 0
-
-# TODO : Convery a PNG to a 28x38 thumbnail
-
 class ZeroOneException(Exception):
     """  Massively complex override of the base exception class for ZeroOne exceptions """
 
@@ -85,12 +79,7 @@ class PixelDriver:
         if len(outputFrame) != ZO_PIXEL_COUNT:
             raise ZeroOneException('Pixel count not the expected length after masking')
 
+        # TODO : This can throw an exception if the input format ia wrong
         pixels = [(x[0], x[1], x[2]) for x in outputFrame]
 
-        self._client.set_interpolation(True)
         self._client.put_pixels(pixels)
-
-    # TODO : Implement the following features
-    #  1 - check the server is running
-    #  2 - check the displays are attached
-    #  3 - blank the pixels
