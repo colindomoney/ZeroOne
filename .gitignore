@@ -11,6 +11,9 @@ HardwareTests/TestRig/__pycache__/
 
 *.egg
 
+.key
+key.tar
+
 Controller/pydev/__pycache__/
 
 Controller/pydev/_pydev_bundle/
