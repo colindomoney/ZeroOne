@@ -40,7 +40,19 @@ Once this command has been run the first time then Git will handle the encryptio
 Once the _secrets.yaml_ file has been decrypted a set of credentials will be revealed as follows:
 
 ```
+ssh_credentials:
+  - sshusername: "pi"
+  - passphrase: "xxx"
+  - ssh_private_key:
+    "xxx"
+```
+The passphrase indicates the SSH command line password to be used when logging into the Raspberry Pi; however the preferred method is to use SSH authentication with the SSH private key provided. The private key is also _base64_ encoded so use the _base64_ command line utility to decode this and store the contents into a file, in my case called _id_rsa_zero-one_.
 
+Finally add an entry to your SSH congig file to specify this file to be used for connections to the Pi either using a hostname or IP address, such as:
 
-
+```
+# cat ~/.ssh/config
+Host rpi.local
+        User pi
+        IdentityFile /Users/colind/.ssh/id_rsa_zero-one
 ```
