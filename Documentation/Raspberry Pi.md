@@ -71,6 +71,10 @@ The easiest method of getting access to the Pi is via Ethernet connection. Use a
 
 Use _ping_ to determine connectivity to the specified IP address. Additionally you may wish to use some method (_hosts_ file, etc) to assign a hostname to this device to avoid having to remember the IP address.
 
+Use the following configuration on Mac OS to enable 'internet connection sharing':
+
+![Sharing on Mac OS](https://raw.githubusercontent.com/colindomoney/ZeroOne/master/Documentation/images/Sharing.png)
+
 ## Setting up SSH on the Pi
 
 ## Install the Pi Build Tools
