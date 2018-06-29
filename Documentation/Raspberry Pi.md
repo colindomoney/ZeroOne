@@ -56,7 +56,7 @@ Unless you are using a fixed IP address in your Pi configuration the Pi will get
 
 > arp -a
 
-It should be easily possible to find the Pi by looking at the hostname, if this method eludes you the [following](https://gist.github.com/dolmen/511a94761f8089964a03) shell snippet should help:
+It should be easily possible to find the Pi by looking at the hostname, if this method eludes you the [following](https://gist.github.com/dolmen/511a94761f8089964a03) shell snippet should help (although it didn't appear to work on Mac OS):
 
 ```
 # Scan the local network to put IPs in the ARP cache
