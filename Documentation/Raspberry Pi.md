@@ -117,13 +117,21 @@ In the event of any problems turn on verbose debugging on the SSH client using t
 
 ## Install the Pi Build Tools
 
-* General build tools
+### Setting the Default Python Interpreter
 
-* Python build tools
+Generally life goes better with newer versions of Python, such as 3.5 and above. The latest versions of Raspbian appear to ship with Python 3.5 but the default interpreter is still set to Python 2.7. The following steps describe how to set the default to 3.5.
+
+> \# update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 \
+> \# update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2 \
+> 
 
 > sudo apt-get install python-dev
 
 https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux
+
+
+* General build tools
+
 
 * FadeCandy build tools
 
