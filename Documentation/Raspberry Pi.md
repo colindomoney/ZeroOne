@@ -77,6 +77,44 @@ Use the following configuration on Mac OS to enable 'internet connection sharing
 
 ## Setting up SSH on the Pi
 
+### Setting up a Factory Build Pi
+It is quite likely that your Pi will already be setup correctly with SSH; however if you are building a new Pi from a factory build Pi you need to perform the following steps:
+
+The initial connection to the Raspberry Pi needs to be performed with the default Raspberry Pi factory credentials, namely:
+
+__Username:__ pi \
+__Password:__ raspberry
+
+Upon access to the Pi the suggestion is to change the default password immediately using the following command:
+> passwd
+
+The password value used on this project is located in [secrets.yaml](https://github.com/colindomoney/ZeroOne/blob/master/secrets.yaml) file. 
+
+It is also necessary to enable SSH on the Pi using:
+
+> ssh-keygen
+
+Accept all the defaults and use an empty passphrase. Also ensure the correct directory and file permissions are set as per [this article](https://www.raspberrypi.org/forums/viewtopic.php?t=23061). Usually this is simply the following:
+
+```
+~/.ssh/authorized_keys : 644
+~/.ssh : 700
+```
+
+### Connecting to a Pre-configured Pi
+
+If your Pi has already been configured (this will almost certainly be the case) then all that is necessary is to configure your SSH client to use the correct SSH private key. The details on how to extract this private key from the [secrets.yaml](https://github.com/colindomoney/ZeroOne/blob/master/secrets.yaml) file can be found [here](https://github.com/colindomoney/ZeroOne/blob/master/Documentation/Setting%20up%20Git-Crypt.md)
+
+Add an entry to your SSH congig file to specify this file to be used for connections to the Pi either using a hostname or IP address, such as:
+
+```
+# cat ~/.ssh/config
+Host rpi.local
+        User pi
+        IdentityFile /Users/colind/.ssh/id_rsa_zero-one
+```
+In the event of any problems turn on verbose debugging on the SSH client using the '-v' option, problems are often associated with directory and file permissions.
+
 ## Install the Pi Build Tools
 
 * General build tools
