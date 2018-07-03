@@ -127,6 +127,11 @@ Generally life goes better with newer versions of Python, such as 3.5 and above.
 
 > sudo apt-get install python-dev
 
+
+> sudo ln -s /usr/bin/pip3 /usr/local/bin/pip \
+> sudo apt-get install python3-pip
+
+
 https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux
 
 
