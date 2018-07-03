@@ -1,16 +1,6 @@
-# Topics
+# Raspberry Pi
 
-1. Which version of Pi OS to use
-1. How to install it and update it
-1. Setting up WiFi on the Pi
-1. Accessing the Pi with Ethernet
-1. Installing the FastLED driver
-    1. Building it 
-    1. USB permissions
-1. Setting up SSH
-1. Getting the ZeroOne code
-
-The following notes describe how to set up the Raspberry Pi used as the main controller on the ZeroOne project
+The following notes describe how to set up the Raspberry Pi used as the main controller on the ZeroOne project.
 
 ## Installing the Raspberry Pi Raspbian image
 
@@ -21,6 +11,11 @@ Use an SD-Card of at least 8GB in capacity and use [Etcher](https://etcher.io/) 
 Before booting the SD-Card it might be useful to follow the additional steps to configure and enable WiFi access upon initial boot, see below for further
 
 ## Updating and Upgrading the image
+
+After the installation it is necessary to upgrade and update Raspbian using the following commands:
+
+> \# sudo apt-get update \
+> \# sudo apt-get dist-upgrade
 
 ## Connecting the Pi to a Network
 
@@ -119,32 +114,43 @@ In the event of any problems turn on verbose debugging on the SSH client using t
 
 ### Setting the Default Python Interpreter
 
-Generally life goes better with newer versions of Python, such as 3.5 and above. The latest versions of Raspbian appear to ship with Python 3.5 but the default interpreter is still set to Python 2.7. The following steps describe how to set the default to 3.5.
+Generally life goes better with newer versions of Python, such as 3.5 and above. The latest versions of Raspbian appear to ship with Python 3.5 but the default interpreter is still set to Python 2.7. The [following steps](https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux) describe how to set the default to 3.5.
 
 > \# update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 \
-> \# update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2 
+> \# update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2 \
+> \# sudo apt-get install python-dev \
+> \# sudo update-alternatives --config python
 
-> sudo apt-get install python-dev
+Following the last command ensure that Python 3.5 is selected as the default, or option 0.
+
+Verify this by getting the Python version as below:
+
+```
+# python -V
+Python 3.5.3
+```
 
 ### Install Python Pip
-> sudo apt-get install python3-pip
-> sudo ln -s /usr/bin/pip3 /usr/local/bin/pip \
+
+It is also necessary to install the Pip package manager for Python 3 using the following commands:
+
+> \# sudo apt-get install python3-pip \
+> \# sudo ln -s /usr/bin/pip3 /usr/local/bin/pip 
 
 ### Install the Package Dependencies
 
-> sudo apt-get install libopenjp2-7-dev
-> sudo apt install libtiff5
-> sudo apt-get install libatlas-base-dev
-> sudo apt install python3-numpy
+The Python code for this project has a few dependencies mostly on the [Pillow image library](http://python-pillow.org/) and they must be installed __prior__ to installing the Python packages as follows:
+
+> \# sudo apt-get install libopenjp2-7-dev
+> \# sudo apt install libtiff5
+> \# sudo apt-get install libatlas-base-dev
+> \# sudo apt install python3-numpy
 
 ### Install the Packages
 
-> sudo pip install -U -r requirements.txt
+The Python packages for the ZeroOne project are contained in a requirements file and can be installed using the following command:
 
-This may not be needed now?
-sudo pip3 install numpy==1.12.1
-
-https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux
+> \# sudo pip install -U -r requirements.txt
 
 ## Getting the ZeroOne code
 
@@ -158,7 +164,8 @@ Then execute the following commands to copy the contents of the 'Controller' dir
 
 > cd /home/pi \
 > mkdir ZeroOne \
-> cp -R temp/Controller/* ./ZeroOne/.
+> cp -R temp/Controller/* ./ZeroOne/. \
+> rm -rf temp/
 
 ## Build the FadeCandy Server
 
@@ -174,12 +181,22 @@ In order to build the FadeCandy server execute the following steps:
 
 ### Test the FadeCandy Server
 
+Copy the configuration file to the server folder using these commands:
+
+> cd /home/pi/ZeroOne/ \
+> cp FadeCandy_Config/zero-one_config.json fadecandy/server/.
+
 To test the FadeCandy server execcute the following commands:
 
 > cd /home/pi/ZeroOne/ 
 > fadecandy/server/fcserver fadecandy/server/zero-one_config.json
 
-## Installing the FastLED driver
-1. Building it 
-1. USB permissions
+## Enabling USB 'hotplug' 
+
+In order to ensure that the USB devices are assigned correct permissions it is necessary to add a configuration file for the [udev](https://linux.die.net/man/8/udev) driver as follows:
+
+```
+# cat /etc/udev/rules.d/50-usb-perms.rules
+SUBSYSTEM=="usb", ATTR{idVendor}=="1d50", ATTR{idProduct}=="607a", MODE="0777"
+```
 
