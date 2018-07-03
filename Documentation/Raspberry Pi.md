@@ -122,15 +122,27 @@ In the event of any problems turn on verbose debugging on the SSH client using t
 Generally life goes better with newer versions of Python, such as 3.5 and above. The latest versions of Raspbian appear to ship with Python 3.5 but the default interpreter is still set to Python 2.7. The following steps describe how to set the default to 3.5.
 
 > \# update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 \
-> \# update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2 \
-> 
+> \# update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2 
 
 > sudo apt-get install python-dev
 
-
-> sudo ln -s /usr/bin/pip3 /usr/local/bin/pip \
+### Install Python Pip
 > sudo apt-get install python3-pip
+> sudo ln -s /usr/bin/pip3 /usr/local/bin/pip \
 
+### Install the Package Dependencies
+
+> sudo apt-get install libopenjp2-7-dev
+> sudo apt install libtiff5
+> sudo apt-get install libatlas-base-dev
+> sudo apt install python3-numpy
+
+### Install the Packages
+
+> sudo pip install -U -r requirements.txt
+
+This may not be needed now?
+sudo pip3 install numpy==1.12.1
 
 https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux
 
