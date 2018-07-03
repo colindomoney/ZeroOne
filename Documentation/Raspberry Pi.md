@@ -115,7 +115,7 @@ Host rpi.local
 ```
 In the event of any problems turn on verbose debugging on the SSH client using the '-v' option, problems are often associated with directory and file permissions.
 
-## Install the Pi Build Tools
+## Install the Python Environment
 
 ### Setting the Default Python Interpreter
 
@@ -146,14 +146,40 @@ sudo pip3 install numpy==1.12.1
 
 https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux
 
+## Getting the ZeroOne code
 
-* General build tools
+Create a directory in the home directory of the Pi called 'ZeroOne' viz.
+> /home/pi/ZeroOne/
 
+In the home directory ('/home/pi') clone the ZeroOne repository as follows:
+> git clone git@github.com:colindomoney/ZeroOne.git /home/pi/temp
 
-* FadeCandy build tools
+Then execute the following commands to copy the contents of the 'Controller' directory to the 'ZeroOne' folder root:
+
+> cd /home/pi \
+> mkdir ZeroOne \
+> cp -R temp/Controller/* ./ZeroOne/.
+
+## Build the FadeCandy Server
+
+[FadeCandy](https://github.com/scanlime/fadecandy) is a server responsible for driving bit patterns to the Neopixel display using the USB interfaces on the Pi. To use FadeCandy it is necessary to clone the repo, build from source, and execute using the configuration file. 
+
+In order to build the FadeCandy server execute the following steps:
+
+> cd /home/pi/ZeroOne/ \
+> git clone git@github.com:scanlime/fadecandy.git \
+> cd fadecandy/server \
+> make submodules \
+> make
+
+### Test the FadeCandy Server
+
+To test the FadeCandy server execcute the following commands:
+
+> cd /home/pi/ZeroOne/ 
+> fadecandy/server/fcserver fadecandy/server/zero-one_config.json
 
 ## Installing the FastLED driver
 1. Building it 
 1. USB permissions
 
-## Getting the ZeroOne code
