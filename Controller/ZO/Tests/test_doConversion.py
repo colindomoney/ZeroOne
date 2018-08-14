@@ -10,34 +10,37 @@ from ZO import convert
 class TestDoConversion(TestCase):
 
     @classmethod
-    def setUp(self):
+    def setUp(cls):
         pass
         # print('\nsetUp()')
 
     @classmethod
-    def setUpClass(self):
-        # print('\nsetUpClass()')
-
+    def setUpClass(cls):
         # Set the image directory and check it exists
-        self.IMAGE_DIRECTORY = '../../images/'
-        if os.path.exists(self.IMAGE_DIRECTORY) == False:
+        cls.IMAGE_DIRECTORY = '../../images/'
+        if os.path.exists(cls.IMAGE_DIRECTORY) == False:
             raise FileNotFoundError('Image directory not found')
-
-        self.numbers = [1, 6, 3, 8, 4, 9]
 
     @classmethod
     def tearDownClass(self):
-        for f in self.GetConvertedFiles(self, self.IMAGE_DIRECTORY):
-            os.remove(self.IMAGE_DIRECTORY  + f)
+        self.DeleteAllConvertedFiles()
+
+    @classmethod
+    def DeleteAllConvertedFiles(cls):
+        # Delete all the converted images
+        for f in cls.GetConvertedFiles(cls.IMAGE_DIRECTORY):
+            os.remove(cls.IMAGE_DIRECTORY  + f)
+
+    @classmethod
+    def GetConvertedFiles(cls, input):
+        return [ x for x in os.listdir(input) if os.path.splitext(x)[0].endswith('_zo')]
 
     def test_DoConversion(self):
-        pass
+        # self.DeleteAllConvertedFiles(self)
+        self.DeleteAllConvertedFiles()
 
         # print('\n\n' + os.getcwd())
         # convert.DoConversion(self.IMAGE_DIRECTORY)
-
-    def GetConvertedFiles(self, input):
-        return [ x for x in os.listdir(input) if os.path.splitext(x)[0].endswith('_zo')]
 
     def test_DoIRun(self):
         res = self.GetConvertedFiles(self.IMAGE_DIRECTORY)
