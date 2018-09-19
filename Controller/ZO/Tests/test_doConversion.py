@@ -12,13 +12,13 @@ class TestDoConversion(TestCase):
     @classmethod
     def setUp(cls):
         pass
-        # print('\nsetUp()')
 
     @classmethod
     def setUpClass(cls):
         # Set the image directory and check it exists
-        cls.IMAGE_DIRECTORY = '../../images/'
-        if os.path.exists(cls.IMAGE_DIRECTORY) == False:
+        cls.ImageDirectory = '../../images/'
+        cls.NumberOfFiles = 5
+        if os.path.exists(cls.ImageDirectory) == False:
             raise FileNotFoundError('Image directory not found')
 
     @classmethod
@@ -28,20 +28,29 @@ class TestDoConversion(TestCase):
     @classmethod
     def DeleteAllConvertedFiles(cls):
         # Delete all the converted images
-        for f in cls.GetConvertedFiles(cls.IMAGE_DIRECTORY):
-            os.remove(cls.IMAGE_DIRECTORY  + f)
+        for f in cls.GetConvertedFiles(cls.ImageDirectory):
+            os.remove(cls.ImageDirectory  + f)
 
     @classmethod
     def GetConvertedFiles(cls, input):
         return [ x for x in os.listdir(input) if os.path.splitext(x)[0].endswith('_zo')]
 
     def test_DoConversion(self):
-        # self.DeleteAllConvertedFiles(self)
+        # Clean all the files to start with
         self.DeleteAllConvertedFiles()
 
-        # print('\n\n' + os.getcwd())
-        # convert.DoConversion(self.IMAGE_DIRECTORY)
+        # Count the converted files, should be zero
+        self.assertEqual(0, len(self.GetConvertedFiles(self.ImageDirectory)))
+
+        # Count the input files, should be 5
+        self.assertEqual(self.NumberOfFiles, len(os.listdir(self.ImageDirectory)))
+
+        # Now convert the directory
+
+        # Count the converted files, should be 5
+
+        # Now check all the files are the right size
 
     def test_DoIRun(self):
-        res = self.GetConvertedFiles(self.IMAGE_DIRECTORY)
+        res = self.GetConvertedFiles(self.ImageDirectory)
         print(len(res))

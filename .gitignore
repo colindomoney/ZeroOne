@@ -49,3 +49,9 @@ Controller/\.idea/
 Controller/images/
 
 Controller/Test\.build/
+
+Controller/ZO/\.pytest_cache/v/cache/
+
+Controller/ZO/Tests/\.pytest_cache/v/cache/
+
+Controller/images\.zip
