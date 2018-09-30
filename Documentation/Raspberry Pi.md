@@ -141,10 +141,10 @@ It is also necessary to install the Pip package manager for Python 3 using the f
 
 The Python code for this project has a few dependencies mostly on the [Pillow image library](http://python-pillow.org/) and they must be installed __prior__ to installing the Python packages as follows:
 
-> \# sudo apt-get install libopenjp2-7-dev
-> \# sudo apt install libtiff5
-> \# sudo apt-get install libatlas-base-dev
-> \# sudo apt install python3-numpy
+> \# sudo apt-get install libopenjp2-7-dev \
+> \# sudo apt install libtiff5 \
+> \# sudo apt-get install libatlas-base-dev \
+> \# sudo apt install python3-numpy \
 
 ### Install the Packages
 
