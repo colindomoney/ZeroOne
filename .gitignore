@@ -57,3 +57,5 @@ Controller/ZO/Tests/\.pytest_cache/v/cache/
 Controller/images\.zip
 
 fadecandy/
+
+\.virtualenvs/
