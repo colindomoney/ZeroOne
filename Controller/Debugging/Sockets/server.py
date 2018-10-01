@@ -1,28 +1,35 @@
 # -*- coding: utf-8 -*-
 import socket
-import os
+# import os
 
-SOCKET_HANDLE = "./zero_one_display_emulator.socket"
+port = 6999
+host = socket.gethostname()
 
-if os.path.exists(SOCKET_HANDLE):
-    os.remove(SOCKET_HANDLE)
+server = socket.socket(
+    socket.AF_INET, socket.SOCK_STREAM)
+
+server.bind((host, port))
+server.listen(5)
+client, info = server.accept()
 
 print("Opening socket...")
-server = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
-server.bind(SOCKET_HANDLE)
-
 print("Listening...")
+
 while True:
-    datagram = server.recv(1024)
+    datagram = client.recv(1024)
     if not datagram:
         break
     else:
         print("-" * 20)
-        print(datagram.decode('utf-8'))
+
+        x = datagram.decode('utf-8')
+        print(x)
+
+        client.send(x.encode('utf-8'))
+
         if "DONE" == datagram.decode('utf-8'):
             break
 print("-" * 20)
 print("Shutting down...")
 server.close()
-os.remove(SOCKET_HANDLE)
 print("Done")

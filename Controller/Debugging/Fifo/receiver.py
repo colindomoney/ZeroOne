@@ -4,5 +4,5 @@ import sys
 path = "./my_program.fifo"
 fifo = open(path, "r")
 for line in fifo:
-    print "Received: " + line,
+    print("Received: " + line)
 fifo.close()
