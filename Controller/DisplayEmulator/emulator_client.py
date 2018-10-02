@@ -1,5 +1,5 @@
 import ZO
-import logging, sys, time, fnmatch, os
+import logging, sys, time, fnmatch, os, socket
 import kbhit as KBHit
 from enum import Enum
 from PIL import ImageTk, Image
@@ -82,21 +82,44 @@ class EmulatorCommand():
         self.Command = command
         self.Data = data
 
-def send_file(fileNumber):
-    files = get_images()
+# TODO : This is going to end up deriving from an interface shared by the 01 sometime
+class ZeroOneEmulator():
+    def __init__(self):
+        print('ZeroOneEmulator::__init__()')
 
-    if fileNumber < len(files):
-        pilImg = Image.open(os.path.join(IMAGE_PATH, files[fileNumber]))
-        rawData = pilImg.tobytes()
+        self._port = 6999
+        self._host = socket.gethostname()
+        self._client = None
+        self._socket = None
+        self._connected = False  # Shows if we are connected or not
 
-        ec = EmulatorCommand(data=rawData)
-        data_string = pickle.dumps(ec)
-        newEc = pickle.loads(data_string)
+    def send_file(self, fileName=None, fileNumber=0):
+        files = get_images()
 
-        print(newEc.Command)
+        if fileNumber < len(files):
+            pilImg = Image.open(os.path.join(IMAGE_PATH, files[fileNumber]))
+            rawData = pilImg.tobytes()
 
-    else:
-        raise ValueError('Too much files')
+            ec = EmulatorCommand(data=rawData)
+            data_string = pickle.dumps(ec)
+            newEc = pickle.loads(data_string)
+
+            print(newEc.Command)
+
+        else:
+            raise ValueError('Too much files')
+
+    def connect(self):
+        self._connected = False
+        self._client = socket.socket(
+                        socket.AF_INET, socket.SOCK_STREAM)
+
+        try:
+            self._client.connect((self._host, self._port))
+            self._connected = True
+
+        except Exception as ex:
+            print('>> ', ex)
 
 if __name__ == '__main__':
     def setup_logging():
@@ -120,7 +143,10 @@ if __name__ == '__main__':
     print('emulator_client running ...')
     setup_logging()
 
-    send_file(1)
+    # send_file(1)
+
+    open_connection()
+
     quit(0)
 
     try:
