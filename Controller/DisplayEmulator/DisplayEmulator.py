@@ -56,17 +56,24 @@ try:
     if len(files) != 0:
         pilImg = Image.open(os.path.join(IMAGE_PATH, files[5]))
 
+        # Now save the byte array and import it again
+        rawData = pilImg.tobytes()
+        size = len(rawData)
+
         # TODO: This resampling thing makes the images all fuzzy. Ideally we want
         # the pixels copied up as they are without interpolation but this is OK
         pilImg = pilImg.resize((canvasX, canvasY), Image.BILINEAR)
+        # pilImg.show()
 
-        # Now save the byte array and import it again
+        importPilImage = Image.frombytes('RGBA', (ZO.zero_one.ZO_X_SIZE, ZO.zero_one.ZO_Y_SIZE), rawData, 'raw')
+        importPilImage = importPilImage.resize((canvasX, canvasY), Image.BILINEAR)
+        # importPilImage.show()
 
-
-        img = ImageTk.PhotoImage(pilImg)
+        importRawData = pilImg.tobytes()
 
         # TODO : Try and understand why we have to add this offset here !!
         # It looks like the canvas is a bit too big for the image
+        img = ImageTk.PhotoImage(pilImg)
         canvas.create_image(3, 3, anchor=NW, image=img)
 
     root.after(500, open_connection())
