@@ -84,19 +84,20 @@ class DisplayEmulatorApplication(Thread):
         while self._closing == False:
             try:
                 data_string = self._client.recv(8192)
-                print('len = ', len(data_string))
-                newEc = pickle.loads(data_string)
-
-                print(newEc.Command)
 
                 if not data_string:
-                    pass
+                    print('... incomplete ... closing ...')
+                    self._client.close()
                 else:
-                    # x = data.decode('utf-8')
-                    # print(x)
-                    pass
+                    print('len = ', len(data_string))
+                    try:
+                        # TODO : This is prone to shitting itself so guard it with kid gloves
+                        newEc = pickle.loads(data_string)
+                        print(newEc.Command)
+                    except:
+                        pass
             except Exception as ex:
-                print("\n>>> EXCEPTION : {} <<<\n".format(ex.message))
+                print("\n>>> EXCEPTION : {} <<<\n".format(ex))
 
         print('exit run()')
 
@@ -137,24 +138,28 @@ def close_window():
     print('CLOSE()')
     app.close()
 
-# Create the root Tk object
-root = Tk()
-root.title("ZeroOne DisplayEmulator")
+try:
+    # Create the root Tk object
+    root = Tk()
+    root.title("ZeroOne DisplayEmulator")
 
-# Hook the close window event
-root.protocol("WM_DELETE_WINDOW", close_window)
+    # Hook the close window event
+    root.protocol("WM_DELETE_WINDOW", close_window)
 
-# Now build the app and start the thread in daemon mode
-app = DisplayEmulatorApplication(root)
-app.daemon = True
-app.start()
+    # Now build the app and start the thread in daemon mode
+    app = DisplayEmulatorApplication(root)
+    app.daemon = True
+    app.start()
 
-# Now run the main TKinter lool
-print('before mainloop()')
-root.mainloop()
-print('after mainloop()')
+    # Now run the main TKinter lool
+    print('before mainloop()')
+    root.mainloop()
+    print('after mainloop()')
 
-# TODO : The Ctrl-C is somehow lost now, add a handler back here somewhere
+except KeyboardInterrupt as ex:
+    print('Forcing a quit')
+    pass
 
-print('exiting ...')
+finally:
+    print('exiting ...')
 

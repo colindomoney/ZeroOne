@@ -96,25 +96,41 @@ class ZeroOneEmulator():
     def connected(self):
         return self._connected
 
-    def send_file(self, fileName=None, fileNumber=0, displayMode = 'DisplayZeroOne'):
+    def send_file(self, fileName=None, fileNumber=-1, displayMode = 'DisplayZeroOne'):
         files = get_images()
 
-        if fileNumber < len(files):
-            pilImg = Image.open(os.path.join(IMAGE_PATH, files[fileNumber]))
-            rawData = pilImg.tobytes()
+        while True:
+            if fileNumber < 0:
+                maxNum = len(files)
+                fileNumber = random.randint(0, maxNum - 1)
 
-            ec = EmulatorCommand(data=rawData)
-            data_string = pickle.dumps(ec)
-            newEc = pickle.loads(data_string)
+            if fileNumber < len(files):
+                pilImg = Image.open(os.path.join(IMAGE_PATH, files[fileNumber]))
+                width, height = pilImg.size
 
-            print(newEc.Command)
+                if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
+                    print('File not a ZeroOne file')
+                    fileNumber = -1
+                    continue
+                else:
+                    break
+            else:
+                raise ValueError('Too much files')
 
-            if self.connected == True:
-                print('len = ', len(data_string))
-                self._client.send(data_string)
+        rawData = pilImg.tobytes()
 
-        else:
-            raise ValueError('Too much files')
+        ec = EmulatorCommand(data=rawData)
+        data_string = pickle.dumps(ec)
+        newEc = pickle.loads(data_string)
+
+        print(newEc.Command)
+
+        if self.connected == True:
+            print('len = ', len(data_string))
+            self._client.send(data_string)
+
+        return 0
+
 
     def connect(self):
         self._connected = False
@@ -131,6 +147,11 @@ class ZeroOneEmulator():
         except Exception as ex:
             print('>> ', ex)
             return self._connected
+
+    def close(self):
+        print('close()')
+        if self.connected == True:
+            self._client.close()
 
 if __name__ == '__main__':
     def setup_logging():
@@ -163,24 +184,19 @@ if __name__ == '__main__':
         print('Connected = ', emulator.connected)
 
         if connected == True:
-            files = get_images()
-            maxNum = len(files)
-
             # Loop forever
             while command != keyboard.Commands.Quit:
                 command = keyboard.get_command()
                 print('. ')
                 time.sleep(0.2)
 
-                thisFile = random.randint(0, maxNum-1)
-
                 # Process the command
                 if command == keyboard.Commands.Command1:
-                    print('Command1', thisFile)
-                    emulator.send_file(fileNumber=thisFile)
+                    print('Command1')
+                    emulator.send_file()
                 elif command == keyboard.Commands.Command2:
-                    print('Command2', thisFile)
-                    emulator.send_file(fileNumber=thisFile)
+                    print('Command2')
+                    emulator.send_file()
         else:
             print('>> Failed to connect to server, exiting ...')
 
@@ -191,11 +207,13 @@ if __name__ == '__main__':
 
     # We got something we really weren't expecting here
     except Exception as ex:
-        print("\n>>> EXCEPTION : {} <<<\n".format(ex.message))
-        log.error(ex.message, exc_info=True)
+        print("\n>>> EXCEPTION : {} <<<\n".format(ex))
+        log.error(ex, exc_info=True)
         pass
 
     finally:
+        emulator.close()
+
         # Flush the keyboard here
         try:
             kb = KBHit.KBHit()
