@@ -64,17 +64,17 @@ def main():
             if command == ui.Commands.Test:
                 print('TEST')
 
-            #     if st == 0:
-            #         _ui.led_on(ui.Led.LED_RED)
-            #
-            #     if st == 1:
-            #         _ui.led_off(ui.Led.LED_RED)
-            #
-            #     print(_ui)
-            #
-            #     st = st + 1
-            #     if st == 2:
-            #         st = 0
+                if st == 0:
+                    _ui.led_on(ui.Led.LED_RED)
+
+                if st == 1:
+                    _ui.led_off(ui.Led.LED_RED)
+
+                print(_ui)
+
+                st = st + 1
+                if st == 2:
+                    st = 0
 
         _ui.shutdown()
 
