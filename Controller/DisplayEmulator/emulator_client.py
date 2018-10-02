@@ -1,23 +1,31 @@
 import ZO
-import logging, sys, time
+import logging, sys, time, fnmatch, os
 import kbhit as KBHit
 from enum import Enum
+from PIL import ImageTk, Image
+import pickle
+import pprint
 from pynput.keyboard import Key, Listener
+
+IMAGE_PATH = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images'
+
+def get_images():
+    return fnmatch.filter(os.listdir(IMAGE_PATH), '*.png')
 
 # Create a class to process key presses
 class KeyboardDriver():
     class Commands(Enum):
         Quit = 100
-        Command1 = 0
-        Command2 = 1
-        Command3 = 2
-        Command4 = 3
-        Command5 = 4
-        Command6 = 5
-        Command7 = 6
-        Command8 = 7
-        Command9 = 8
-        Command10 = 9
+        Command1 = 1
+        Command2 = 2
+        Command3 = 3
+        Command4 = 4
+        Command5 = 5
+        Command6 = 6
+        Command7 = 7
+        Command8 = 8
+        Command9 = 9
+        Command10 = 0
         Test = 101
 
         @classmethod
@@ -69,7 +77,26 @@ class KeyboardDriver():
             if key == Key.esc:
                 self._command = self.Commands.Quit
 
-print('Done!')
+class EmulatorCommand():
+    def __init__(self, command = 'None', data=None):
+        self.Command = command
+        self.Data = data
+
+def send_file(fileNumber):
+    files = get_images()
+
+    if fileNumber < len(files):
+        pilImg = Image.open(os.path.join(IMAGE_PATH, files[fileNumber]))
+        rawData = pilImg.tobytes()
+
+        ec = EmulatorCommand(data=rawData)
+        data_string = pickle.dumps(ec)
+        newEc = pickle.loads(data_string)
+
+        print(newEc.Command)
+
+    else:
+        raise ValueError('Too much files')
 
 if __name__ == '__main__':
     def setup_logging():
@@ -93,6 +120,9 @@ if __name__ == '__main__':
     print('emulator_client running ...')
     setup_logging()
 
+    send_file(1)
+    quit(0)
+
     try:
         keyboard = KeyboardDriver()
         command = None
@@ -106,8 +136,10 @@ if __name__ == '__main__':
             # Process the command
             if command == keyboard.Commands.Command1:
                 print('Command1')
+                send_file(1)
             elif command == keyboard.Commands.Command2:
                 print('Command2')
+                send_file(2)
 
     # This is kinda normal - just exit
     except KeyboardInterrupt as ex:

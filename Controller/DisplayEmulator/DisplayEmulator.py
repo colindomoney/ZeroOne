@@ -1,4 +1,4 @@
-import fnmatch, os
+import fnmatch, os, socket
 import ZO
 from tkinter import *
 from PIL import ImageTk, Image
@@ -6,16 +6,29 @@ from PIL import ImageTk, Image
 PIXEL_MULTIPLIER = 10
 IMAGE_PATH = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images'
 
+port = 6999
+host = socket.gethostname()
+
 def get_images():
     return fnmatch.filter(os.listdir(IMAGE_PATH), '*.png')
 
 # This will open the socket connection
 def open_connection():
+    # TODO : Open up the listening socket here
     print("open_connection")
-    root.after(500, process_connection())
+
+    server = socket.socket(
+        socket.AF_INET, socket.SOCK_STREAM)
+
+    server.bind((host, port))
+    server.listen(5)
+    client, info = server.accept()
+
+    root.after(100, process_connection())
 
 # This will process the incoming data from the socket
 def process_connection():
+    # TODO : Listen here
     print("process_connection")
 
 # Exit button handler
@@ -25,6 +38,7 @@ def exitButtonClick():
 # Clear button handler
 def clearButtonClick():
     print('clearButtonClick')
+
 
 # Build the app
 root = Tk()
@@ -63,11 +77,9 @@ try:
         # TODO: This resampling thing makes the images all fuzzy. Ideally we want
         # the pixels copied up as they are without interpolation but this is OK
         pilImg = pilImg.resize((canvasX, canvasY), Image.BILINEAR)
-        # pilImg.show()
 
         importPilImage = Image.frombytes('RGBA', (ZO.zero_one.ZO_X_SIZE, ZO.zero_one.ZO_Y_SIZE), rawData, 'raw')
         importPilImage = importPilImage.resize((canvasX, canvasY), Image.BILINEAR)
-        # importPilImage.show()
 
         importRawData = pilImg.tobytes()
 
@@ -76,7 +88,7 @@ try:
         img = ImageTk.PhotoImage(pilImg)
         canvas.create_image(3, 3, anchor=NW, image=img)
 
-    root.after(500, open_connection())
+    root.after(100, open_connection())
     root.mainloop()
 
 except KeyboardInterrupt as ex:
