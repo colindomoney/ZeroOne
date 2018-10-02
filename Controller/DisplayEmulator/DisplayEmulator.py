@@ -1,4 +1,6 @@
 import fnmatch, os, socket
+import pickle
+
 import ZO
 from threading import *
 from tkinter import *
@@ -18,12 +20,18 @@ def exitButtonClick():
 def clearButtonClick():
     print('clearButtonClick')
 
+class EmulatorCommand():
+    def __init__(self, command = 'None', data=None):
+        self.Command = command
+        self.Data = data
+
 class DisplayEmulatorApplication(Thread):
     def __init__(self, root):
         self._port = 6999
         self._host = socket.gethostname()
         self._client = None
         self._socket = None
+        self._closing = False
         self._root = root
 
         self._canvasX = PIXEL_MULTIPLIER * ZO.zero_one.ZO_X_SIZE
@@ -44,25 +52,51 @@ class DisplayEmulatorApplication(Thread):
         canvas.pack(pady=(10, 10), padx=(10,10))
 
     def close(self):
+        # This is called when the main loop wants to shut down
         print('close()')
+        self._closing = True
         self._server.close()
 
     def run(self):
+        # This is the main listening thread
         print('run()')
 
+        # Open the socket
         self._server = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM)
 
+        # self._server.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+        # Bind and listen
         self._server.bind((self._host, self._port))
         self._server.listen(5)
 
+        # TODO : I think we'll have to have this a bit more sophisticatted than this
+        # i.e. we'll need to loop back to accept a new connection
+
+        # Await a connection
         try:
             self._client, info = self._server.accept()
-
             print('CONNECTED !')
-
         except Exception as ex:
             print('>> ', ex)
+
+        while self._closing == False:
+            try:
+                data_string = self._client.recv(8192)
+                print('len = ', len(data_string))
+                newEc = pickle.loads(data_string)
+
+                print(newEc.Command)
+
+                if not data_string:
+                    pass
+                else:
+                    # x = data.decode('utf-8')
+                    # print(x)
+                    pass
+            except Exception as ex:
+                print("\n>>> EXCEPTION : {} <<<\n".format(ex.message))
 
         print('exit run()')
 

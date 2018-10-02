@@ -3,7 +3,7 @@ import logging, sys, time, fnmatch, os, socket
 import kbhit as KBHit
 from enum import Enum
 from PIL import ImageTk, Image
-import pickle
+import pickle, random
 import pprint
 from pynput.keyboard import Key, Listener
 
@@ -90,10 +90,13 @@ class ZeroOneEmulator():
         self._port = 6999
         self._host = socket.gethostname()
         self._client = None
-        self._socket = None
         self._connected = False  # Shows if we are connected or not
 
-    def send_file(self, fileName=None, fileNumber=0):
+    @property
+    def connected(self):
+        return self._connected
+
+    def send_file(self, fileName=None, fileNumber=0, displayMode = 'DisplayZeroOne'):
         files = get_images()
 
         if fileNumber < len(files):
@@ -106,6 +109,10 @@ class ZeroOneEmulator():
 
             print(newEc.Command)
 
+            if self.connected == True:
+                print('len = ', len(data_string))
+                self._client.send(data_string)
+
         else:
             raise ValueError('Too much files')
 
@@ -114,12 +121,16 @@ class ZeroOneEmulator():
         self._client = socket.socket(
                         socket.AF_INET, socket.SOCK_STREAM)
 
+        # self._client.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
         try:
             self._client.connect((self._host, self._port))
             self._connected = True
+            return self._connected
 
         except Exception as ex:
             print('>> ', ex)
+            return self._connected
 
 if __name__ == '__main__':
     def setup_logging():
@@ -143,29 +154,35 @@ if __name__ == '__main__':
     print('emulator_client running ...')
     setup_logging()
 
-    # send_file(1)
-
-    open_connection()
-
-    quit(0)
-
     try:
         keyboard = KeyboardDriver()
         command = None
 
-        # Loop forever
-        while command != keyboard.Commands.Quit:
-            command = keyboard.get_command()
-            print('. ')
-            time.sleep(0.2)
+        emulator = ZeroOneEmulator()
+        connected = emulator.connect()
+        print('Connected = ', emulator.connected)
 
-            # Process the command
-            if command == keyboard.Commands.Command1:
-                print('Command1')
-                send_file(1)
-            elif command == keyboard.Commands.Command2:
-                print('Command2')
-                send_file(2)
+        if connected == True:
+            files = get_images()
+            maxNum = len(files)
+
+            # Loop forever
+            while command != keyboard.Commands.Quit:
+                command = keyboard.get_command()
+                print('. ')
+                time.sleep(0.2)
+
+                thisFile = random.randint(0, maxNum-1)
+
+                # Process the command
+                if command == keyboard.Commands.Command1:
+                    print('Command1', thisFile)
+                    emulator.send_file(fileNumber=thisFile)
+                elif command == keyboard.Commands.Command2:
+                    print('Command2', thisFile)
+                    emulator.send_file(fileNumber=thisFile)
+        else:
+            print('>> Failed to connect to server, exiting ...')
 
     # This is kinda normal - just exit
     except KeyboardInterrupt as ex:
@@ -178,11 +195,15 @@ if __name__ == '__main__':
         log.error(ex.message, exc_info=True)
         pass
 
-    # Flush the keyboard here
-    kb = KBHit.KBHit()
-    kb.flush()
+    finally:
+        # Flush the keyboard here
+        try:
+            kb = KBHit.KBHit()
+            kb.flush()
+        except:
+            pass
 
-    # Shut this puppy down
-    destroy_logging()
-    print('Done!')
+        # Shut this puppy down
+        destroy_logging()
+        print('Done!')
 
