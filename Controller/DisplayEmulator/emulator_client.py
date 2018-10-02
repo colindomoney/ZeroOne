@@ -2,11 +2,7 @@ import ZO
 import logging, sys
 from pynput.keyboard import Key, Listener
 
-print('emulator_client running ...')
-
-
 # Create a class to process key presses
-
 class KeyboardDriver():
     def __init__(self):
         print('KeyboardDriver::__init__()')
@@ -69,10 +65,23 @@ if __name__ == '__main__':
 
     # Start the main program here
 
-    print('Testing UI ...')
+    print('emulator_client running ...')
     setup_logging()
 
-    keyboard = KeyboardDriver()
+    try:
+        keyboard = KeyboardDriver()
+
+        while True:
+            pass
+
+    except KeyboardInterrupt as ex:
+        print('Forcing a quit')
+        pass
+
+    except Exception as ex:
+        print("\n>>> EXCEPTION : {} <<<\n".format(ex.message))
+        log.error(ex.message, exc_info=True)
+        pass
 
     destroy_logging()
     print('Done!')
