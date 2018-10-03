@@ -170,11 +170,11 @@ ZERO_ONE_MASK_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Controller/ZO/zero_
 def main_graphics():
     from PIL import Image
     import numpy
-    from ZO import image
+    from ZO import Image
 
     print('main_graphics')
 
-    img = image.ZO_Image()
+    img = Image.ZO_Image()
     pix = zero_one.PixelDriver()
 
     # Set up the pattern and load an image from disk
@@ -183,7 +183,7 @@ def main_graphics():
     # img.set_pattern(image.ZO_Image.Patterns.OneInterior, rgb='white')
     # img.set_pattern(image.ZO_Image.Patterns.ZeroOutline, rgb='green')
     # img.set_pattern(image.ZO_Image.Patterns.ZeroInterior, rgb='yellow')
-    img.load_from_file(image.TEST_PATTERN_FILE)
+    img.load_from_file(Image.TEST_PATTERN_FILE)
 
     # img.image.show()
     img.show_pattern = False

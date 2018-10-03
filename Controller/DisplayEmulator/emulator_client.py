@@ -3,7 +3,7 @@ import logging, sys, time, fnmatch, os, socket
 import kbhit as KBHit
 from enum import Enum
 from PIL import ImageTk, Image
-import pickle, random
+import pickle, random, timer_cm
 import pprint
 from pynput.keyboard import Key, Listener
 
@@ -40,7 +40,7 @@ class KeyboardDriver():
             return None
 
     def __init__(self):
-        print('KeyboardDriver::__init__()')
+        # print('KeyboardDriver::__init__()')
 
         self._command = None
 
@@ -77,15 +77,21 @@ class KeyboardDriver():
             if key == Key.esc:
                 self._command = self.Commands.Quit
 
+
+# TODO : God this has to be duplicated on both the client and server
 class EmulatorCommand():
     def __init__(self, command = 'None', data=None):
-        self.Command = command
-        self.Data = data
+        self.command = command
+        self.data = data
+
 
 # TODO : This is going to end up deriving from an interface shared by the 01 sometime
 class ZeroOneEmulator():
+    # Define some strings for the commands we'll use
+    Commands = ['DisplayAll', 'DisplayZeroOne', 'ClearDisplay']
+
     def __init__(self):
-        print('ZeroOneEmulator::__init__()')
+        # print('ZeroOneEmulator::__init__()')
 
         self._port = 6999
         self._host = socket.gethostname()
@@ -96,34 +102,81 @@ class ZeroOneEmulator():
     def connected(self):
         return self._connected
 
-    def send_file(self, fileName=None, fileNumber=-1, displayMode = 'DisplayZeroOne'):
+    # Do the useful commands here
+    def display_full_image(self, raw_data=None, filename=None):
+        print('display_full_image')
+
+    def display_full_image(self, raw_data=None, filename=None):
+        print('display_full_image')
+
+    def clear_display(self):
+        print('clear_display')
+
+    # Arguably not the best place for this but needs must
+    def get_random_file(self):
         files = get_images()
 
         while True:
-            if fileNumber < 0:
-                maxNum = len(files)
-                fileNumber = random.randint(0, maxNum - 1)
+            max_num = len(files)
+            file_number = random.randint(0, max_num - 1)
 
-            if fileNumber < len(files):
-                pilImg = Image.open(os.path.join(IMAGE_PATH, files[fileNumber]))
+            file_name = os.path.join(IMAGE_PATH, files[file_number])
+            pil_img = Image.open(file_name)
+            width, height = pil_img.size
+
+            if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
+                print('File not a ZeroOne file')
+                continue
+            else:
+                return file_name
+
+    # A debug method to be removed
+    def debug(self, opt=0):
+        print('debug()')
+
+        file_name = self.get_random_file()
+        print(file_name)
+
+        zo_image = ZO.ZO_Image()
+        zo_image.load_from_file(file_name)
+
+        zo_data = zo_image.zero_one_raw_data
+
+        with timer_cm.Timer('get_image_from_zero_one_data'):
+            zo_image.get_image_from_zero_one_data()
+
+        # zo_image.set_pattern(ZO.ZO_Image.Patterns.BothBoth)
+        # zo_image.show()
+
+    def send_file(self, file_name=None, file_number=-1, displayMode ='DisplayZeroOne'):
+        files = get_images()
+
+        while True:
+            if file_number < 0:
+                maxNum = len(files)
+                file_number = random.randint(0, maxNum - 1)
+
+            if file_number < len(files):
+                file_name = os.path.join(IMAGE_PATH, files[file_number])
+                pilImg = Image.open(file_name)
                 width, height = pilImg.size
 
                 if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
                     print('File not a ZeroOne file')
-                    fileNumber = -1
+                    file_number = -1
                     continue
                 else:
                     break
             else:
                 raise ValueError('Too much files')
 
-        rawData = pilImg.tobytes()
+        raw_data = pilImg.tobytes()
 
-        ec = EmulatorCommand(data=rawData)
-        data_string = pickle.dumps(ec)
-        newEc = pickle.loads(data_string)
+        emulator_command = EmulatorCommand(data=raw_data)
+        data_string = pickle.dumps(emulator_command)
+        new_emulator_command = pickle.loads(data_string)
 
-        print(newEc.Command)
+        print(new_emulator_command.command)
 
         if self.connected == True:
             print('len = ', len(data_string))
@@ -137,8 +190,6 @@ class ZeroOneEmulator():
         self._client = socket.socket(
                         socket.AF_INET, socket.SOCK_STREAM)
 
-        # self._client.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-
         try:
             self._client.connect((self._host, self._port))
             self._connected = True
@@ -149,9 +200,10 @@ class ZeroOneEmulator():
             return self._connected
 
     def close(self):
-        print('close()')
+        # print('close()')
         if self.connected == True:
             self._client.close()
+
 
 if __name__ == '__main__':
     def setup_logging():
@@ -180,10 +232,15 @@ if __name__ == '__main__':
         command = None
 
         emulator = ZeroOneEmulator()
-        connected = emulator.connect()
-        print('Connected = ', emulator.connected)
 
-        if connected == True:
+        # TODO : This is IDE debugging only, can be remove
+        # connected = emulator.connect()
+        # print('Connected = ', emulator.connected)
+
+        emulator.debug(1)
+        connected = False
+
+        if connected:
             # Loop forever
             while command != keyboard.Commands.Quit:
                 command = keyboard.get_command()
@@ -193,7 +250,8 @@ if __name__ == '__main__':
                 # Process the command
                 if command == keyboard.Commands.Command1:
                     print('Command1')
-                    emulator.send_file()
+                    # emulator.send_file()
+                    emulator.debug(1)
                 elif command == keyboard.Commands.Command2:
                     print('Command2')
                     emulator.send_file()
