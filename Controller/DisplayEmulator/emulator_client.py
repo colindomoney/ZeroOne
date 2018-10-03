@@ -4,7 +4,6 @@ import kbhit as KBHit
 from enum import Enum
 from PIL import ImageTk, Image
 import pickle, random, timer_cm
-import pprint
 from pynput.keyboard import Key, Listener
 
 IMAGE_PATH = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images'
@@ -103,8 +102,20 @@ class ZeroOneEmulator():
         return self._connected
 
     # Do the useful commands here
-    def display_full_image(self, raw_data=None, filename=None):
-        print('display_full_image')
+    def display_zero_one_image(self, raw_data=None, filename=None):
+        print('display_zero_one_image', filename)
+
+        pil_img = Image.open(filename)
+        width, height = pil_img.size
+
+        if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
+            raise ZO.ZeroOneException('File not a ZeroOne file')
+
+        # Now convert to 01 format
+        zo_image = ZO.ZO_Image()
+        zo_image.load_from_file(filename)
+
+        self._do_command(EmulatorCommand('DisplayZeroOne', zo_image.zero_one_raw_data))
 
     def display_full_image(self, raw_data=None, filename=None):
         print('display_full_image', filename)
@@ -115,13 +126,9 @@ class ZeroOneEmulator():
         if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
             raise ZO.ZeroOneException('File not a ZeroOne file')
 
-        # TODO: Make sure everything else works with RGB only
         pil_img = pil_img.convert('RGB')
 
         self._do_command(EmulatorCommand('DisplayAll', pil_img.tobytes()))
-
-        # new_pil_img = Image.frombytes('RGB', (ZO.zero_one.ZO_X_SIZE, ZO.zero_one.ZO_Y_SIZE), pil_img.tobytes(), 'raw')
-        # new_pil_img.show()
 
     def clear_display(self):
         print('clear_display')
@@ -131,11 +138,8 @@ class ZeroOneEmulator():
         data_string = pickle.dumps(ec)
 
         if self.connected == True:
-            # print('len = ', len(data_string))
-            # print(data_string)
             self._client.send(data_string)
 
-            # print(data_string)
             emulator_command = pickle.loads(data_string)
             print(emulator_command.command)
         else:
@@ -174,9 +178,6 @@ class ZeroOneEmulator():
         with timer_cm.Timer('get_image_from_zero_one_data'):
             zo_image.get_image_from_zero_one_data()
 
-        # zo_image.set_pattern(ZO.ZO_Image.Patterns.BothBoth)
-        # zo_image.show()
-
     def send_file(self, file_name=None, file_number=-1, displayMode ='DisplayZeroOne'):
         files = get_images()
 
@@ -208,7 +209,6 @@ class ZeroOneEmulator():
         print(new_emulator_command.command)
 
         if self.connected == True:
-            print('len = ', len(data_string))
             self._client.send(data_string)
 
         return 0
@@ -229,9 +229,8 @@ class ZeroOneEmulator():
             return self._connected
 
     def close(self):
-        print('close()')
-        if self.connected == True:
-            self._client.close()
+        print('ZeroOneEmulator::close()')
+        self._client.close()
 
 
 if __name__ == '__main__':
@@ -246,7 +245,7 @@ if __name__ == '__main__':
             ])
 
         global log
-        log = logging.getLogger('zero_one')
+        log = logging.getLogger('emulator_client')
         log.setLevel(logging.INFO)
 
     def destroy_logging():
@@ -262,32 +261,30 @@ if __name__ == '__main__':
 
         emulator = ZeroOneEmulator()
 
-        # TODO : This is IDE debugging only, can be remove
+        # TODO : This is IDE debugging only, can be removed
         connected = emulator.connect()
         print('Connected = ', emulator.connected)
-
-        # emulator.debug(1)
-        emulator.display_full_image(filename=emulator.get_random_file())
-        # emulator.clear_display()
-
-        # connected = False
+        emulator.clear_display()
 
         if connected:
             # Loop forever
             while command != keyboard.Commands.Quit:
                 command = keyboard.get_command()
                 print('. ')
-                time.sleep(0.2)
+                time.sleep(0.1)
 
                 # Process the command
                 if command == keyboard.Commands.Command1:
                     print('Command1')
-                    emulator.debug(1)
+                    emulator.display_full_image(filename=emulator.get_random_file())
                 elif command == keyboard.Commands.Command2:
                     print('Command2')
+                    emulator.display_zero_one_image(filename=emulator.get_random_file())
+                elif command == keyboard.Commands.Command3:
+                    print('Command3')
                     emulator.clear_display()
         else:
-            print('>> Failed to connect to server, exiting ...')
+            print('Failed to connect to server, exiting ...')
 
     # This is kinda normal - just exit
     except KeyboardInterrupt as ex:

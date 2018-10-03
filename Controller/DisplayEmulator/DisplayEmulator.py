@@ -1,5 +1,5 @@
 import fnmatch, os, socket
-import pickle, pprint
+import pickle, timer_cm
 
 import ZO
 from threading import *
@@ -32,6 +32,8 @@ class EmulatorCommand():
 
 
 class DisplayEmulatorApplication(Thread):
+    POLL_INTERVAL = 20
+
     def __init__(self, root):
         self._port = 6999
         self._host = socket.gethostname()
@@ -40,6 +42,7 @@ class DisplayEmulatorApplication(Thread):
         self._canvas = None
         self._closing = False
         self._root = root
+        self._render_image = None
 
         self._canvasX = PIXEL_MULTIPLIER * ZO.zero_one.ZO_X_SIZE
         self._canvasY = PIXEL_MULTIPLIER * ZO.zero_one.ZO_Y_SIZE
@@ -61,6 +64,25 @@ class DisplayEmulatorApplication(Thread):
         # Add the top frame for the buttons
         self._status_frame = Frame(root, bg='red', width=self._canvasX + 10, height=20)
         self._status_frame.pack(fill='x')
+
+        self._root.after(self.POLL_INTERVAL, self._process_messages)
+
+    def _process_messages(self):
+        if self._render_image != None:
+            with timer_cm.Timer('DisplayZeroOne') as tm:
+                with tm.child('convert'):
+                    pil_img = self._render_image.resize((self._canvasX, self._canvasY), Image.BILINEAR)
+
+                with tm.child('ImageTk'):
+                    self._img2 = ImageTk.PhotoImage(pil_img)
+                with tm.child('create_image'):
+                    self._canvas.create_image(3, 3, anchor=NW, image=self._img2)
+
+                self._canvas.update_idletasks()
+
+            self._render_image = None
+
+        self._root.after(self.POLL_INTERVAL, self._process_messages)
 
     def set_connected_state(self, is_connected = False):
         if is_connected == True:
@@ -107,7 +129,7 @@ class DisplayEmulatorApplication(Thread):
                     print('CONNECTED !')
                     self.set_connected_state(True)
                 except Exception as ex:
-                    print('>> ', ex)
+                    print("\n>>> EXCEPTION : {} <<<\n".format(ex))
 
             # Now try get some data
             try:
@@ -131,7 +153,7 @@ class DisplayEmulatorApplication(Thread):
                         self._handle_command(emulator_command)
 
                     except Exception as ex:
-                        print('Failed to unpickle it', ex)
+                        print("\n>>> EXCEPTION : {} <<<\n".format(ex))
             except Exception as ex:
                 print("\n>>> EXCEPTION : {} <<<\n".format(ex))
 
@@ -144,19 +166,17 @@ class DisplayEmulatorApplication(Thread):
         print('_handle_command', emulator_command.command)
 
         if emulator_command.command == 'DisplayAll':
-            print('len data = ', len(emulator_command.data))
-            pil_img = Image.frombytes('RGB', (ZO.zero_one.ZO_X_SIZE, ZO.zero_one.ZO_Y_SIZE), emulator_command.data, 'raw')
-
-            # self._canvas.delete('all')
-            pil_img = pil_img.resize((self._canvasX, self._canvasY), Image.BILINEAR)
-            self._img = ImageTk.PhotoImage(pil_img)
-            self._canvas.create_image(3, 3, anchor=NW, image=self._img)
-            self._canvas.update_idletasks()
+            self._render_image = Image.frombytes('RGB', (ZO.zero_one.ZO_X_SIZE, ZO.zero_one.ZO_Y_SIZE), emulator_command.data,
+                                      'raw')
 
         elif emulator_command.command == 'DisplayZeroOne':
-            pass
+            zo_image = ZO.ZO_Image()
+            self._render_image = zo_image.get_image_from_zero_one_data(emulator_command.data)
+
         elif emulator_command.command == 'ClearDisplay':
-            pass
+            self._canvas.delete('all')
+            self._canvas.update_idletasks()
+
         else:
             print('Unknown command')
 
@@ -182,13 +202,13 @@ try:
     app.start()
 
     # Now run the main TKinter lool
-    print('before mainloop()')
+    # print('before mainloop()')
     root.mainloop()
-    print('after mainloop()')
+    # print('after mainloop()')
 
 except KeyboardInterrupt as ex:
     print('Forcing a quit')
     pass
 
 finally:
-    print('exiting ...')
+    print('Done!')

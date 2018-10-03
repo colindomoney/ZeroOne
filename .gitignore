@@ -61,3 +61,5 @@ fadecandy/
 \.virtualenvs/
 
 *.log
+
+fadecandy_v1/
