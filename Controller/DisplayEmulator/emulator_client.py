@@ -107,10 +107,39 @@ class ZeroOneEmulator():
         print('display_full_image')
 
     def display_full_image(self, raw_data=None, filename=None):
-        print('display_full_image')
+        print('display_full_image', filename)
+
+        pil_img = Image.open(filename)
+        width, height = pil_img.size
+
+        if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
+            raise ZO.ZeroOneException('File not a ZeroOne file')
+
+        # TODO: Make sure everything else works with RGB only
+        pil_img = pil_img.convert('RGB')
+
+        self._do_command(EmulatorCommand('DisplayAll', pil_img.tobytes()))
+
+        # new_pil_img = Image.frombytes('RGB', (ZO.zero_one.ZO_X_SIZE, ZO.zero_one.ZO_Y_SIZE), pil_img.tobytes(), 'raw')
+        # new_pil_img.show()
 
     def clear_display(self):
         print('clear_display')
+        self._do_command(EmulatorCommand('ClearDisplay'))
+
+    def _do_command(self, ec):
+        data_string = pickle.dumps(ec)
+
+        if self.connected == True:
+            # print('len = ', len(data_string))
+            # print(data_string)
+            self._client.send(data_string)
+
+            # print(data_string)
+            emulator_command = pickle.loads(data_string)
+            print(emulator_command.command)
+        else:
+            print('>> Not connected')
 
     # Arguably not the best place for this but needs must
     def get_random_file(self):
@@ -200,7 +229,7 @@ class ZeroOneEmulator():
             return self._connected
 
     def close(self):
-        # print('close()')
+        print('close()')
         if self.connected == True:
             self._client.close()
 
@@ -234,11 +263,14 @@ if __name__ == '__main__':
         emulator = ZeroOneEmulator()
 
         # TODO : This is IDE debugging only, can be remove
-        # connected = emulator.connect()
-        # print('Connected = ', emulator.connected)
+        connected = emulator.connect()
+        print('Connected = ', emulator.connected)
 
-        emulator.debug(1)
-        connected = False
+        # emulator.debug(1)
+        emulator.display_full_image(filename=emulator.get_random_file())
+        # emulator.clear_display()
+
+        # connected = False
 
         if connected:
             # Loop forever
@@ -250,11 +282,10 @@ if __name__ == '__main__':
                 # Process the command
                 if command == keyboard.Commands.Command1:
                     print('Command1')
-                    # emulator.send_file()
                     emulator.debug(1)
                 elif command == keyboard.Commands.Command2:
                     print('Command2')
-                    emulator.send_file()
+                    emulator.clear_display()
         else:
             print('>> Failed to connect to server, exiting ...')
 
