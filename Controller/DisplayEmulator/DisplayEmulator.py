@@ -14,16 +14,6 @@ def get_images():
     return fnmatch.filter(os.listdir(IMAGE_PATH), '*.png')
 
 
-# Exit button handler
-def exitButtonClick():
-    print('exitButtonClick')
-
-
-# Clear button handler
-def clearButtonClick():
-    print('clearButtonClick')
-
-
 # TODO : God this has to be duplicated on both the client and server
 class EmulatorCommand():
     def __init__(self, command='None', data=None):
@@ -52,9 +42,9 @@ class DisplayEmulatorApplication(Thread):
         # Add the top frame for the buttons
         button_frame = Frame(root, bg='white', width=self._canvasX + 10, height=40)
         button_frame.pack(fill='x')
-        exit_button = Button(button_frame, text='Exit', command=exitButtonClick)
+        exit_button = Button(button_frame, text='Exit', command=self._exit_button_click)
         exit_button.pack(side='left', padx=10)
-        clear_button = Button(button_frame, text='Clear', command=clearButtonClick)
+        clear_button = Button(button_frame, text='Clear', command=self._clear_button_click)
         clear_button.pack(side='left')
 
         # Add the canvas with a black border and a bit of padding
@@ -67,19 +57,23 @@ class DisplayEmulatorApplication(Thread):
 
         self._root.after(self.POLL_INTERVAL, self._process_messages)
 
+    # Exit button handler
+    def _exit_button_click(self):
+        print('exit_button_click()')
+        self._root.destroy()
+
+    # Clear button handler
+    def _clear_button_click(self):
+        print('clear_button_click()')
+        self._canvas.delete('all')
+        self._canvas.update_idletasks()
+
     def _process_messages(self):
         if self._render_image != None:
-            with timer_cm.Timer('DisplayZeroOne') as tm:
-                with tm.child('convert'):
-                    pil_img = self._render_image.resize((self._canvasX, self._canvasY), Image.BILINEAR)
-
-                with tm.child('ImageTk'):
-                    self._img2 = ImageTk.PhotoImage(pil_img)
-                with tm.child('create_image'):
-                    self._canvas.create_image(3, 3, anchor=NW, image=self._img2)
-
-                self._canvas.update_idletasks()
-
+            pil_img = self._render_image.resize((self._canvasX, self._canvasY), Image.BILINEAR)
+            self._img = ImageTk.PhotoImage(pil_img)
+            self._canvas.create_image(3, 3, anchor=NW, image=self._img)
+            self._canvas.update_idletasks()
             self._render_image = None
 
         self._root.after(self.POLL_INTERVAL, self._process_messages)
@@ -143,7 +137,7 @@ class DisplayEmulatorApplication(Thread):
                     self._client.close()
                     self.set_connected_state(False)
                 else:
-                    print('len = ', len(data_string))
+                    # print('len = ', len(data_string))
                     # print(data_string)
                     try:
                         # This is prone to shitting itself so guard it with kid gloves
@@ -157,7 +151,7 @@ class DisplayEmulatorApplication(Thread):
             except Exception as ex:
                 print("\n>>> EXCEPTION : {} <<<\n".format(ex))
 
-        print('exit run()')
+        # print('exit run()')
 
         # Quit TKinter
         self._root.destroy()

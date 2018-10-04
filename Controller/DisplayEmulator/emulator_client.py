@@ -2,14 +2,16 @@ import ZO
 import logging, sys, time, fnmatch, os, socket
 import kbhit as KBHit
 from enum import Enum
-from PIL import ImageTk, Image
+from PIL import Image
 import pickle, random, timer_cm
 from pynput.keyboard import Key, Listener
 
 IMAGE_PATH = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images'
 
+
 def get_images():
     return fnmatch.filter(os.listdir(IMAGE_PATH), '*.png')
+
 
 # Create a class to process key presses
 class KeyboardDriver():
@@ -168,7 +170,7 @@ class ZeroOneEmulator():
         print('debug()')
 
         file_name = self.get_random_file()
-        print(file_name)
+        # print(file_name)
 
         zo_image = ZO.ZO_Image()
         zo_image.load_from_file(file_name)
