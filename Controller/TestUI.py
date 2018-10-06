@@ -51,8 +51,8 @@ def main():
 
         # _ui.led_on(ui.Led.LED_RED)
 
-        _ui.led_flash(ui.Led.LED_RED, 0.2)
-        _ui.led_flash(ui.Led.LED_AMBER, 0.1)
+        # _ui.led_flash(ui.Led.LED_RED, 0.2)
+        _ui.led_flash(ui.Led.LED_RED, 0.1)
 
         while command != ui.Commands.Quit:
             print('. ')

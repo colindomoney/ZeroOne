@@ -71,9 +71,9 @@ class ButtonEvent(Enum):
 
 
 class Button(Enum):
-    BUTTON_1 = 1
-    BUTTON_2 = 2
-    BUTTON_3 = 3
+    BUTTON_1 = 1  # Black button
+    BUTTON_2 = 2  # Middle Red button
+    BUTTON_3 = 3  # Outer Red button
 
 
 class Led(Enum):

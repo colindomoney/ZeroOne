@@ -1,4 +1,5 @@
 import os, sys
+import time
 from enum import Enum
 
 from ZO.ui import UIBase, ButtonEvent, Led, Button
@@ -20,6 +21,18 @@ class PI_UI(UIBase):
         super().__init__()
 
         self._gpio = GPIO_Driver()
+
+    # def _button_handler(self, key, button_event):
+    #     print('button_handler1() -> {}, {}'.format(key.value, button_event))
+    #
+    #     if key.value == Keyboard_Driver.Keys.KEY1.value:
+    #         self._buttonEvents[Button.BUTTON_1.value] = button_event;
+    #
+    #     if key.value == Keyboard_Driver.Keys.KEY2.value:
+    #         self._buttonEvents[Button.BUTTON_2.value] = button_event;
+    #
+    #     if key.value == Keyboard_Driver.Keys.KEY3.value:
+    #         self._buttonEvents[Button.BUTTON_3.value] = button_event;
 
     def led_flash(self, led, period=0.2):
         super().led_flash(led, period)
@@ -50,6 +63,12 @@ class GPIO_Driver():
         self._platform = PiPlatform.ZeroOnePlatform
         self._gpioInitialised = False
 
+        self._button_state = {
+            Button.BUTTON_1: 0,
+            Button.BUTTON_2: 0,
+            Button.BUTTON_3: 0
+        }
+
         # A horrible hack here to determine if we're running on 01 hardware or a test Pi
         # Look for a file called 'debug_platform' in the root of the install folder
         this_directory = os.path.dirname(os.path.realpath(__file__))
@@ -64,32 +83,44 @@ class GPIO_Driver():
         # Setup the GPIO here
         if self._platform == PiPlatform.ZeroOnePlatform:
             GPIO.setmode(GPIO.BCM)
+            GPIO.setwarnings(False)
 
             # Set the output pins
-            GPIO.setup(17, GPIO.OUT)  #  LED
-            GPIO.setup(27, GPIO.OUT)  #  LED
+            GPIO.setup(17, GPIO.OUT)  # Red LED
+            GPIO.setup(27, GPIO.OUT)  # Amber LED
+            # The Green LED is hardwired to +5V
 
             # Set the input pins
-            GPIO.setup(2, GPIO.IN)  # Black button
-            GPIO.setup(3, GPIO.IN)  # Red button
+            GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Outer Red button
+            GPIO.setup(3, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Middle Red button
+            GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Black button
 
             # Set the initial values
             GPIO.output(17, 1)
             GPIO.output(27, 1)
+
+            GPIO.add_event_detect(2, GPIO.BOTH, callback=self._button_callback)
+            GPIO.add_event_detect(3, GPIO.BOTH, callback=self._button_callback)
+            GPIO.add_event_detect(22, GPIO.BOTH, callback=self._button_callback)
+
         else:
             GPIO.setmode(GPIO.BCM)
+            GPIO.setwarnings(False)
 
             # Set the output pins
             GPIO.setup(17, GPIO.OUT)  # Green LED
             GPIO.setup(27, GPIO.OUT)  # Red LED
 
             # Set the input pins
-            GPIO.setup(2, GPIO.IN)  # Black button
-            GPIO.setup(3, GPIO.IN)  # Red button
+            GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Black button
+            GPIO.setup(3, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Red button
 
             # Set the initial values
             GPIO.output(17, 1)
             GPIO.output(27, 1)
+
+            GPIO.add_event_detect(2, GPIO.BOTH, callback=self._button_callback)
+            GPIO.add_event_detect(3, GPIO.BOTH, callback=self._button_callback)
 
         self._gpioInitialised = True
 
@@ -119,22 +150,28 @@ class GPIO_Driver():
                 elif led == Led.LED_RED:
                     GPIO.output(27, 1)
 
+
+    def _button_callback(self, pin):
+        time.sleep(.05)
+
+        print("Pin:", pin)
+
+        if pin == 2:
+            button = Button.BUTTON_1
+        elif pin == 3:
+            button = Button.BUTTON_2
+        else:
+            button = Button.BUTTON_3
+
+
+        if (GPIO.input(pin) != 0 and self._button_state[button] != 0):
+            print("<U>")
+            self._button_state[button] = 0
+        elif (GPIO.input(pin) == 0 and self._button_state[button] == 0):
+            print("<D>")
+            self._button_state[button] = 1
+
+
     def shutdown(self):
         self._gpioInitialised = False
         GPIO.cleanup()
-
-
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(17, GPIO.OUT)  # Green LED
-# GPIO.setup(27, GPIO.OUT)  # Red LED
-# GPIO.setup(2, GPIO.IN)  # Black button
-# GPIO.setup(3, GPIO.IN)  # Red button
-
-# For the ZeroOne I guess:
-
-# 2 = Black
-# 3 = Red1
-# 4 = Red2
-# 17 = Red LED
-# 27 = Amber LED
-# 22 = Green LED
