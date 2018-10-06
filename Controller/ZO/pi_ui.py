@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, collections
 import time
 from enum import Enum
 
@@ -16,23 +16,28 @@ class PiPlatform(Enum):
 
 class PI_UI(UIBase):
     def __init__(self):
-        print('PI_UI::__init__()')
-
         super().__init__()
 
         self._gpio = GPIO_Driver()
 
-    # def _button_handler(self, key, button_event):
-    #     print('button_handler1() -> {}, {}'.format(key.value, button_event))
-    #
-    #     if key.value == Keyboard_Driver.Keys.KEY1.value:
-    #         self._buttonEvents[Button.BUTTON_1.value] = button_event;
-    #
-    #     if key.value == Keyboard_Driver.Keys.KEY2.value:
-    #         self._buttonEvents[Button.BUTTON_2.value] = button_event;
-    #
-    #     if key.value == Keyboard_Driver.Keys.KEY3.value:
-    #         self._buttonEvents[Button.BUTTON_3.value] = button_event;
+        self._gpio.register_key_event_handler(self._button_handler, Button.BUTTON_1)
+        self._gpio.register_key_event_handler(self._button_handler, Button.BUTTON_2)
+        self._gpio.register_key_event_handler(self._button_handler, Button.BUTTON_3)
+
+        # TODO : This queue stuff can go in the base class really
+        self._queue = collections.deque()
+
+    def _button_handler(self, button, button_event):
+        print('button_handler() -> {}, {}'.format(button.value, button_event))
+
+        if button_event == ButtonEvent.BUTTON_UP:
+            self._queue.appendleft(button)
+
+    def get_button(self):
+        if len(self._queue) != 0:
+            return self._queue.pop()
+        else:
+            return None
 
     def led_flash(self, led, period=0.2):
         super().led_flash(led, period)
@@ -52,10 +57,11 @@ class PI_UI(UIBase):
         else:
             self._gpio.led_off(led)
 
-    def shutdown(self):
-        print('shutdown()')
-        super().shutdown()
+    def test_button(self, button=Button.BUTTON_1):
+        return self._gpio.test_button(button)
 
+    def shutdown(self):
+        super().shutdown()
         self._gpio.shutdown()
 
 class GPIO_Driver():
@@ -67,6 +73,12 @@ class GPIO_Driver():
             Button.BUTTON_1: 0,
             Button.BUTTON_2: 0,
             Button.BUTTON_3: 0
+        }
+
+        self._button_handler = {
+            Button.BUTTON_1: None,
+            Button.BUTTON_2: None,
+            Button.BUTTON_3: None,
         }
 
         # A horrible hack here to determine if we're running on 01 hardware or a test Pi
@@ -124,6 +136,7 @@ class GPIO_Driver():
 
         self._gpioInitialised = True
 
+
     def led_on(self, led):
         if self._gpioInitialised:
             if self._platform == PiPlatform.ZeroOnePlatform:
@@ -150,11 +163,13 @@ class GPIO_Driver():
                 elif led == Led.LED_RED:
                     GPIO.output(27, 1)
 
+    def test_button(self, button=Button.BUTTON_1):
+        return self._button_state[button]
 
     def _button_callback(self, pin):
         time.sleep(.05)
 
-        print("Pin:", pin)
+        # print(pin)
 
         if pin == 2:
             button = Button.BUTTON_1
@@ -165,12 +180,19 @@ class GPIO_Driver():
 
 
         if (GPIO.input(pin) != 0 and self._button_state[button] != 0):
-            print("<U>")
+            # print("<U>")
             self._button_state[button] = 0
+            if self._button_handler[button] != None:
+                self._button_handler[button](button, ButtonEvent.BUTTON_UP)
         elif (GPIO.input(pin) == 0 and self._button_state[button] == 0):
-            print("<D>")
+            # print("<D>")
+            if self._button_handler[button] != None:
+                self._button_handler[button](button, ButtonEvent.BUTTON_DOWN)
             self._button_state[button] = 1
 
+    # Register a callback method to register for the events
+    def register_key_event_handler(self, callback, button=Button.BUTTON_1):
+        self._button_handler[button] = callback
 
     def shutdown(self):
         self._gpioInitialised = False

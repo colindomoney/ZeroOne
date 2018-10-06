@@ -44,6 +44,7 @@ def main():
     setup_logging()
 
     st = 0
+    tick = 0;
 
     try:
         _ui = ui.get_ui_instance()
@@ -59,10 +60,15 @@ def main():
             time.sleep(0.2)
             command = _ui.get_command()
 
-            # if _ui.test_button(Button.BUTTON_2):
-            #     _ui.led_on(ui.Led.LED_RED)
-            # else:
-            #     _ui.led_off(ui.Led.LED_RED)
+            if _ui.test_button(Button.BUTTON_3):
+                _ui.led_on(ui.Led.LED_AMBER)
+            else:
+                _ui.led_off(ui.Led.LED_AMBER)
+
+            tick = tick+1
+            if tick > 20:
+                print('Queue:', _ui.get_button())
+                tick = 0
 
             if command == ui.Commands.Test:
                 print('TEST')

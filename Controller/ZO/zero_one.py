@@ -6,23 +6,17 @@ ZO_X_SIZE = 38  # The X dimension ie. columns
 ZO_Y_SIZE = 28  # The Y dimension ie. rows
 
 
-# GPIO pinouts
-# GPIO2 = pushbutton
-# GPIO4 = pushbutton
-# GPIO5 = pushbutton
-# GPIO17 = LED
-# GPIO27 = LED
-
 class ZeroOneException(Exception):
     """  Massively complex override of the base exception class for ZeroOne exceptions """
 
-    def __init__(self, message):
+    def __init__(self, message, error_code=0):
         super().__init__(self)
         self.message = message
+        self.error_code = error_code
 
     # Forget to do this and it will recurse like a motherf...er
     def __str__(self):
-        return self.message
+        return "{0} ({1})".format(self.message, self.error_code)
 
 
 # TODO : Not sure we need this class any more
@@ -30,7 +24,7 @@ class ZeroOne(object):
     def __init__(self):
         pass
 
-
+# This is the OPC driver class
 class PixelDriver:
     OpcConnectionString = 'localhost:7890'
 

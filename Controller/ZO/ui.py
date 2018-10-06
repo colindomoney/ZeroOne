@@ -71,9 +71,9 @@ class ButtonEvent(Enum):
 
 
 class Button(Enum):
-    BUTTON_1 = 1  # Black button
+    BUTTON_1 = 1  # Outer Red button
     BUTTON_2 = 2  # Middle Red button
-    BUTTON_3 = 3  # Outer Red button
+    BUTTON_3 = 3  # Black button
 
 
 class Led(Enum):
@@ -151,6 +151,9 @@ class UIBase:
             self._command = Commands.Test
 
     def test_button(self, button=Button.BUTTON_1):
+        pass
+
+    def get_button(self):
         pass
 
     def register_button_event_handler(self, callback, button=Button.BUTTON_1):
