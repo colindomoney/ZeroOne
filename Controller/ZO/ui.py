@@ -108,7 +108,8 @@ class UIBase:
 
         self._leds = {
             Led.LED_RED: UIBase.LED_Values(UIBase.LED_State.LED_OFF),
-            Led.LED_GREEN: UIBase.LED_Values(UIBase.LED_State.LED_OFF)
+            Led.LED_GREEN: UIBase.LED_Values(UIBase.LED_State.LED_OFF),
+            Led.LED_AMBER: UIBase.LED_Values(UIBase.LED_State.LED_OFF)
         }
 
         self._leds[Led.LED_GREEN].period = 0.2
@@ -116,6 +117,9 @@ class UIBase:
 
         self._leds[Led.LED_RED].period = 0.2
         self._leds[Led.LED_RED].state = UIBase.LED_State.LED_OFF
+
+        self._leds[Led.LED_AMBER].period = 0.2
+        self._leds[Led.LED_AMBER].state = UIBase.LED_State.LED_OFF
 
     def _do_flash(self, led):
         if self._leds[led].state == UIBase.LED_State.LED_FLASH:

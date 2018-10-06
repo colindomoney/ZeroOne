@@ -63,7 +63,19 @@ class GPIO_Driver():
 
         # Setup the GPIO here
         if self._platform == PiPlatform.ZeroOnePlatform:
-            pass
+            GPIO.setmode(GPIO.BCM)
+
+            # Set the output pins
+            GPIO.setup(17, GPIO.OUT)  #  LED
+            GPIO.setup(27, GPIO.OUT)  #  LED
+
+            # Set the input pins
+            GPIO.setup(2, GPIO.IN)  # Black button
+            GPIO.setup(3, GPIO.IN)  # Red button
+
+            # Set the initial values
+            GPIO.output(17, 1)
+            GPIO.output(27, 1)
         else:
             GPIO.setmode(GPIO.BCM)
 
@@ -79,12 +91,15 @@ class GPIO_Driver():
             GPIO.output(17, 1)
             GPIO.output(27, 1)
 
-            self._gpioInitialised = True
+        self._gpioInitialised = True
 
     def led_on(self, led):
         if self._gpioInitialised:
             if self._platform == PiPlatform.ZeroOnePlatform:
-                pass
+                if led == Led.LED_RED:
+                    GPIO.output(17, 0)
+                elif led == Led.LED_AMBER:
+                    GPIO.output(27, 0)
             else:
                 if led == Led.LED_GREEN:
                     GPIO.output(17, 0)
@@ -94,7 +109,10 @@ class GPIO_Driver():
     def led_off(self, led):
         if self._gpioInitialised:
             if self._platform == PiPlatform.ZeroOnePlatform:
-                pass
+                if led == Led.LED_RED:
+                    GPIO.output(17, 1)
+                elif led == Led.LED_AMBER:
+                    GPIO.output(27, 1)
             else:
                 if led == Led.LED_GREEN:
                     GPIO.output(17, 1)

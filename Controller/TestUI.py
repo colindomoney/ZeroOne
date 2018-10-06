@@ -49,10 +49,10 @@ def main():
         _ui = ui.get_ui_instance()
         command = None
 
-        _ui.led_on(ui.Led.LED_RED)
+        # _ui.led_on(ui.Led.LED_RED)
 
-        _ui.led_flash(ui.Led.LED_RED, 0.1)
-        _ui.led_flash(ui.Led.LED_GREEN, 0.2)
+        _ui.led_flash(ui.Led.LED_RED, 0.2)
+        _ui.led_flash(ui.Led.LED_AMBER, 0.1)
 
         while command != ui.Commands.Quit:
             print('. ')
@@ -67,11 +67,11 @@ def main():
             if command == ui.Commands.Test:
                 print('TEST')
 
-                if st == 0:
-                    _ui.led_on(ui.Led.LED_RED)
-
-                if st == 1:
-                    _ui.led_off(ui.Led.LED_RED)
+                # if st == 0:
+                #     _ui.led_on(ui.Led.LED_RED)
+                #
+                # if st == 1:
+                #     _ui.led_off(ui.Led.LED_RED)
 
                 print(_ui)
 
