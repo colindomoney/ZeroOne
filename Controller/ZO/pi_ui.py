@@ -24,20 +24,11 @@ class PI_UI(UIBase):
         self._gpio.register_key_event_handler(self._button_handler, Button.BUTTON_2)
         self._gpio.register_key_event_handler(self._button_handler, Button.BUTTON_3)
 
-        # TODO : This queue stuff can go in the base class really
-        self._queue = collections.deque()
-
     def _button_handler(self, button, button_event):
         print('button_handler() -> {}, {}'.format(button.value, button_event))
 
         if button_event == ButtonEvent.BUTTON_UP:
             self._queue.appendleft(button)
-
-    def get_button(self):
-        if len(self._queue) != 0:
-            return self._queue.pop()
-        else:
-            return None
 
     def led_flash(self, led, period=0.2):
         super().led_flash(led, period)
@@ -136,7 +127,6 @@ class GPIO_Driver():
 
         self._gpioInitialised = True
 
-
     def led_on(self, led):
         if self._gpioInitialised:
             if self._platform == PiPlatform.ZeroOnePlatform:
@@ -178,13 +168,12 @@ class GPIO_Driver():
         else:
             button = Button.BUTTON_3
 
-
-        if (GPIO.input(pin) != 0 and self._button_state[button] != 0):
+        if GPIO.input(pin) != 0 and self._button_state[button] != 0:
             # print("<U>")
             self._button_state[button] = 0
             if self._button_handler[button] != None:
                 self._button_handler[button](button, ButtonEvent.BUTTON_UP)
-        elif (GPIO.input(pin) == 0 and self._button_state[button] == 0):
+        elif GPIO.input(pin) == 0 and self._button_state[button] == 0:
             # print("<D>")
             if self._button_handler[button] != None:
                 self._button_handler[button](button, ButtonEvent.BUTTON_DOWN)

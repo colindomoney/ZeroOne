@@ -66,7 +66,7 @@ def main():
                 _ui.led_off(ui.Led.LED_AMBER)
 
             tick = tick+1
-            if tick > 20:
+            if tick > 10:
                 print('Queue:', _ui.get_button())
                 tick = 0
 

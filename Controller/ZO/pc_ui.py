@@ -51,12 +51,18 @@ class PC_UI(UIBase):
 
         if key.value == Keyboard_Driver.Keys.KEY1.value:
             self._buttonEvents[Button.BUTTON_1.value] = button_event;
+            if button_event == ButtonEvent.BUTTON_UP:
+                self._queue.appendleft(Button.BUTTON_1)
 
         if key.value == Keyboard_Driver.Keys.KEY2.value:
             self._buttonEvents[Button.BUTTON_2.value] = button_event;
+            if button_event == ButtonEvent.BUTTON_UP:
+                self._queue.appendleft(Button.BUTTON_2)
 
         if key.value == Keyboard_Driver.Keys.KEY3.value:
             self._buttonEvents[Button.BUTTON_3.value] = button_event;
+            if button_event == ButtonEvent.BUTTON_UP:
+                self._queue.appendleft(Button.BUTTON_3)
 
     def led_on(self, led):
         super().led_on(led)
@@ -195,6 +201,9 @@ class Blinkstick_LED_Driver():
         if led == Led.LED_RED:
             self._stick.set_color(0, 0, name='black')
 
+        if led == Led.LED_AMBER:
+            self._stick.set_color(2, 0, name='black')
+
     def led_on(self, led):
         brightness = 24
 
@@ -205,3 +214,7 @@ class Blinkstick_LED_Driver():
         if led == Led.LED_RED:
             # self._stick.set_color(1, 0, name='red')
             self._stick.set_color(0, 0, red=brightness, green=0, blue=0)
+
+        if led == Led.LED_AMBER:
+            # self._stick.set_color(0, 0, name='green')
+            self._stick.set_color(2, 0, red=brightness, green=brightness, blue=0)

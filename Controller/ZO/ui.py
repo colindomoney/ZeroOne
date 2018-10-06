@@ -1,4 +1,4 @@
-import io
+import io, collections
 from enum import Enum
 import threading
 
@@ -81,6 +81,7 @@ class Led(Enum):
     LED_GREEN = 2
     LED_AMBER = 3
 
+
 _ui_instance = None
 
 
@@ -121,6 +122,8 @@ class UIBase:
         self._leds[Led.LED_AMBER].period = 0.2
         self._leds[Led.LED_AMBER].state = UIBase.LED_State.LED_OFF
 
+        self._queue = collections.deque()
+
     def _do_flash(self, led):
         if self._leds[led].state == UIBase.LED_State.LED_FLASH:
             if self._leds[led].nextState == UIBase.LED_State.LED_OFF:
@@ -154,7 +157,10 @@ class UIBase:
         pass
 
     def get_button(self):
-        pass
+        if len(self._queue) != 0:
+            return self._queue.pop()
+        else:
+            return None
 
     def register_button_event_handler(self, callback, button=Button.BUTTON_1):
         pass
