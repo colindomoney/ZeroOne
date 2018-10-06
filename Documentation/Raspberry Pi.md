@@ -152,6 +152,10 @@ The Python packages for the ZeroOne project are contained in a requirements file
 
 > \# sudo pip install -U -r requirements.txt
 
+The Raspberry Pi GPIO module needs to installed separately as follows:
+
+> sudo apt-get -y install python3-rpi.gpio
+
 ## Getting the ZeroOne code
 
 Create a directory in the home directory of the Pi called 'ZeroOne' viz.
