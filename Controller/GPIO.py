@@ -11,6 +11,7 @@ def setup_gpio():
     GPIO.setup(2, GPIO.IN)  # Black button
     GPIO.setup(3, GPIO.IN)  # Red button
 
+
     def pin2_callback(self):
         time.sleep(.075)
 
@@ -66,7 +67,6 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         print("Aborted")
-        pass
 
     finally:
         print("Exiting")

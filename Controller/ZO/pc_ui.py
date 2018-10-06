@@ -1,5 +1,4 @@
-import os
-import sys
+import os, sys
 from enum import Enum
 
 from blinkstick import blinkstick

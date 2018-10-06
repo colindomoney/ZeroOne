@@ -5,7 +5,8 @@ import threading
 import sys
 
 
-def __is_raspberry_pi__(raise_on_errors=False):
+def _is_raspberry_pi(raise_on_errors=False):
+
     """
     Checks if the platform is a Raspberry Pi by check the 'cpuinfo' file
     :param raise_on_errors: Set to true to throw an exception if it's not a Pi
@@ -78,9 +79,9 @@ class Button(Enum):
 class Led(Enum):
     LED_RED = 1
     LED_GREEN = 2
+    LED_AMBER = 3
 
-
-__ui_instance__ = None
+_ui_instance = None
 
 
 class UIBase:
@@ -103,6 +104,7 @@ class UIBase:
 
     def __init__(self):
         self._command = None
+        self._running = True
 
         self._leds = {
             Led.LED_RED: UIBase.LED_Values(UIBase.LED_State.LED_OFF),
@@ -124,7 +126,8 @@ class UIBase:
                 self._leds[led].nextState = UIBase.LED_State.LED_OFF
                 self._set_led(led, UIBase.LED_State.LED_ON)
 
-            threading.Timer(self._leds[led].period, self._do_flash, [led]).start()
+            if self._running:
+                threading.Timer(self._leds[led].period, self._do_flash, [led]).start()
         else:
             self.led_off(led)
 
@@ -182,21 +185,27 @@ class UIBase:
 
     def shutdown(self):
         # Shut everything down here before we exit
-        self._leds[Led.LED_GREEN].period = 0
-        self.led_off(Led.LED_GREEN)
 
-        self._leds[Led.LED_RED].period = 0
-        self.led_off(Led.LED_RED)
+        if self._running:
+            self._leds[Led.LED_GREEN].period = 0
+            self.led_off(Led.LED_GREEN)
 
+            self._leds[Led.LED_RED].period = 0
+            self.led_off(Led.LED_RED)
+
+        self._running = False
 
 def get_ui_instance():
-    global __ui_instance__
-    if __is_raspberry_pi__():
+    global _ui_instance
+    if _is_raspberry_pi():
         import ZO.pi_ui
+
+        if _ui_instance is None:
+            _ui_instance = ZO.pi_ui.PI_UI()
 
     else:
         import ZO.pc_ui
-        if __ui_instance__ is None:
-            __ui_instance__ = ZO.pc_ui.PC_UI()
+        if _ui_instance is None:
+            _ui_instance = ZO.pc_ui.PC_UI()
 
-    return __ui_instance__
+    return _ui_instance

@@ -144,7 +144,7 @@ The Python code for this project has a few dependencies mostly on the [Pillow im
 > \# sudo apt-get install libopenjp2-7-dev \
 > \# sudo apt install libtiff5 \
 > \# sudo apt-get install libatlas-base-dev \
-> \# sudo apt install python3-numpy \
+> \# sudo apt install python3-numpy 
 
 ### Install the Packages
 

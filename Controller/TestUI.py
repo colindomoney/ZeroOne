@@ -49,6 +49,9 @@ def main():
         _ui = ui.get_ui_instance()
         command = None
 
+        _ui.led_on(ui.Led.LED_RED)
+
+        _ui.led_flash(ui.Led.LED_RED, 0.1)
         _ui.led_flash(ui.Led.LED_GREEN, 0.2)
 
         while command != ui.Commands.Quit:
@@ -56,10 +59,10 @@ def main():
             time.sleep(0.2)
             command = _ui.get_command()
 
-            if _ui.test_button(Button.BUTTON_2):
-                _ui.led_on(ui.Led.LED_RED)
-            else:
-                _ui.led_off(ui.Led.LED_RED)
+            # if _ui.test_button(Button.BUTTON_2):
+            #     _ui.led_on(ui.Led.LED_RED)
+            # else:
+            #     _ui.led_off(ui.Led.LED_RED)
 
             if command == ui.Commands.Test:
                 print('TEST')
@@ -83,13 +86,18 @@ def main():
         kb = KBHit()
         kb.flush()
 
+    except KeyboardInterrupt as ex:
+        print("Aborted")
+
     except ZeroOneException as ex:
         print("\n>>> EXCEPTION : {} <<<\n".format(ex.message))
         log.error(ex.message, exc_info=True)
         pass
 
-    destroy_logging()
-    print('Done!')
+    finally:
+        _ui.shutdown()
+        destroy_logging()
+        print('Done!')
 
 
 if __name__ == "__main__":
