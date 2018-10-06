@@ -1,7 +1,6 @@
 import getopt, json
 import time, logging, os, sys
 import ZO
-import opc
 
 
 def setup_logging():
@@ -99,7 +98,7 @@ def main(argv):
         print('Exiting ...')
     except ZO.ZeroOneException as ex:
         print("\n>>> EXCEPTION : {} <<<\n".format(ex.message))
-        log.error(ex.message, exc_info=True)
+        logging.error(ex.message, exc_info=True)
 
     finally:
         logging.info('Done!')

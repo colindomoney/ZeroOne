@@ -1,10 +1,12 @@
+import signal
+
 import psutil
 
 def find_procs_by_name(name):
     "Return a list of processes matching 'name'."
     ls = []
     for p in psutil.process_iter(attrs=['name']):
-        if p.info['name'] == name:
+        if name in p.info['name']:
             ls.append(p)
     return ls
 
@@ -13,6 +15,13 @@ if __name__ == '__main__':
 
     # print('PIDs : ', psutil.pids())
 
-    print(find_procs_by_name('python'))
+    pids = find_procs_by_name('fcserver')
+    print(pids)
+
+    if len(pids) != 0:
+        pids[0].send_signal(signal.SIGTERM)
+
+    pids = find_procs_by_name('fcserver')
+    print(pids)
 
     print('Done!')
