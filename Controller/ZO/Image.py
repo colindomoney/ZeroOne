@@ -12,13 +12,13 @@ this_directory = os.path.dirname(os.path.realpath(__file__))
 ZERO_ONE_MASK_FILE = os.path.join(this_directory, './zero_one.npy')
 
 # TODO : Uuuuugghhhh look at all this hardcoded stuff !
-TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png'
-UNION_JACK_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/UnionJack.png'
-SOUTH_AFRICA_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/SouthAfrica.png'
-EUROPEAN_UNION_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/EU.png'
-RED_TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/Red_Left.png'
-GREEN_TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/Green_Centre.png'
-BLUE_TEST_PATTERN_FILE = '/Users/colind/Projects/ZeroOne/ZeroOne/Graphics/Images/Blue_Right.png'
+TEST_PATTERN_FILE = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png'
+UNION_JACK_FILE = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images/UnionJack.png'
+SOUTH_AFRICA_FILE = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images/SouthAfrica.png'
+EUROPEAN_UNION_FILE = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images/EU.png'
+RED_TEST_PATTERN_FILE = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images/Red_Left.png'
+GREEN_TEST_PATTERN_FILE = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images/Green_Centre.png'
+BLUE_TEST_PATTERN_FILE = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images/Blue_Right.png'
 
 class ZO_Mask:
     # This tag values in the CSV pattern file

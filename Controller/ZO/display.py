@@ -54,7 +54,10 @@ class Display(metaclass=Singleton):
 
     def update_display(self, img):
         if self._fcserver != None:
-            pass
+            test_img = ZO_Image()
+            test_img.load_from_file(TEST_PATTERN_FILE)
+
+            self._fcserver.update_display(test_img.image)
 
 class FCServer():
     # Construct with the path to the binary and its config file
@@ -127,14 +130,14 @@ class FCServer():
         self._pixel_driver.clear_display()
 
     def update_display(self, img):
-        self._pixel_driver.updata_display(img)
+        self._pixel_driver.update_display(img)
 
 # This is the OPC driver class
 class PixelDriver:
     OpcConnectionString = 'localhost:7890'
 
     def __init__(self):
-        self._interpolation = True
+        self._interpolation = False
         self._client = opc.Client(PixelDriver.OpcConnectionString)
         self._client.set_interpolation(self._interpolation)
 

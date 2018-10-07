@@ -122,6 +122,7 @@ def main(argv):
                     app_display.clear_display()
                 elif button == Button.BUTTON_2:
                     print('BUTTON_2')
+                    app_display.update_display(None)
                 elif button == Button.BUTTON_3:
                     print('BUTTON_3')
 
