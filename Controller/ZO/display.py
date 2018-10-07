@@ -16,14 +16,43 @@ class Singleton(type):
 
 class Display(metaclass=Singleton):
 # class Display():
-    def __init__(self):
+    def __init__(self, config):
         print('Display::__init__()')
+
+        this_directory = os.path.dirname(os.path.realpath(__file__))
+        if this_directory.endswith('/ZO'):
+            this_directory = this_directory[:-3]
+
+        self._fcserver = None
+
+        if config['Enabled'] != 0:
+            self._fcserver = FCServer(os.path.join(this_directory, config['BinaryPath']),
+                                      os.path.join(this_directory, config['ConfigPath']))
+
+            print(self._fcserver)
 
     def __str__(self):
         return "Display() -> {0}".format(self.__hash__())
 
     def test(self):
-        print('test()', self)
+        pass
+
+    def setup(self):
+        if self._fcserver != None:
+            self._fcserver.setup()
+
+    def shutdown(self):
+        if self._fcserver != None:
+            self._fcserver.shutdown()
+
+    # The actual methods to write to the display
+    def clear_display(self):
+        if self._fcserver != None:
+            pass
+
+    def update_display(self, img):
+        if self._fcserver != None:
+            pass
 
 class FCServer():
     # Construct with the path to the binary and its config file

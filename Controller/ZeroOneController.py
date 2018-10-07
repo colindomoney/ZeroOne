@@ -1,5 +1,7 @@
 import getopt, json
 import time, logging, os, sys
+from pprint import pprint
+
 from ZO import ui, display
 from ZO.ui import Button
 from ZO.zero_one import ZeroOneException
@@ -66,18 +68,21 @@ def parse_config():
 def main(argv):
     print('ZeroOneController running ...')
 
+    # Set up the logging
     setup_logging()
     logging.info('ZeroOneController running ...')
 
+    # Get the UI instance
     app_ui = ui.get_ui_instance()
     command = None
 
+    # Read the config file
     config_file = './config.ini'
     try:
         opts, args = getopt.getopt(argv, "hc:", ["config="])
     except getopt.GetoptError:
         print('ZeroOneController.py --config <configfile>')
-        raise ZO.ZeroOneException()
+        raise ZeroOneException()
 
     for opt, arg in opts:
         if opt in ('-c', '--config'):
@@ -87,6 +92,20 @@ def main(argv):
     print('Using config from', config_file)
     if os.path.exists(config_file) == False:
         raise ZeroOneException("Config file {0} does not exist".format(config_file))
+    else:
+        # TODO : This should catch the json.decoder.JSONDecodeError exception
+        with open(config_file) as cf:
+            data = json.load(cf)
+
+            config_fadecandy = data['Fadecandy']
+            pprint(config_fadecandy)
+
+            this_directory = os.path.dirname(os.path.realpath(__file__))
+
+    # Now create a display object
+    app_display = display.Display(config_fadecandy)
+    print(app_display)
+    app_display.setup()
 
     try:
         while command != ui.Commands.Quit:
@@ -112,8 +131,9 @@ def main(argv):
         app_ui.display_exception(ex.error_code)
 
     finally:
-        logging.info('Done!')
+        app_display.shutdown()
 
+        logging.info('Done!')
         destroy_logging()
         print('Done!')
 
