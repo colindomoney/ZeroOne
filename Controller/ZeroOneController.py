@@ -5,6 +5,8 @@ from pprint import pprint
 from ZO import ui, display
 from ZO.ui import Button
 from ZO.zero_one import ZeroOneException
+from kbhit import KBHit
+
 
 def setup_logging():
     print("setup_logging")
@@ -117,10 +119,14 @@ def main(argv):
             if button != None:
                 if button == Button.BUTTON_1:
                     print('BUTTON_1')
+                    app_display.clear_display()
                 elif button == Button.BUTTON_2:
                     print('BUTTON_2')
                 elif button == Button.BUTTON_3:
                     print('BUTTON_3')
+
+        kb = KBHit()
+        kb.flush()
 
     except KeyboardInterrupt:
         print('Exiting ...')

@@ -199,7 +199,7 @@ def main_graphics():
             # pix.blank_display()
             # time.sleep(2)
     except KeyboardInterrupt:
-        pix.blank_display()
+        pix.clear_display()
 
         # img.show_pattern = True
         # pix.update_display(img.image)

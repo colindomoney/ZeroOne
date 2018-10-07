@@ -16,7 +16,7 @@ class Singleton(type):
 
 class Display(metaclass=Singleton):
 # class Display():
-    def __init__(self, config):
+    def __init__(self, fadecandy_config, ):
         print('Display::__init__()')
 
         this_directory = os.path.dirname(os.path.realpath(__file__))
@@ -25,9 +25,9 @@ class Display(metaclass=Singleton):
 
         self._fcserver = None
 
-        if config['Enabled'] != 0:
-            self._fcserver = FCServer(os.path.join(this_directory, config['BinaryPath']),
-                                      os.path.join(this_directory, config['ConfigPath']))
+        if fadecandy_config['Enabled'] != 0:
+            self._fcserver = FCServer(os.path.join(this_directory, fadecandy_config['BinaryPath']),
+                                      os.path.join(this_directory, fadecandy_config['ConfigPath']))
 
             print(self._fcserver)
 
@@ -37,10 +37,12 @@ class Display(metaclass=Singleton):
     def test(self):
         pass
 
+    # Setup the display servers
     def setup(self):
         if self._fcserver != None:
             self._fcserver.setup()
 
+    # Shutdown the display servers
     def shutdown(self):
         if self._fcserver != None:
             self._fcserver.shutdown()
@@ -48,7 +50,7 @@ class Display(metaclass=Singleton):
     # The actual methods to write to the display
     def clear_display(self):
         if self._fcserver != None:
-            pass
+            self._fcserver.clear_display()
 
     def update_display(self, img):
         if self._fcserver != None:
@@ -60,6 +62,7 @@ class FCServer():
         self._binary_path = binary_path
         self._config_path = config_path
         self._process = None
+        self._pixel_driver = None
 
         if os.path.exists(binary_path) == False:
             raise ZeroOneException("fcserver binary does not exist -> {0}".format(binary_path))
@@ -112,13 +115,19 @@ class FCServer():
     def _run_server(self):
         self._process = psutil.Popen([self._binary_path, self._config_path])
         time.sleep(0.2)
-        pixed_driver = PixelDriver()
-        return True if pixed_driver.can_connect() else False
+        self._pixel_driver = PixelDriver()
+        return True if self._pixel_driver.can_connect() else False
 
     # Does a simple loopback test to see if the server is running
-    def _verify_server(self):
-        pixel_driver = PixelDriver()
-        return True if pixel_driver.can_connect() else False
+    # def _verify_server(self):
+    #     self._pixel_driver = PixelDriver()
+    #     return True if self._pixel_driver.can_connect() else False
+
+    def clear_display(self):
+        self._pixel_driver.clear_display()
+
+    def update_display(self, img):
+        self._pixel_driver.updata_display(img)
 
 # This is the OPC driver class
 class PixelDriver:
@@ -137,6 +146,8 @@ class PixelDriver:
             raise ZeroOneException('Failed to connect to OPC server at {0}'.format(PixelDriver.OpcConnectionString))
 
     def update_display(self, image=None):
+        print('update_display()')
+
         ''' Actually write the pixels to the display'''
         self.connect_to_server()
 
@@ -152,7 +163,8 @@ class PixelDriver:
         self.interpolation = value
         self._client.set_interpolation(self._interpolation)
 
-    def blank_display(self):
+    def clear_display(self):
+        print('clear_display()')
         black = [(0, 0, 0)] * ZO_X_SIZE * ZO_Y_SIZE
         self._client.set_interpolation(False)
         self._client.put_pixels(black)
@@ -177,8 +189,3 @@ class PixelDriver:
 
         self._client.put_pixels(pixels)
 
-
-# An abstract base class for a display device, either emulator or physical
-class DisplayDevice():
-    def __init__(self):
-        pass
