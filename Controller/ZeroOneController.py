@@ -1,7 +1,8 @@
 import getopt, json
 import time, logging, os, sys
-import ZO
-
+from ZO import ui, display
+from ZO.ui import Button
+from ZO.zero_one import ZeroOneException
 
 def setup_logging():
     print("setup_logging")
@@ -13,10 +14,6 @@ def setup_logging():
             logging.StreamHandler(sys.stdout),
         ],
         level=logging.INFO)
-
-    # global log
-    # log = logging.getLogger('ZeroOneController')
-    # log.setLevel(logging.INFO)
 
 def destroy_logging():
     print("destroy_logging")
@@ -66,13 +63,14 @@ def parse_config():
 # 1. Debug mode for I/O ie. buttons and LEDs
 # 2. Debug mode to blit to screen
 
-# if __name__ == '__main__'
 def main(argv):
     print('ZeroOneController running ...')
 
     setup_logging()
-
     logging.info('ZeroOneController running ...')
+
+    app_ui = ui.get_ui_instance()
+    command = None
 
     config_file = './config.ini'
     try:
@@ -88,17 +86,30 @@ def main(argv):
     # Test the config file exists
     print('Using config from', config_file)
     if os.path.exists(config_file) == False:
-        raise ZO.ZeroOneException("Config file {0} does not exist".format(config_file))
+        raise ZeroOneException("Config file {0} does not exist".format(config_file))
 
     try:
-        # while True:
+        while command != ui.Commands.Quit:
+            print('. ')
             time.sleep(0.1)
-            # print('.')
+            command = app_ui.get_command()
+            button = app_ui.get_button()
+
+            if button != None:
+                if button == Button.BUTTON_1:
+                    print('BUTTON_1')
+                elif button == Button.BUTTON_2:
+                    print('BUTTON_2')
+                elif button == Button.BUTTON_3:
+                    print('BUTTON_3')
+
     except KeyboardInterrupt:
         print('Exiting ...')
-    except ZO.ZeroOneException as ex:
+
+    except ZeroOneException as ex:
         print("\n>>> EXCEPTION : {} <<<\n".format(ex.message))
         logging.error(ex.message, exc_info=True)
+        app_ui.display_exception(ex.error_code)
 
     finally:
         logging.info('Done!')

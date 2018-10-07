@@ -9,7 +9,7 @@ ZO_Y_SIZE = 28  # The Y dimension ie. rows
 class ZeroOneException(Exception):
     """  Massively complex override of the base exception class for ZeroOne exceptions """
 
-    def __init__(self, message, error_code=0):
+    def __init__(self, message, error_code=1):
         super().__init__(self)
         self.message = message
         self.error_code = error_code

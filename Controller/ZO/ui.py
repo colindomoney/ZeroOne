@@ -215,7 +215,7 @@ class UIBase:
         self._all_leds(UIBase.LED_State.LED_OFF)
 
         while True:
-            time.sleep(0.5)
+            time.sleep(1)
             self._all_leds(UIBase.LED_State.LED_ON)
             time.sleep(1.25)
             self._all_leds(UIBase.LED_State.LED_OFF)
