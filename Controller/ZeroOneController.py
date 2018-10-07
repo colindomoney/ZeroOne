@@ -102,10 +102,13 @@ def main(argv):
             config_fadecandy = data['Fadecandy']
             pprint(config_fadecandy)
 
+            config_emulator = data['DisplayEmulator']
+            pprint(config_emulator)
+
             this_directory = os.path.dirname(os.path.realpath(__file__))
 
     # Now create a display object
-    app_display = display.Display(config_fadecandy)
+    app_display = display.Display(config_fadecandy, config_emulator)
     print(app_display)
     app_display.setup()
 

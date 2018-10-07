@@ -1,9 +1,11 @@
-import time
+import time, pprint
 
 import psutil, sys, os, signal
 import opc
 from PIL import Image
 from ZO import *
+
+from DisplayEmulator import emulator_client
 
 # This file is responsible for driving the displays on the ZeroOne
 
@@ -16,7 +18,7 @@ class Singleton(type):
 
 class Display(metaclass=Singleton):
 # class Display():
-    def __init__(self, fadecandy_config, ):
+    def __init__(self, fadecandy_config, emulator_config=None):
         print('Display::__init__()')
 
         this_directory = os.path.dirname(os.path.realpath(__file__))
@@ -31,6 +33,11 @@ class Display(metaclass=Singleton):
 
             print(self._fcserver)
 
+        self._emulator = None
+
+        if emulator_config != None and emulator_config['Enabled'] != 0:
+            self._emulator = emulator_client.ZeroOneEmulator()
+
     def __str__(self):
         return "Display() -> {0}".format(self.__hash__())
 
@@ -42,15 +49,25 @@ class Display(metaclass=Singleton):
         if self._fcserver != None:
             self._fcserver.setup()
 
-    # Shutdown the display servers
+        if self._emulator != None:
+            self._emulator.connect()
+            self._emulator.clear_display()
+
+# Shutdown the display servers
     def shutdown(self):
         if self._fcserver != None:
             self._fcserver.shutdown()
+
+        if self._emulator != None:
+            self._emulator.close()
 
     # The actual methods to write to the display
     def clear_display(self):
         if self._fcserver != None:
             self._fcserver.clear_display()
+
+        if self._emulator != None:
+            self._emulator.clear_display()
 
     def update_display(self, img):
         if self._fcserver != None:
@@ -58,6 +75,13 @@ class Display(metaclass=Singleton):
             test_img.load_from_file(TEST_PATTERN_FILE)
 
             self._fcserver.update_display(test_img.image)
+
+        if self._emulator != None:
+            test_img = ZO_Image()
+            test_img.load_from_file(TEST_PATTERN_FILE)
+
+            pprint.pprint(test_img.image)
+            self._emulator.display_full_image(image=test_img.image)
 
 class FCServer():
     # Construct with the path to the binary and its config file

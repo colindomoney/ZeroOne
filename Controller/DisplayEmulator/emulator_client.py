@@ -1,9 +1,9 @@
-import ZO
+from ZO import EmulatorCommand, ZO_Image, ZO_Y_SIZE, ZO_X_SIZE, ZeroOneException
 import logging, sys, time, fnmatch, os, socket
 import kbhit as KBHit
 from enum import Enum
 from PIL import Image
-import pickle, random, timer_cm
+import random, timer_cm, pprint, dill
 from pynput.keyboard import Key, Listener
 
 IMAGE_PATH = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images'
@@ -79,13 +79,6 @@ class KeyboardDriver():
                 self._command = self.Commands.Quit
 
 
-# TODO : God this has to be duplicated on both the client and server
-class EmulatorCommand():
-    def __init__(self, command = 'None', data=None):
-        self.command = command
-        self.data = data
-
-
 # TODO : This is going to end up deriving from an interface shared by the 01 sometime
 class ZeroOneEmulator():
     # Define some strings for the commands we'll use
@@ -110,39 +103,43 @@ class ZeroOneEmulator():
         pil_img = Image.open(filename)
         width, height = pil_img.size
 
-        if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
-            raise ZO.ZeroOneException('File not a ZeroOne file')
+        if width !=  ZO_X_SIZE and height != ZO_Y_SIZE:
+            raise ZeroOneException('File not a ZeroOne file')
 
         # Now convert to 01 format
-        zo_image = ZO.ZO_Image()
+        zo_image = ZO_Image()
         zo_image.load_from_file(filename)
 
-        self._do_command(EmulatorCommand('DisplayZeroOne', zo_image.zero_one_raw_data))
+        self._do_command(EmulatorCommand.EmulatorCommand('DisplayZeroOne', zo_image.zero_one_raw_data))
 
-    def display_full_image(self, raw_data=None, filename=None):
+    def display_full_image(self, image=None, filename=None):
         print('display_full_image', filename)
 
-        pil_img = Image.open(filename)
+        if filename != None:
+            pil_img = Image.open(filename)
+        elif image != None:
+            pil_img = image
+
         width, height = pil_img.size
 
-        if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
-            raise ZO.ZeroOneException('File not a ZeroOne file')
+        if width != ZO_X_SIZE and height != ZO_Y_SIZE:
+            raise ZeroOneException('File not a ZeroOne file')
 
         pil_img = pil_img.convert('RGB')
 
-        self._do_command(EmulatorCommand('DisplayAll', pil_img.tobytes()))
+        self._do_command(EmulatorCommand.EmulatorCommand('DisplayAll', pil_img.tobytes()))
 
     def clear_display(self):
         print('clear_display')
-        self._do_command(EmulatorCommand('ClearDisplay'))
+        self._do_command(EmulatorCommand.EmulatorCommand('ClearDisplay'))
 
     def _do_command(self, ec):
-        data_string = pickle.dumps(ec)
+        data_string = dill.dumps(ec)
 
         if self.connected == True:
             self._client.send(data_string)
 
-            emulator_command = pickle.loads(data_string)
+            emulator_command = dill.loads(data_string)
             print(emulator_command.command)
         else:
             print('>> Not connected')
@@ -159,7 +156,7 @@ class ZeroOneEmulator():
             pil_img = Image.open(file_name)
             width, height = pil_img.size
 
-            if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
+            if width != ZO_X_SIZE and height != ZO_Y_SIZE:
                 print('File not a ZeroOne file')
                 continue
             else:
@@ -172,7 +169,7 @@ class ZeroOneEmulator():
         file_name = self.get_random_file()
         # print(file_name)
 
-        zo_image = ZO.ZO_Image()
+        zo_image = ZO_Image()
         zo_image.load_from_file(file_name)
 
         zo_data = zo_image.zero_one_raw_data
@@ -193,7 +190,7 @@ class ZeroOneEmulator():
                 pilImg = Image.open(file_name)
                 width, height = pilImg.size
 
-                if width != ZO.ZO_X_SIZE and height != ZO.ZO_Y_SIZE:
+                if width != ZO_X_SIZE and height != ZO_Y_SIZE:
                     print('File not a ZeroOne file')
                     file_number = -1
                     continue
@@ -204,9 +201,9 @@ class ZeroOneEmulator():
 
         raw_data = pilImg.tobytes()
 
-        emulator_command = EmulatorCommand(data=raw_data)
-        data_string = pickle.dumps(emulator_command)
-        new_emulator_command = pickle.loads(data_string)
+        emulator_command = EmulatorCommand.EmulatorCommand(data=raw_data)
+        data_string = dill.dumps(emulator_command)
+        new_emulator_command = dill.loads(data_string)
 
         print(new_emulator_command.command)
 
@@ -278,7 +275,8 @@ if __name__ == '__main__':
                 # Process the command
                 if command == keyboard.Commands.Command1:
                     print('Command1')
-                    emulator.display_full_image(filename=emulator.get_random_file())
+                    # emulator.display_full_image(filename=emulator.get_random_file())
+                    emulator.display_full_image(filename='/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images/RGBW.png')
                 elif command == keyboard.Commands.Command2:
                     print('Command2')
                     emulator.display_zero_one_image(filename=emulator.get_random_file())

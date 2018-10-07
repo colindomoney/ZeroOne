@@ -1,5 +1,5 @@
 import fnmatch, os, socket
-import pickle, timer_cm
+import pickle, timer_cm, dill
 
 import ZO
 from threading import *
@@ -12,13 +12,6 @@ IMAGE_PATH = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images'
 
 def get_images():
     return fnmatch.filter(os.listdir(IMAGE_PATH), '*.png')
-
-
-# TODO : God this has to be duplicated on both the client and server
-class EmulatorCommand():
-    def __init__(self, command='None', data=None):
-        self.command = command
-        self.data = data
 
 
 class DisplayEmulatorApplication(Thread):
@@ -100,7 +93,7 @@ class DisplayEmulatorApplication(Thread):
 
     def run(self):
         # This is the main listening thread
-        # print('run()')
+        print('run()')
 
         # Open the socket
         self._server = socket.socket(
@@ -141,7 +134,7 @@ class DisplayEmulatorApplication(Thread):
                     # print(data_string)
                     try:
                         # This is prone to shitting itself so guard it with kid gloves
-                        emulator_command = pickle.loads(data_string)
+                        emulator_command = dill.loads(data_string)
                         print(emulator_command.command)
 
                         self._handle_command(emulator_command)
@@ -151,7 +144,7 @@ class DisplayEmulatorApplication(Thread):
             except Exception as ex:
                 print("\n>>> EXCEPTION : {} <<<\n".format(ex))
 
-        # print('exit run()')
+        print('exit run()')
 
         # Quit TKinter
         self._root.destroy()
