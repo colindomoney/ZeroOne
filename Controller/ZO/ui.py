@@ -1,4 +1,5 @@
 import io, collections
+import time
 from enum import Enum
 import threading
 
@@ -162,6 +163,9 @@ class UIBase:
         else:
             return None
 
+    def clear_buttons(self):
+        self._queue.clear()
+
     def register_button_event_handler(self, callback, button=Button.BUTTON_1):
         pass
 
@@ -193,8 +197,35 @@ class UIBase:
         self._leds[led].state = UIBase.LED_State.LED_OFF
         self._set_led(led, UIBase.LED_State.LED_OFF)
 
+    def _all_leds(self, state = LED_State.LED_OFF):
+        if state == UIBase.LED_State.LED_OFF:
+            self.led_off(Led.LED_RED)
+            self.led_off(Led.LED_AMBER)
+            self.led_off(Led.LED_GREEN)
+        else:
+            self.led_on(Led.LED_RED)
+            self.led_on(Led.LED_AMBER)
+            self.led_on(Led.LED_GREEN)
+
     def _set_led(self, led, state):
         pass
+
+    # A handy method to show an crital error code upon failure
+    def display_exception(self, error_code=1):
+        self._all_leds(UIBase.LED_State.LED_OFF)
+
+        while True:
+            time.sleep(0.5)
+            self._all_leds(UIBase.LED_State.LED_ON)
+            time.sleep(1.25)
+            self._all_leds(UIBase.LED_State.LED_OFF)
+            time.sleep(0.5)
+
+            for i in range(error_code):
+                self._all_leds(UIBase.LED_State.LED_ON)
+                time.sleep(0.25)
+                self._all_leds(UIBase.LED_State.LED_OFF)
+                time.sleep(0.25)
 
     def shutdown(self):
         # Shut everything down here before we exit
@@ -205,6 +236,9 @@ class UIBase:
 
             self._leds[Led.LED_RED].period = 0
             self.led_off(Led.LED_RED)
+
+            self._leds[Led.LED_AMBER].period = 0
+            self.led_off(Led.LED_AMBER)
 
         self._running = False
 

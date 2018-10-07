@@ -8,6 +8,13 @@ from ZO import *
 class FCServer():
     # Construct with the path to the binary and its config file
     def __init__(self, binary_path=None, config_path=None):
+        self._binary_path = binary_path
+        self._config_path = config_path
+
+    def __str__(self):
+        return "FCServer() -> Exe: {0}, Config: {1}".format(self._binary_path, self._config_path)
+
+    def setup(self):
         pass
 
     def _find_procs_by_name(name):

@@ -47,7 +47,7 @@ class PC_UI(UIBase):
         self._lastKey = None
 
     def _button_handler(self, key, button_event):
-        print('button_handler1() -> {}, {}'.format(key.value, button_event))
+        # print('button_handler1() -> {}, {}'.format(key.value, button_event))
 
         if key.value == Keyboard_Driver.Keys.KEY1.value:
             self._buttonEvents[Button.BUTTON_1.value] = button_event;
