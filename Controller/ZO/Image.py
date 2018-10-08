@@ -169,12 +169,29 @@ class ZO_Image:
         self._image = Image.fromarray(arr, 'RGBA')
 
     def load_from_file(self, filename=None):
-        self._image = Image.open(filename)
+        img = Image.open(filename)
+        backing_img = Image.new('RGBA', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE))
 
-        if self.image.width != zero_one.ZO_X_SIZE or self.image.height != zero_one.ZO_Y_SIZE:
+        size = (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE)
+        img.convert(mode="RGBA")
+        res = img.thumbnail(size)
+
+        if img.width != zero_one.ZO_X_SIZE or img.height != zero_one.ZO_Y_SIZE:
+            x_pos = y_pos = 0
+            if img.width != zero_one.ZO_X_SIZE:
+                x_pos = int((zero_one.ZO_X_SIZE - img.width)/2)
+            if img.height != zero_one.ZO_Y_SIZE:
+                y_pos = int((zero_one.ZO_Y_SIZE - img.height)/2)
+
+            print('x, y', x_pos, y_pos)
+            backing_img.paste(img, (x_pos, y_pos))
+            img = backing_img
+            # img.show()
+
+        if img.width != zero_one.ZO_X_SIZE or img.height != zero_one.ZO_Y_SIZE:
             raise zero_one.ZeroOneException('Invalid image size, not loaded')
 
-        # TODO : We should check that we have an actual RGBA image here ?
+        self._image = img
 
     def clear_pattern(self):
         # Create a new blank/black image in RGBA with (width, height)

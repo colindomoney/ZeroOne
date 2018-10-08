@@ -64,17 +64,16 @@ class Display(metaclass= Singleton):
 
     def update_display(self, img):
         if self._fcserver != None:
-            test_img = ZO_Image()
-            test_img.load_from_file(TEST_PATTERN_FILE)
+            # test_img = ZO_Image()
+            # test_img.load_from_file(TEST_PATTERN_FILE)
 
-            self._fcserver.update_display(test_img.image)
+            self._fcserver.update_display(img)
 
         if self._emulator != None:
-            test_img = ZO_Image()
-            test_img.load_from_file(TEST_PATTERN_FILE)
+            # test_img = ZO_Image()
+            # test_img.load_from_file(TEST_PATTERN_FILE)
 
-            pprint.pprint(test_img.image)
-            self._emulator.display_full_image(image=test_img.image)
+            self._emulator.display_full_image(image=img)
 
 class FCServer():
     # Construct with the path to the binary and its config file

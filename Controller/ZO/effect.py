@@ -57,8 +57,6 @@ def inherits_from(child, parent_name):
             return True
     return False
 
-# matched = any(fnmatch(filename, p) for p in patterns)
-
 class ImageCycler():
     def __init__(self, path):
         self._images = []
@@ -78,12 +76,12 @@ class ImageCycler():
         for p in patterns:
             self._images.append(fnmatch.filter(os.listdir(self._path), p))
 
+        # Flatten the list of lists
         self._images =  [val for sublist in self._images for val in sublist]
 
-        print('Files', self._images)
-
     def get_next_file(self):
-        return next(self._iterable_images)
+        base_filename = next(self._iterable_images)
+        return(os.path.join(self._path, base_filename))
 
 
 if __name__ == '__main__':

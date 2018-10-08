@@ -2,7 +2,7 @@ import getopt, json
 import time, logging, os, sys
 from pprint import pprint
 
-from ZO import ui, display, effect
+from ZO import ui, display, effect, ZO_Image
 from ZO.ui import Button
 from ZO.zero_one import ZeroOneException
 from kbhit import KBHit
@@ -169,7 +169,14 @@ def main(argv):
                     app_display.update_display(None)
                 elif button == Button.BUTTON_3:
                     print('BUTTON_3')
-                    print(image_cycler.get_next_file())
+                    image_file = image_cycler.get_next_file()
+
+                    print('Processing ', image_file)
+
+                    img = ZO_Image()
+                    img.load_from_file(image_file)
+
+                    app_display.update_display(img.image)
 
         try:
             kb = KBHit()
