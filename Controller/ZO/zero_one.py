@@ -5,6 +5,17 @@ ZO_PIXEL_COUNT = 591  # The total pixels (ie. LEDs) on the display
 ZO_X_SIZE = 38  # The X dimension ie. columns
 ZO_Y_SIZE = 28  # The Y dimension ie. rows
 
+class MoreSillyStuff():
+    def __init__(self):
+        pass
+
+
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
 
 class ZeroOneException(Exception):
     """  Massively complex override of the base exception class for ZeroOne exceptions """

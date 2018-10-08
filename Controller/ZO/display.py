@@ -9,14 +9,7 @@ from DisplayEmulator import emulator_client
 
 # This file is responsible for driving the displays on the ZeroOne
 
-class Singleton(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-class Display(metaclass=Singleton):
+class Display(metaclass= Singleton):
 # class Display():
     def __init__(self, fadecandy_config, emulator_config=None):
         print('Display::__init__()')

@@ -2,7 +2,7 @@ import getopt, json
 import time, logging, os, sys
 from pprint import pprint
 
-from ZO import ui, display
+from ZO import ui, display, effect
 from ZO.ui import Button
 from ZO.zero_one import ZeroOneException
 from kbhit import KBHit
@@ -50,6 +50,25 @@ def destroy_logging():
 #     print('Exiting ...')
 #     client.put_pixels(black)
 
+def get_ide_mode_command_and_button():
+    command = None
+    key = None
+    button = None
+
+    key = input('Enter command >')
+
+    if key == ' ':
+        command = ui.Commands.Quit
+
+    if key == 'q' or key == 'Q':
+        button = Button.BUTTON_1
+    elif key == 'w' or key == 'W':
+        button = Button.BUTTON_2
+    elif key == 'e' or key == 'E':
+        button = Button.BUTTON_3
+
+    return (command, button)
+
 def parse_config():
     with open('config.json', 'r') as f:
         config = json.load(f)
@@ -90,8 +109,12 @@ def main(argv):
         if opt in ('-c', '--config'):
             config_file = arg
 
+    this_directory = os.path.dirname(os.path.realpath(__file__))
+
     # Test the config file exists
     print('Using config from', config_file)
+    # TODO : This should check absolute path
+    # os.path.isabs()
     if os.path.exists(config_file) == False:
         raise ZeroOneException("Config file {0} does not exist".format(config_file))
     else:
@@ -105,6 +128,14 @@ def main(argv):
             config_emulator = data['DisplayEmulator']
             pprint(config_emulator)
 
+            config_options = data['Options']
+            pprint(config_options)
+
+            ide_mode = False
+            if 'Ide_mode' in config_options:
+                if config_options['Ide_mode'] != 0:
+                    ide_mode = True
+
             this_directory = os.path.dirname(os.path.realpath(__file__))
 
     # Now create a display object
@@ -112,13 +143,23 @@ def main(argv):
     print(app_display)
     app_display.setup()
 
+    app_effects = effect.EffectController()
+
+    image_cycler = effect.ImageCycler(config_options['ImagePath'])
+
     try:
         while command != ui.Commands.Quit:
             print('. ')
-            time.sleep(0.1)
-            command = app_ui.get_command()
-            button = app_ui.get_button()
+            time.sleep(0.05)
 
+            # Check if we're running in the IDE mode or not
+            if ide_mode == False:
+                command = app_ui.get_command()
+                button = app_ui.get_button()
+            else:
+                command, button = get_ide_mode_command_and_button()
+
+            # Process the incoming commands
             if button != None:
                 if button == Button.BUTTON_1:
                     print('BUTTON_1')
@@ -128,9 +169,13 @@ def main(argv):
                     app_display.update_display(None)
                 elif button == Button.BUTTON_3:
                     print('BUTTON_3')
+                    print(image_cycler.get_next_file())
 
-        kb = KBHit()
-        kb.flush()
+        try:
+            kb = KBHit()
+            kb.flush()
+        except:
+            pass
 
     except KeyboardInterrupt:
         print('Exiting ...')

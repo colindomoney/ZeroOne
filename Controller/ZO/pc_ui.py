@@ -109,8 +109,10 @@ class Keyboard_Driver():
     def __init__(self, on_press, on_release):
         # Check if we're on a Mac here, and see if we have GUID; if not throw an exception
         if sys.platform == 'darwin':
+            # TODO : This really should exit entirely but for now make it print a message
             if os.getuid() != 0:
-                raise ZeroOneException("Must be run as root on a Mac, use 'sudo -s '")
+                # raise ZeroOneException("Must be run as root on a Mac, use 'sudo -s '")
+                print("*** Should be run as root on a Mac, this may not work properly ***")
 
         # Store the last_key_press
         self.keyEvents = {
