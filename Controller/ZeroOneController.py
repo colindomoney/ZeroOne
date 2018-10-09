@@ -97,6 +97,8 @@ def main(argv):
     app_ui = ui.get_ui_instance()
     command = None
 
+    app_ui.led_flash(ui.Led.LED_AMBER, 0.2)
+
     # Read the config file
     config_file = './config.ini'
     try:
@@ -123,13 +125,8 @@ def main(argv):
             data = json.load(cf)
 
             config_fadecandy = data['Fadecandy']
-            pprint(config_fadecandy)
-
             config_emulator = data['DisplayEmulator']
-            pprint(config_emulator)
-
             config_options = data['Options']
-            pprint(config_options)
 
             ide_mode = False
             if 'Ide_mode' in config_options:
@@ -140,43 +137,52 @@ def main(argv):
 
     # Now create a display object
     app_display = display.Display(config_fadecandy, config_emulator)
-    print(app_display)
     app_display.setup()
 
     app_effects = effect.EffectController()
-
     image_cycler = effect.ImageCycler(config_options['ImagePath'])
 
     try:
-        while command != ui.Commands.Quit:
-            print('. ')
-            time.sleep(0.05)
+        if ide_mode == True:
 
-            # Check if we're running in the IDE mode or not
-            if ide_mode == False:
-                command = app_ui.get_command()
-                button = app_ui.get_button()
-            else:
-                command, button = get_ide_mode_command_and_button()
+            image_filename = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Controller/images/RGBW.png'
+            print(image_filename)
 
-            # Process the incoming commands
-            if button != None:
-                if button == Button.BUTTON_1:
-                    print('BUTTON_1')
-                    app_display.clear_display()
-                elif button == Button.BUTTON_2:
-                    print('BUTTON_2')
-                    app_display.update_display(None)
-                elif button == Button.BUTTON_3:
-                    print('BUTTON_3')
-                    image_file = image_cycler.get_next_file()
+            zo_image = ZO_Image()
+            zo_image.load_from_file(image_filename)
+            print(zo_image)
 
-                    print('Processing ', image_file)
+            # zo_image.image.show()
+            app_display.update_display(zo_image.test_image())
 
-                    img = ZO_Image()
-                    img.load_from_file(image_file)
 
-                    app_display.update_display(img.image)
+        else:
+            while command != ui.Commands.Quit:
+                print('. ')
+                time.sleep(0.05)
+
+                # Check if we're running in the IDE mode or not
+                if ide_mode == False:
+                    command = app_ui.get_command()
+                    button = app_ui.get_button()
+                else:
+                    command, button = get_ide_mode_command_and_button()
+
+                # Process the incoming commands
+                if button != None:
+                    if button == Button.BUTTON_1:
+                        print('BUTTON_1')
+                        app_display.clear_display()
+                    elif button == Button.BUTTON_2:
+                        print('BUTTON_2')
+                        image_file = image_cycler.get_next_file()
+
+                        print('Processing ', image_file)
+                        img = ZO_Image()
+                        img.load_from_file(image_file)
+                        app_display.update_display(img.image)
+                    elif button == Button.BUTTON_3:
+                        print('BUTTON_3')
 
         try:
             kb = KBHit()
@@ -193,6 +199,7 @@ def main(argv):
         app_ui.display_exception(ex.error_code)
 
     finally:
+        app_ui.shutdown()
         app_display.shutdown()
 
         logging.info('Done!')

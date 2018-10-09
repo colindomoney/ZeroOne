@@ -4,7 +4,6 @@ import kbhit as KBHit
 from enum import Enum
 from PIL import Image
 import random, timer_cm, pprint, dill
-from pynput.keyboard import Key, Listener
 
 IMAGE_PATH = '/Users/colind/Documents/Projects/ZeroOne/ZeroOne/Graphics/Images'
 
@@ -255,6 +254,8 @@ if __name__ == '__main__':
     setup_logging()
 
     try:
+        from pynput.keyboard import Key, Listener
+
         keyboard = KeyboardDriver()
         command = None
 

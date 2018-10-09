@@ -24,8 +24,6 @@ class Display(metaclass= Singleton):
             self._fcserver = FCServer(os.path.join(this_directory, fadecandy_config['BinaryPath']),
                                       os.path.join(this_directory, fadecandy_config['ConfigPath']))
 
-            print(self._fcserver)
-
         self._emulator = None
 
         if emulator_config != None and emulator_config['Enabled'] != 0:
@@ -63,16 +61,10 @@ class Display(metaclass= Singleton):
             self._emulator.clear_display()
 
     def update_display(self, img):
-        if self._fcserver != None:
-            # test_img = ZO_Image()
-            # test_img.load_from_file(TEST_PATTERN_FILE)
-
+        if self._fcserver != None and img != None:
             self._fcserver.update_display(img)
 
-        if self._emulator != None:
-            # test_img = ZO_Image()
-            # test_img.load_from_file(TEST_PATTERN_FILE)
-
+        if self._emulator != None and img != None:
             self._emulator.display_full_image(image=img)
 
 class FCServer():
@@ -118,7 +110,7 @@ class FCServer():
             print(pids)
 
             # Loop ... a bit
-            for i in range(10):
+            for i in range(4):
                 for pid in pids:
                     print('isrunning', pid.is_running())
                     print('status()', pid.status())
@@ -128,7 +120,7 @@ class FCServer():
                     break
 
                 # print('sleep ...')
-                time.sleep(0.25)
+                time.sleep(0.2)
 
     # Runs the server as a new process and returns straight away
     def _run_server(self):
@@ -153,7 +145,7 @@ class PixelDriver:
     OpcConnectionString = 'localhost:7890'
 
     def __init__(self):
-        self._interpolation = False
+        self._interpolation = True
         self._client = opc.Client(PixelDriver.OpcConnectionString)
         self._client.set_interpolation(self._interpolation)
 

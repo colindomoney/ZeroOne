@@ -1,10 +1,11 @@
 """
     A helper file to do useful things with images
 """
+import colorsys
 
-import numpy, os
+import numpy, os, pprint
 from . import zero_one, ZO_PIXEL_COUNT, ZeroOneException
-from PIL import Image, ImageColor
+from PIL import Image, ImageColor, ImageDraw
 
 # Now pay attention - the location of the NPY file is relative to where the ZO folder resides
 # Use this one trick to find that path and make the reference relative to that
@@ -73,6 +74,27 @@ class ZO_Image:
         self._image = Image.new('RGBA', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE))
         self._pattern = None
 
+        self._black_image = Image.new('RGBA', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE),
+                                      color=(0, 0, 0, 0))
+
+        self._mask = Image.new('L', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE),
+                                  color=0xff)
+
+        img_draw = ImageDraw.Draw(self._mask)
+
+        img_draw.rectangle([0,0,10,10], 0x20, 0x20)
+
+
+
+        # pprint.pprint(self._mask.tobytes())
+        # print(len(self._mask.tobytes()))
+
+        print('Done')
+
+    def __str__(self):
+        return "ZO_Image() -> Filename: {0}, Format: {1}, Mode: {2}, Size: {3}".format(
+            self.image.filename, self.image.format, self.image.mode,  self.image.size)
+
     # This is the main access method to accees the image - don't use the internal _image value
     # since this won't show the mask value
     @property
@@ -93,6 +115,42 @@ class ZO_Image:
     @property
     def zero_one_raw_data(self):
         return self._map_image_to_pixels()
+
+    def test_image(self):
+        # res = Image.blend(self._image, self._black_image, alpha=0)
+
+        newImg = Image.new('RGB', (zero_one.ZO_X_SIZE, zero_one.ZO_Y_SIZE),
+                                       color=(0, 0, 0))
+
+        res = self.image
+        res.putalpha(self._mask)
+
+
+        # TODO : The plan with this piece of code was to use the intensity (Y) value
+        # from the YIG co-ordinates to adjust the brightness but it didn't seem to work
+        # pixels = self.image.load()
+        # mask = self._mask.load()
+
+        # pixels = res.load()
+        #
+        # for i in range(res.size[0]):  # for every col:
+        #     for j in range(res.size[1]):  # For every row
+        #         pixel = pixels[i, j]
+        #         yiq = colorsys.rgb_to_yiq(float(pixel[0])/0xff, float(pixel[1])/0xff, float(pixel[2])/0xff)
+        #
+        #         rgb = colorsys.yiq_to_rgb(0.1, yiq[1], yiq[2])
+        #         pixels[i, j] = (int(rgb[0]*0xff), int(rgb[1]*0xff), int(rgb[2]*0xff))
+
+
+        # TODO : this was the actual bit of magic that made it work
+        # Use the res image (which is a copy of the original), then paste in
+        # the mask using putalpha(), then do the fact split thing to remove the alpha
+        # into a new image and then show that. Voila.
+        newImg.paste(res, mask=res.split()[3])
+        newImg.show()
+
+        # res.show()
+        return newImg
 
     # This is the function that converts the full image to a 01 shape
     def _map_image_to_pixels(self):
